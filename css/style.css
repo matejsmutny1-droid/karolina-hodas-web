@@ -21,16 +21,19 @@ text-align:center;
 .hero{
 position:relative;
 height:100vh;
+min-height:600px; /* toto pridaj */
 overflow:hidden;
+background:#000; /* fallback */
 }
 
 .hero-video{
 position:absolute;
-top:0;
-left:0;
+top:50%;
+left:50%;
 width:100%;
 height:100%;
 object-fit:cover;
+transform:translate(-50%, -50%);
 }
 
 .overlay{
@@ -57,18 +60,50 @@ z-index:2;
 }
 
 .logo{
-width:400px;
-max-width:80%;
-margin-bottom:40px;
-filter: invert(1) brightness(2);
+width:520px;
+max-width:85%;
+margin-bottom:60px;
+filter: invert(1) brightness(1.8);
+opacity:0.95;
 }
 
 .btn{
-border:1px solid white;
-padding:12px 30px;
-text-decoration:none;
+position:relative;
+padding:14px 40px;
+
 color:white;
+text-decoration:none;
+font-size:14px;
+letter-spacing:2px;
+
+border:1px solid rgba(255,255,255,0.6);
+background:transparent;
+
+transition:all 0.3s ease;
+}
+
+/* hover efekt */
+.btn:hover{
+background:white;
+color:black;
+border-color:white;
+}
+
+/* jemná čiara animácia */
+.btn::after{
+content:"";
+position:absolute;
+bottom:-6px;
+left:50%;
+transform:translateX(-50%);
+width:0%;
+height:1px;
+background:white;
 transition:0.3s;
+}
+
+.btn:hover::after{
+width:60%;
 }
 
 .btn:hover{
@@ -107,4 +142,52 @@ margin-top:20px;
 
 .contact{
 padding:100px 20px;
+}
+body, html{
+height:100%;
+}
+/* ABOUT NEW */
+
+.about{
+padding:160px 20px;
+display:flex;
+justify-content:center;
+}
+
+.about-inner{
+max-width:720px;
+text-align:center;
+}
+
+.about-title{
+font-size:44px;
+margin-bottom:50px;
+line-height:1.2;
+letter-spacing:0.5px;
+}
+
+.about-text{
+font-size:18px;
+line-height:1.9;
+margin-bottom:28px;
+opacity:0.75;
+letter-spacing:0.4px;
+}
+
+.about-signature{
+margin-top:60px;
+letter-spacing:8px;
+font-size:11px;
+opacity:0.5;
+position:relative;
+}
+
+.about-signature::after{
+content:"";
+display:block;
+width:40px;
+height:1px;
+background:black;
+margin:15px auto 0;
+opacity:0.3;
 }
