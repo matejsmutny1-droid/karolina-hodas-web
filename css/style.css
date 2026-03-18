@@ -1,0 +1,85 @@
+:root{
+--main:#DAD8CC;
+--black:#000000;
+}
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:var(--main);
+color:var(--black);
+font-family:'Playfair Display',serif;
+text-align:center;
+}
+
+
+/* HERO */
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.logo{
+width:400px;
+max-width:80%;
+margin-bottom:20px;
+}
+
+.subtitle{
+letter-spacing:6px;
+font-size:14px;
+margin-bottom:40px;
+}
+
+.btn{
+border:1px solid black;
+padding:12px 30px;
+text-decoration:none;
+color:black;
+transition:0.3s;
+}
+
+.btn:hover{
+background:black;
+color:white;
+}
+
+
+/* ABOUT */
+
+.about{
+padding:100px 20px;
+max-width:600px;
+margin:auto;
+line-height:1.8;
+}
+
+
+/* SERVICES */
+
+.services{
+padding:100px 20px;
+}
+
+.service{
+max-width:600px;
+margin:auto;
+}
+
+.price{
+margin-top:20px;
+}
+
+
+/* CONTACT */
+
+.contact{
+padding:100px 20px;
+}
