@@ -6,12 +6,15 @@
 <title>KARA MASÁŽE</title>
 
 <link rel="stylesheet" href="css/style.css">
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+<meta name="description" content="Masáže pre uvoľnenie tela a mysle. Doprajte si relax a regeneráciu.">
+
 </head>
 
 <body>
 
+<!-- HERO -->
 <section class="hero">
 
 <video autoplay muted loop playsinline class="hero-video">
@@ -22,12 +25,12 @@
 
 <div class="hero-content">
   <img src="images/logo.png" class="logo">
-  <a href="#" class="btn">Rezervovať termín</a>
+  <a href="#booking" class="btn">Rezervovať termín</a>
 </div>
 
 </section>
 
-
+<!-- ABOUT -->
 <section class="about">
 
 <div class="about-grid">
@@ -60,6 +63,7 @@ KARA
 
 </section>
 
+<!-- MASÁŽE -->
 <section class="massages">
 
 <h2 class="massages-title">Masáže</h2>
@@ -67,28 +71,28 @@ KARA
 <div class="massages-grid">
 
 <a href="celotelove.html" class="massage-card">
-  <img src="images/m1.jpg" alt="">
+  <img src="images/m1.jpg">
   <div class="card-overlay">
     <h3>Celotelové masáže</h3>
   </div>
 </a>
 
 <a href="ciastocne.html" class="massage-card">
-  <img src="images/m2.jpg" alt="">
+  <img src="images/m2.jpg">
   <div class="card-overlay">
     <h3>Čiastočné masáže</h3>
   </div>
 </a>
 
 <a href="celotelove-peeling.html" class="massage-card">
-  <img src="images/m3.jpg" alt="">
+  <img src="images/m3.jpg">
   <div class="card-overlay">
     <h3>Celotelová peelingová</h3>
   </div>
 </a>
 
 <a href="ciastocne-peeling.html" class="massage-card">
-  <img src="images/m4.jpg" alt="">
+  <img src="images/m4.jpg">
   <div class="card-overlay">
     <h3>Čiastočná peelingová</h3>
   </div>
@@ -98,6 +102,7 @@ KARA
 
 </section>
 
+<!-- SERVICES -->
 <section class="services">
 
 <h2>Masáže</h2>
@@ -119,6 +124,7 @@ Uvoľnenie stresu, lepší spánok, regenerácia a jemný omladzujúci efekt.
 
 </section>
 
+<!-- CONTACT -->
 <section class="contact">
 
 <h2>Kontakt</h2>
@@ -128,40 +134,73 @@ Uvoľnenie stresu, lepší spánok, regenerácia a jemný omladzujúci efekt.
 
 </section>
 
-<script src="js/script.js"></script>
-
-<section class="booking">
+<!-- BOOKING -->
+<section class="booking" id="booking">
 
 <h2>Rezervácia</h2>
 
-<form action="https://formsubmit.co/matejsmutny1@gmail.com" method="POST">
-<input type="hidden" name="_next" value="https://matejsmutny1-droid.github.io/karolina-hodas-web/dakujeme.html">
-
-<input type="text" name="meno" placeholder="Vaše meno" required>
-
-<input type="tel" name="telefon" placeholder="Telefón" required>
-
-<select name="masaz" required>
-<option value="">Vyberte masáž</option>
-<option>Celotelová masáž</option>
-<option>Masáž chrbta</option>
-<option>Masáž tváre</option>
-<option>Masáž nôh</option>
-</select>
-
-<input type="text" name="termin" placeholder="Preferovaný termín">
-
-<textarea name="sprava" placeholder="Poznámka"></textarea>
-
-<<button type="submit">Odoslať žiadosť</button>
-
 <p class="booking-sub">
-Vyberte si termín a ja sa vám ozvem späť.
+Vyplňte formulár a čoskoro vás budem kontaktovať.
 </p>
 
+<form action="https://formsubmit.co/matejsmutny1@gmail.com" method="POST">
+
+<!-- FORM SETTINGS -->
+<input type="hidden" name="_next" value="https://matejsmutny1-droid.github.io/karolina-hodas-web/dakujeme.html">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_subject" value="Nová rezervácia - KARA masáže">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_autoresponse" value="Dobrý deň,
+
+ďakujeme za Vašu rezerváciu masáže.
+
+Vašu žiadosť sme prijali a čoskoro sa Vám ozveme s potvrdením termínu.
+
+Tešíme sa na Vás.
+KARA masáže">
+
+<!-- INPUTS -->
+
+<input type="text" name="Meno" placeholder="Meno a priezvisko" required>
+<input type="tel" name="Telefón" placeholder="Telefón" required>
+<input type="email" name="email" placeholder="Email" required>
+<input type="text" name="Termín" placeholder="Preferovaný termín">
+
+<select name="Masáž" required>
+  <option value="">Vyberte masáž</option>
+  <option>Masáž tváre, hlavy a dekoltu</option>
+  <option>Masáž chrbta a krčnej chrbtice</option>
+  <option>Masáž dolných končatín</option>
+  <option>Celotelová masáž</option>
+</select>
+
+<textarea name="Poznámka" placeholder="Poznámka (voliteľné)"></textarea>
+
+<!-- SOURCE -->
+
+<div class="source">
+<p>Odkiaľ ste sa o nás dozvedeli?</p>
+
+<label><input type="checkbox" name="Zdroj[]" value="Instagram"> Instagram</label>
+<label><input type="checkbox" name="Zdroj[]" value="Facebook"> Facebook</label>
+<label><input type="checkbox" name="Zdroj[]" value="Odporúčanie"> Odporúčanie</label>
+<label><input type="checkbox" name="Zdroj[]" value="Google"> Google</label>
+
+</div>
+
+<button type="submit">Odoslať rezerváciu</button>
+
 </form>
+
+<div class="booking-alt">
+<p>prípadne</p>
+<a href="https://wa.me/421944388697">WhatsApp</a>
+<a href="tel:+421944388697">Zavolať</a>
+<a href="sms:+421944388697">SMS</a>
+</div>
 
 </section>
 
 </body>
 </html>
+```
