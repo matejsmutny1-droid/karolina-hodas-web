@@ -14,6 +14,10 @@
 
 <body>
 
+  <div class="scroll-bar"></div>
+
+  <div class="cursor-glow"></div>
+
 <!-- HERO -->
 <section class="hero">
 <video autoplay muted loop playsinline class="hero-video">
@@ -29,7 +33,7 @@
 </section>
 
 <!-- ABOUT -->
-<section class="about">
+<section class="about reveal">
 <div class="about-grid">
 
 <div class="about-left">
@@ -54,7 +58,7 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 </section>
 
 <!-- MASÁŽE -->
-<section class="massages">
+<section class="massages reveal">
 <h2 class="massages-title">Masáže</h2>
 
 <div class="massages-grid">
@@ -81,7 +85,7 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 </section>
 
 <!-- CENNÍK -->
-<section class="pricing-preview">
+<section class="pricing-preview reveal">
 <h2>Cenník</h2>
 
 <div class="pricing-card">
@@ -93,10 +97,6 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 <div class="price-item"><span>120 min</span><strong>89€</strong></div>
 </div>
 
-<div class="pricing-extra">
-<div class="price-row"><span>Facecontouring</span><strong>90€</strong></div>
-<div class="price-row"><span>Peeling</span><strong>+15€</strong></div>
-</div>
 
 <a href="cennik.html" class="btn-dark">Zobraziť celý cenník</a>
 
@@ -104,7 +104,7 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 </section>
 
 <!-- CONTACT -->
-<section class="contact">
+<section class="contact reveal">
 <h2>Kontakt</h2>
 
 <div class="contact-card">
@@ -124,94 +124,49 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 </section>
 
 <!-- BOOKING -->
-<section class="booking" id="booking">
+<section class="booking reveal" id="booking">
+
 <div class="booking-wrapper">
 
+<div class="booking-head">
 <h2>Rezervácia</h2>
-<p class="booking-sub">Vyplňte formulár a čoskoro vás budeme kontaktovať</p>
+<p>Vyplňte formulár a čoskoro vás budeme kontaktovať</p>
+</div>
 
-<form action="https://formsubmit.co/karolinahodas@gmail.com" method="POST" class="modern-form" id="bookingForm">
+<form action="https://formsubmit.co/karolinahodas@gmail.com" method="POST" class="booking-form">
 
 <input type="hidden" name="_next" value="https://matejsmutny1-droid.github.io/karolina-hodas-web/dakujeme.html">
 <input type="hidden" name="_captcha" value="false">
 
+<!-- ROW 1 -->
 <div class="form-row">
-<input type="text" name="Meno" placeholder="Meno a priezvisko" required>
-<input type="tel" name="Telefón" placeholder="Telefón" required>
+  <input type="text" name="Meno" placeholder="Meno a priezvisko" required pattern="[A-Za-zÁ-ž ]+">
+  <input type="tel" name="Telefón" placeholder="Telefón" required pattern="[0-9+ ]{9,}">
 </div>
 
+<!-- ROW 2 -->
 <div class="form-row">
-<input type="email" name="email" placeholder="Email" required>
-<input type="date" name="Dátum" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="date" name="Termín" required>
 </div>
 
-<select name="Masáž" required>
-<option value="">Vyberte masáž</option>
-<option>Celotelová masáž</option>
-<option>Čiastočná masáž</option>
-<option>Peelingová masáž</option>
-</select>
+<!-- ROW 3 -->
+<div class="form-row single">
+  <select name="Masáž" required>
+    <option value="">Vyberte masáž</option>
+    <option>Celotelová masáž</option>
+    <option>Čiastočná masáž</option>
+    <option>Peelingová masáž</option>
+  </select>
+</div>
 
-<textarea name="Poznámka" placeholder="Poznámka (voliteľné)"></textarea>
+<!-- ROW 4 -->
+<div class="form-row single">
+  <textarea name="Poznámka" placeholder="Poznámka (voliteľné)"></textarea>
+</div>
 
-<div class="source">
-<p>Odkiaľ ste sa o nás dozvedeli?</p>
+<!-- SOURCE -->
+<div class="source-inline">
 <label><input type="radio" name="Zdroj" value="Instagram" required> Instagram</label>
 <label><input type="radio" name="Zdroj" value="Facebook"> Facebook</label>
 <label><input type="radio" name="Zdroj" value="Google"> Google</label>
-<label><input type="radio" name="Zdroj" value="Odporúčanie"> Odporúčanie</label>
-<label><input type="radio" name="Zdroj" value="Iné"> Iné</label>
-</div>
-
-<button type="submit">Odoslať rezerváciu</button>
-
-</form>
-</div>
-</section>
-
-<!-- VALIDATION SCRIPT -->
-<script>
-document.getElementById("bookingForm").addEventListener("submit", function(e){
-
-let valid = true;
-
-const name = this.querySelector('[name="Meno"]');
-const phone = this.querySelector('[name="Telefón"]');
-const email = this.querySelector('[name="email"]');
-const date = this.querySelector('[name="Dátum"]');
-const source = this.querySelectorAll('[name="Zdroj"]:checked');
-
-if(!/^[A-Za-zÁ-ž ]+$/.test(name.value)){
-alert("Zadajte správne meno");
-valid = false;
-}
-
-if(!/^[0-9+ ]{9,}$/.test(phone.value)){
-alert("Zadajte správne telefónne číslo");
-valid = false;
-}
-
-if(email.value === ""){
-alert("Zadajte email");
-valid = false;
-}
-
-if(date.value === ""){
-alert("Vyberte dátum");
-valid = false;
-}
-
-if(source.length === 0){
-alert("Vyberte, odkiaľ ste sa o nás dozvedeli");
-valid = false;
-}
-
-if(!valid){
-e.preventDefault();
-}
-
-});
-</script>
-
-</body>
-</html>
