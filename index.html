@@ -16,7 +16,6 @@
 
 <!-- HERO -->
 <section class="hero">
-
 <video autoplay muted loop playsinline class="hero-video">
   <source src="images/video.mp4" type="video/mp4">
 </video>
@@ -27,19 +26,14 @@
   <img src="images/logo.png" class="logo">
   <a href="#booking" class="btn">Rezervovať termín</a>
 </div>
-
 </section>
 
 <!-- ABOUT -->
 <section class="about">
-
 <div class="about-grid">
 
 <div class="about-left">
-
-<h2 class="about-title">
-Masáž ako návrat<br>k sebe
-</h2>
+<h2 class="about-title">Masáž ako návrat<br>k sebe</h2>
 
 <p class="about-text">
 Moja cesta začala umením. Od detstva som vnímala svet cez citlivosť, tvorbu a vnútorné prežívanie.
@@ -50,96 +44,70 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 </p>
 
 <img src="images/podpis.png" class="signature">
-
 </div>
 
 <div class="about-right">
-  <img src="images/kajka.jpg" alt="">
+<img src="images/kajka.jpg" alt="">
 </div>
 
 </div>
-
 </section>
 
 <!-- MASÁŽE -->
 <section class="massages">
-
 <h2 class="massages-title">Masáže</h2>
 
 <div class="massages-grid">
-
 <a href="celotelove.html" class="massage-card">
-  <img src="images/m1.jpg">
-  <div class="card-overlay">
-    <h3>Celotelové masáže</h3>
-  </div>
+<img src="images/m1.jpg">
+<div class="card-overlay"><h3>Celotelové masáže</h3></div>
 </a>
 
 <a href="ciastocne.html" class="massage-card">
-  <img src="images/m2.jpg">
-  <div class="card-overlay">
-    <h3>Čiastočné masáže</h3>
-  </div>
+<img src="images/m2.jpg">
+<div class="card-overlay"><h3>Čiastočné masáže</h3></div>
 </a>
 
 <a href="celotelove-peeling.html" class="massage-card">
-  <img src="images/m3.jpg">
-  <div class="card-overlay">
-    <h3>Celotelová peelingová</h3>
-  </div>
+<img src="images/m3.jpg">
+<div class="card-overlay"><h3>Celotelová peelingová</h3></div>
 </a>
 
 <a href="ciastocne-peeling.html" class="massage-card">
-  <img src="images/m4.jpg">
-  <div class="card-overlay">
-    <h3>Čiastočná peelingová</h3>
-  </div>
+<img src="images/m4.jpg">
+<div class="card-overlay"><h3>Čiastočná peelingová</h3></div>
 </a>
-
 </div>
-
-<section class="pricing-preview">
-
-<h2>Cenník</h2>
-
-<div class="pricing-preview-list">
-
-<div class="pricing-preview-row">
-<span>30 min</span>
-<span>29€</span>
-</div>
-
-<div class="pricing-preview-row">
-<span>60 min</span>
-<span>49€</span>
-</div>
-
-<div class="pricing-preview-row">
-<span>90 min</span>
-<span>69€</span>
-</div>
-
-<div class="pricing-preview-row">
-<span>120 min</span>
-<span>89€</span>
-</div>
-
-</div>
-
-<a href="cennik.html" class="btn-dark">
-Zobraziť celý cenník
-</a>
-
 </section>
 
+<!-- CENNÍK -->
+<section class="pricing-preview">
+<h2>Cenník</h2>
+
+<div class="pricing-card">
+
+<div class="pricing-main">
+<div class="price-item"><span>30 min</span><strong>29€</strong></div>
+<div class="price-item"><span>60 min</span><strong>49€</strong></div>
+<div class="price-item"><span>90 min</span><strong>69€</strong></div>
+<div class="price-item"><span>120 min</span><strong>89€</strong></div>
+</div>
+
+<div class="pricing-extra">
+<div class="price-row"><span>Facecontouring</span><strong>90€</strong></div>
+<div class="price-row"><span>Peeling</span><strong>+15€</strong></div>
+</div>
+
+<a href="cennik.html" class="btn-dark">Zobraziť celý cenník</a>
+
+</div>
+</section>
 
 <!-- CONTACT -->
 <section class="contact">
-
 <h2>Kontakt</h2>
 
 <div class="contact-card">
-
 <p class="contact-name">Karolína Hodas</p>
 
 <div class="contact-info">
@@ -152,60 +120,98 @@ Zobraziť celý cenník
 <p class="contact-note">
 Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 </p>
-
 </div>
-
 </section>
 
 <!-- BOOKING -->
-
 <section class="booking" id="booking">
-
 <div class="booking-wrapper">
 
-<div class="booking-head">
 <h2>Rezervácia</h2>
-<p>
-Vyplňte formulár a čoskoro vás budem kontaktovať.
-</p>
-</div>
+<p class="booking-sub">Vyplňte formulár a čoskoro vás budeme kontaktovať</p>
 
-<form action="https://formsubmit.co/karolinahodas@gmail.com" method="POST" class="booking-form">
+<form action="https://formsubmit.co/karolinahodas@gmail.com" method="POST" class="modern-form" id="bookingForm">
 
 <input type="hidden" name="_next" value="https://matejsmutny1-droid.github.io/karolina-hodas-web/dakujeme.html">
 <input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_subject" value="Nová rezervácia - KARA masáže">
 
+<div class="form-row">
 <input type="text" name="Meno" placeholder="Meno a priezvisko" required>
 <input type="tel" name="Telefón" placeholder="Telefón" required>
+</div>
+
+<div class="form-row">
 <input type="email" name="email" placeholder="Email" required>
+<input type="date" name="Dátum" required>
+</div>
 
 <select name="Masáž" required>
-  <option value="">Vyberte masáž</option>
-  <option>Celotelová masáž</option>
-  <option>Čiastočná masáž</option>
-  <option>Peelingová masáž</option>
+<option value="">Vyberte masáž</option>
+<option>Celotelová masáž</option>
+<option>Čiastočná masáž</option>
+<option>Peelingová masáž</option>
 </select>
 
 <textarea name="Poznámka" placeholder="Poznámka (voliteľné)"></textarea>
 
 <div class="source">
 <p>Odkiaľ ste sa o nás dozvedeli?</p>
-
-<label><input type="checkbox" name="Zdroj[]" value="Instagram"> Instagram</label>
-<label><input type="checkbox" name="Zdroj[]" value="Facebook"> Facebook</label>
-<label><input type="checkbox" name="Zdroj[]" value="Odporúčanie"> Odporúčanie</label>
-<label><input type="checkbox" name="Zdroj[]" value="Google"> Google</label>
-
+<label><input type="radio" name="Zdroj" value="Instagram" required> Instagram</label>
+<label><input type="radio" name="Zdroj" value="Facebook"> Facebook</label>
+<label><input type="radio" name="Zdroj" value="Google"> Google</label>
+<label><input type="radio" name="Zdroj" value="Odporúčanie"> Odporúčanie</label>
+<label><input type="radio" name="Zdroj" value="Iné"> Iné</label>
 </div>
 
 <button type="submit">Odoslať rezerváciu</button>
 
 </form>
-
 </div>
-
 </section>
+
+<!-- VALIDATION SCRIPT -->
+<script>
+document.getElementById("bookingForm").addEventListener("submit", function(e){
+
+let valid = true;
+
+const name = this.querySelector('[name="Meno"]');
+const phone = this.querySelector('[name="Telefón"]');
+const email = this.querySelector('[name="email"]');
+const date = this.querySelector('[name="Dátum"]');
+const source = this.querySelectorAll('[name="Zdroj"]:checked');
+
+if(!/^[A-Za-zÁ-ž ]+$/.test(name.value)){
+alert("Zadajte správne meno");
+valid = false;
+}
+
+if(!/^[0-9+ ]{9,}$/.test(phone.value)){
+alert("Zadajte správne telefónne číslo");
+valid = false;
+}
+
+if(email.value === ""){
+alert("Zadajte email");
+valid = false;
+}
+
+if(date.value === ""){
+alert("Vyberte dátum");
+valid = false;
+}
+
+if(source.length === 0){
+alert("Vyberte, odkiaľ ste sa o nás dozvedeli");
+valid = false;
+}
+
+if(!valid){
+e.preventDefault();
+}
+
+});
+</script>
 
 </body>
 </html>

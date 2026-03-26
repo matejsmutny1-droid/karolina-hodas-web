@@ -1,10 +1,9 @@
-```css
 :root{
---bg:#E4DBC9;          /* hlavná farba (tvoja) */
---text:#1a1a1a;        /* jemnejšia než čistá čierna */
---accent:#000000;
+--bg:#E9DFCC;
+--text:#1a1a1a;
+--accent:#000;
 --soft:rgba(0,0,0,0.15);
---overlay:rgba(0,0,0,0.25);
+--overlay:rgba(0,0,0,0.3);
 }
 
 /* RESET */
@@ -16,9 +15,8 @@ box-sizing:border-box;
 }
 
 body{
-margin:0;
-background:#E4DBC9 !important;
-color:#1a1a1a;
+background:var(--bg);
+color:var(--text);
 font-family:'Playfair Display', serif;
 }
 
@@ -28,19 +26,10 @@ section{
 padding:80px 20px;
 }
 
-h1,h2,h3{
-font-weight:500;
-letter-spacing:0.5px;
-}
-
 h2{
 font-size:42px;
 text-align:center;
 margin-bottom:60px;
-}
-
-p{
-opacity:0.75;
 }
 
 /* HERO */
@@ -48,9 +37,7 @@ opacity:0.75;
 .hero{
 position:relative;
 height:100vh;
-min-height:600px;
 overflow:hidden;
-background:black;
 }
 
 .hero-video{
@@ -67,8 +54,7 @@ transform:translate(-50%,-50%);
 position:absolute;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(2px);
+background:var(--overlay);
 }
 
 .hero-content{
@@ -80,12 +66,11 @@ display:flex;
 flex-direction:column;
 align-items:center;
 gap:40px;
-z-index:2;
 }
 
 .logo{
-width:420px;
-max-width:80%;
+width:520px;
+max-width:90%;
 filter:invert(1);
 opacity:0.95;
 }
@@ -97,9 +82,7 @@ padding:14px 36px;
 border:1px solid rgba(255,255,255,0.6);
 color:white;
 text-decoration:none;
-font-size:13px;
 letter-spacing:2px;
-transition:0.3s;
 }
 
 .btn:hover{
@@ -108,6 +91,12 @@ color:black;
 }
 
 /* ABOUT */
+
+.about{
+padding-top:100px;
+padding-bottom:60px;
+margin-bottom:-40px;
+}
 
 .about-grid{
 max-width:1100px;
@@ -121,31 +110,27 @@ align-items:center;
 .about-title{
 font-size:48px;
 margin-bottom:30px;
+text-align:left;
 }
 
 .about-text{
 margin-bottom:20px;
-font-size:17px;
 }
 
-.about-signature{
-margin-top:40px;
-letter-spacing:6px;
-font-size:12px;
-opacity:0.5;
+.signature{
+width:120px;
+margin-top:30px;
+filter:brightness(0);
+opacity:0.7;
 }
 
-.about-right img{
-width:100%;
-height:450px;
-object-fit:cover;
-}
-
-/* MASÁŽE GRID */
+/* MASÁŽE */
 
 .massages{
 max-width:1200px;
 margin:auto;
+padding-top:60px;
+padding-bottom:100px;
 }
 
 .massages-grid{
@@ -158,7 +143,6 @@ gap:20px;
 position:relative;
 height:300px;
 overflow:hidden;
-text-decoration:none;
 color:white;
 }
 
@@ -169,119 +153,143 @@ object-fit:cover;
 transition:0.5s;
 }
 
+.massage-card:hover img{
+transform:scale(1.05);
+}
+
 .card-overlay{
 position:absolute;
 bottom:0;
-left:0;
 width:100%;
 padding:25px;
 background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);
 }
 
-.card-overlay h3{
-font-size:18px;
-}
-
-.massage-card:hover img{
-transform:scale(1.05);
-}
-
-/* SERVICES */
-
-.services{
-text-align:center;
-}
-
-.service{
-max-width:500px;
-margin:auto;
-}
-
-.price{
-margin-top:20px;
-}
-
 /* CONTACT */
 
 .contact{
+padding:140px 20px 60px;
 text-align:center;
+}
+
+.contact-card{
+max-width:500px;
+margin:auto;
+padding:50px;
+border:1px solid rgba(0,0,0,0.1);
+background:rgba(255,255,255,0.2);
+}
+
+.contact-info{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.contact-info a{
+text-decoration:none;
+color:black;
+opacity:0.7;
+}
+
+.contact-divider{
+margin:25px auto;
+width:40px;
+height:1px;
+background:black;
+opacity:0.3;
 }
 
 /* BOOKING */
 
 .booking{
-max-width:500px;
+padding:100px 20px 160px;
+}
+
+.booking-wrapper{
+max-width:800px;
 margin:auto;
+padding:60px;
+border:1px solid rgba(0,0,0,0.1);
+background:rgba(255,255,255,0.5);
+}
+
+.booking-head{
 text-align:center;
-}
-
-.booking-sub{
 margin-bottom:40px;
-font-size:14px;
-opacity:0.6;
 }
 
-.booking form{
+/* FORM */
+
+.booking-form{
 display:flex;
 flex-direction:column;
+gap:25px;
+}
+
+/* DESKTOP GRID */
+
+@media(min-width:900px){
+.booking-form{
+display:grid;
+grid-template-columns:1fr 1fr;
 gap:30px;
+}
+
+.booking-form textarea,
+.booking-form button,
+.source{
+grid-column:span 2;
+}
 }
 
 /* INPUTS */
 
-.booking input,
-.booking select,
-.booking textarea{
+.booking-form input,
+.booking-form select,
+.booking-form textarea{
 border:none;
 border-bottom:1px solid var(--soft);
 background:none;
 padding:14px 5px;
 font-size:15px;
-font-family:'Playfair Display', serif;
 outline:none;
 transition:0.3s;
 }
 
-.booking input:focus,
-.booking select:focus,
-.booking textarea:focus{
+.booking-form input:focus,
+.booking-form select:focus{
 border-color:black;
 }
 
-/* TEXTAREA */
+/* BUTTON */
 
-.booking textarea{
-min-height:90px;
-resize:none;
+.booking-form button{
+padding:14px;
+border:1px solid black;
+background:none;
+letter-spacing:2px;
+cursor:pointer;
 }
 
-/* CHECKBOX */
+.booking-form button:hover{
+background:black;
+color:white;
+}
+
+/* SOURCE */
 
 .source{
 margin-top:20px;
-text-align:left;
-}
-
-.source p{
-font-size:12px;
-letter-spacing:2px;
-opacity:0.5;
-margin-bottom:15px;
 }
 
 .source label{
 display:flex;
 align-items:center;
 gap:10px;
-margin-bottom:12px;
+margin-bottom:10px;
 cursor:pointer;
-font-size:14px;
-opacity:0.7;
-transition:0.3s;
-}
-
-.source label:hover{
-opacity:1;
 }
 
 .source input{
@@ -289,65 +297,32 @@ appearance:none;
 width:16px;
 height:16px;
 border:1px solid black;
-position:relative;
 }
 
 .source input:checked{
 background:black;
 }
 
-.source input:checked::after{
-content:"";
-position:absolute;
-top:4px;
-left:4px;
-width:6px;
-height:6px;
-background:white;
+/* ERRORS */
+
+.form-group.error input,
+.form-group.error select{
+border-bottom:1px solid #b00020;
 }
 
-/* BUTTON */
-
-.booking button{
-margin-top:20px;
-padding:14px;
-border:1px solid black;
-background:none;
-letter-spacing:2px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.booking button:hover{
-background:black;
-color:white;
-}
-
-/* ALT CONTACT */
-
-.booking-alt{
-margin-top:60px;
-}
-
-.booking-alt p{
+.error-message{
+display:none;
+color:#b00020;
 font-size:12px;
-letter-spacing:2px;
-opacity:0.4;
-margin-bottom:15px;
 }
 
-.booking-alt a{
-margin:0 10px;
-text-decoration:none;
-color:black;
-font-size:13px;
-letter-spacing:2px;
-opacity:0.6;
-transition:0.3s;
+.form-group.error .error-message{
+display:block;
 }
 
-.booking-alt a:hover{
-opacity:1;
+.source.error{
+border:1px solid #b00020;
+padding:15px;
 }
 
 /* THANK YOU */
@@ -357,537 +332,11 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-text-align:center;
-}
-
-.thanks h1{
-font-size:56px;
-margin-bottom:20px;
-}
-
-.thanks-text{
-margin-bottom:40px;
-}
-
-.thanks-btn{
-padding:12px 30px;
-border:1px solid black;
-text-decoration:none;
-color:black;
-transition:0.3s;
-}
-
-.thanks-btn:hover{
-background:black;
-color:white;
-}
-
-/* RESPONSIVE */
-
-@media (max-width:900px){
-
-.about-grid{
-grid-template-columns:1fr;
-text-align:center;
-}
-
-.massages-grid{
-grid-template-columns:1fr 1fr;
-}
-
-}
-
-@media (max-width:500px){
-
-h2{
-font-size:32px;
-}
-
-.logo{
-width:260px;
-}
-
-.massages-grid{
-grid-template-columns:1fr;
-}
-
-section{
-padding:80px 20px;
-}
-
-}
-```
-
-.detail{
-max-width:1000px;
-margin:auto;
-padding:140px 20px;
-}
-
-.detail-title{
-text-align:center;
-font-size:44px;
-margin-bottom:100px;
-letter-spacing:1px;
-}
-
-.detail-list{
-display:flex;
-flex-direction:column;
-gap:60px;
-}
-
-/* CARD */
-
-.detail-card{
-padding:40px;
-border:1px solid rgba(0,0,0,0.1);
-transition:0.3s;
-background:rgba(255,255,255,0.2);
-}
-
-.detail-card:hover{
-transform:translateY(-5px);
-border-color:black;
-}
-
-.detail-card h3{
-font-size:24px;
-margin-bottom:15px;
-}
-
-.desc{
-margin-bottom:20px;
-opacity:0.7;
-}
-
-.detail-card ul{
-list-style:none;
-padding:0;
-margin-bottom:25px;
-}
-
-.detail-card li{
-margin-bottom:10px;
-opacity:0.7;
-position:relative;
-padding-left:14px;
-}
-
-.detail-card li::before{
-content:"";
-position:absolute;
-left:0;
-top:8px;
-width:4px;
-height:4px;
-background:black;
-border-radius:50%;
-}
-
-/* BOTTOM */
-
-.bottom{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:20px;
-}
-
-.price{
-display:flex;
-gap:15px;
-font-size:14px;
-}
-
-.price .highlight{
-font-weight:500;
-}
-
-/* BUTTON */
-
-.book-btn{
-padding:10px 20px;
-border:1px solid black;
-text-decoration:none;
-color:black;
-font-size:12px;
-letter-spacing:2px;
-transition:0.3s;
-}
-
-.book-btn:hover{
-background:black;
-color:white;
-}
-html{
-scroll-behavior:smooth;
-}
-/* PEELING HERO */
-
-.peeling-hero{
-height:60vh;
-min-height:400px;
-position:relative;
-background:url('../images/m3.jpg') center/cover no-repeat;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-.peeling-overlay{
-position:absolute;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.25);
-}
-
-.peeling-hero-content{
-position:relative;
-color:white;
-text-align:center;
-}
-
-.peeling-hero-content h1{
-font-size:48px;
-margin-bottom:15px;
-}
-
-.peeling-hero-content p{
-opacity:0.8;
-}
-
-/* CONTENT */
-
-.peeling{
-padding:120px 20px;
-}
-
-.peeling-container{
-max-width:900px;
-margin:auto;
-text-align:center;
-}
-
-.intro{
-font-size:18px;
-line-height:1.8;
-margin-bottom:60px;
-opacity:0.75;
-}
-
-/* GRID */
-
-.peeling-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:40px;
-margin-bottom:60px;
-}
-
-.peeling-block{
-padding:30px;
-border:1px solid rgba(0,0,0,0.1);
-background:rgba(255,255,255,0.2);
-}
-
-.peeling-block h3{
-margin-bottom:20px;
-font-size:20px;
-}
-
-.peeling-block ul{
-list-style:none;
-padding:0;
-}
-
-.peeling-block li{
-margin-bottom:10px;
-opacity:0.7;
-}
-
-/* RELAX TEXT */
-
-.relax{
-max-width:600px;
-margin:60px auto;
-line-height:1.8;
-opacity:0.75;
-}
-
-/* PRICE */
-
-.peeling-price{
-display:flex;
-justify-content:center;
-gap:40px;
-margin:60px 0;
-}
-
-.price-box{
-border:1px solid black;
-padding:20px 40px;
-text-align:center;
-}
-
-.price-box span{
-display:block;
-opacity:0.6;
-margin-bottom:5px;
-}
-
-.price-box strong{
-font-size:22px;
-}
-
-/* BUTTON */
-
-.btn-dark{
-display:inline-block;
-padding:14px 30px;
-border:1px solid black;
-text-decoration:none;
-color:black;
-letter-spacing:2px;
-transition:0.3s;
-}
-
-.btn-dark:hover{
-background:black;
-color:white;
-}
-
-/* RESPONSIVE */
-
-@media (max-width:700px){
-
-.peeling-grid{
-grid-template-columns:1fr;
-}
-
-.peeling-price{
-flex-direction:column;
-gap:20px;
-}
-
-.peeling-hero-content h1{
-font-size:34px;
-}
-
-}/* PRICING */
-
-.pricing{
-padding:140px 20px;
-}
-
-.pricing-title{
-text-align:center;
-font-size:44px;
-margin-bottom:100px;
-letter-spacing:1px;
-}
-
-.pricing-container{
-max-width:700px;
-margin:auto;
-display:flex;
-flex-direction:column;
-gap:80px;
-}
-
-/* BLOCK */
-
-.pricing-block{
-text-align:center;
-}
-
-.pricing-block h3{
-margin-bottom:30px;
-font-size:20px;
-letter-spacing:1px;
-}
-
-/* LIST */
-
-.price-list{
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-.price-row{
-display:flex;
-justify-content:space-between;
-border-bottom:1px solid rgba(0,0,0,0.1);
-padding-bottom:8px;
-font-size:16px;
-}
-
-/* NOTE */
-
-.note{
-margin-top:30px;
-font-size:13px;
-opacity:0.5;
-}
-
-/* CTA */
-
-.pricing-cta{
-text-align:center;
-margin-top:40px;
-}
-/* PRICING PREVIEW */
-
-.pricing-preview{
-text-align:center;
-padding:120px 20px;
-}
-
-.pricing-preview-list{
-max-width:400px;
-margin:40px auto;
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-.pricing-preview-row{
-display:flex;
-justify-content:space-between;
-border-bottom:1px solid rgba(0,0,0,0.1);
-padding-bottom:8px;
-}
-/* CONTACT UPGRADE */
-
-.contact{
-padding:140px 20px;
-text-align:center;
-}
-
-.contact-card{
-max-width:400px;
-margin:40px auto;
-padding:40px;
-border:1px solid rgba(0,0,0,0.1);
-background:rgba(255,255,255,0.2);
-}
-
-.contact-name{
-font-size:20px;
-margin-bottom:20px;
-}
-
-.contact-info{
-display:flex;
-flex-direction:column;
-gap:10px;
-margin-bottom:30px;
-}
-
-.contact-info a{
-text-decoration:none;
-color:black;
-opacity:0.7;
-transition:0.3s;
-}
-
-.contact-info a:hover{
-opacity:1;
-}
-
-.contact-divider{
-width:40px;
-height:1px;
-background:black;
-margin:20px auto;
-opacity:0.3;
-}
-
-.contact-note{
-font-size:14px;
-opacity:0.6;
-}
-/* BOOKING UPGRADE */
-
-.booking{
-padding:160px 20px;
-}
-
-.booking-wrapper{
-max-width:500px;
-margin:auto;
-padding:50px;
-border:1px solid rgba(0,0,0,0.1);
-background:rgba(255,255,255,0.25);
-}
-
-.booking-head{
-text-align:center;
-margin-bottom:40px;
-}
-
-.booking-head p{
-font-size:14px;
-opacity:0.6;
-margin-top:10px;
-}
-
-.booking-form{
-display:flex;
-flex-direction:column;
-gap:25px;
-}
-
-/* INPUTS */
-
-.booking-form input,
-.booking-form select,
-.booking-form textarea{
-border:none;
-border-bottom:1px solid rgba(0,0,0,0.2);
-background:none;
-padding:14px 5px;
-font-family:'Playfair Display', serif;
-font-size:15px;
-outline:none;
-transition:0.3s;
-}
-
-.booking-form input:focus,
-.booking-form select:focus,
-.booking-form textarea:focus{
-border-color:black;
-}
-
-/* BUTTON */
-
-.booking-form button{
-margin-top:20px;
-padding:14px;
-border:1px solid black;
-background:none;
-letter-spacing:2px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.booking-form button:hover{
-background:black;
-color:white;
-}
-.thanks{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#E4DBC9;
+background:var(--bg);
 }
 
 .thanks-inner{
 text-align:center;
-max-width:400px;
-padding:20px;
 }
 
 .thanks h1{
@@ -900,46 +349,316 @@ width:40px;
 height:1px;
 background:black;
 margin:20px auto;
-opacity:0.3;
-}
-
-.thanks-text{
-font-size:18px;
-line-height:1.8;
-opacity:0.7;
-margin-bottom:40px;
 }
 
 .thanks-btn{
-display:inline-block;
 padding:14px 30px;
 border:1px solid black;
 text-decoration:none;
 color:black;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+.about-grid{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.massages-grid{
+grid-template-columns:1fr 1fr;
+}
+}
+
+@media(max-width:500px){
+.massages-grid{
+grid-template-columns:1fr;
+}
+
+.logo{
+width:260px;
+}
+}
+/* ===== GLOBAL FIX ===== */
+
+section{
+max-width:1200px;
+margin:auto;
+}
+
+/* ===== HERO FIX ===== */
+
+.hero{
+height:100vh;
+max-height:900px;
+}
+
+/* ===== ABOUT FIX ===== */
+
+.about-grid{
+max-width:1100px;
+margin:auto;
+}
+
+.about-right img{
+height:500px;
+object-fit:cover;
+}
+
+/* ===== MASSAGES FIX ===== */
+
+.massages{
+max-width:1100px;
+margin:auto;
+}
+
+/* ===== PRICING FIX ===== */
+
+.pricing,
+.pricing-preview{
+max-width:800px;
+margin:auto;
+text-align:center;
+}
+
+/* ===== CONTACT FIX ===== */
+
+.contact{
+max-width:900px;
+margin:auto;
+}
+
+/* ===== BOOKING FIX ===== */
+
+.booking{
+max-width:900px;
+margin:auto;
+}
+
+.booking-wrapper{
+max-width:700px;
+margin:auto;
+padding:50px;
+}
+
+/* FORM späť na clean (žiadny rozbitý grid) */
+
+.booking-form{
+display:flex !important;
+flex-direction:column !important;
+gap:25px;
+}
+
+/* ===== IMAGE OVERFLOW FIX ===== */
+
+img{
+max-width:100%;
+height:auto;
+display:block;
+}
+
+/* ===== MOBILE FIX ===== */
+
+@media(max-width:900px){
+
+section{
+padding:80px 20px;
+}
+
+.about-right img{
+height:350px;
+}
+
+}
+.hero{
+width:100vw;
+max-width:100%;
+}
+h1,h2,h3{
+letter-spacing:1.5px;
+}
+
+h2{
 letter-spacing:2px;
-font-size:12px;
+}
+
+p{
+letter-spacing:0.3px;
+}
+/* ===== MODERN BOOKING ===== */
+
+.booking{
+padding:160px 20px;
+}
+
+.booking-container{
+max-width:700px;
+margin:auto;
+text-align:center;
+}
+
+.booking-sub{
+margin-top:10px;
+margin-bottom:60px;
+opacity:0.6;
+}
+
+.modern-form{
+display:flex;
+flex-direction:column;
+gap:30px;
+}
+
+/* ROW */
+
+.form-row{
+display:flex;
+gap:20px;
+}
+
+.form-row input{
+flex:1;
+}
+
+/* INPUTS */
+
+.modern-form input,
+.modern-form select,
+.modern-form textarea{
+border:none;
+border-bottom:1px solid rgba(0,0,0,0.2);
+background:none;
+padding:16px 5px;
+font-size:15px;
+font-family:'Playfair Display', serif;
+outline:none;
 transition:0.3s;
 }
 
-.thanks-btn:hover{
+.modern-form input:focus,
+.modern-form select:focus,
+.modern-form textarea:focus{
+border-color:black;
+}
+
+/* TEXTAREA */
+
+.modern-form textarea{
+min-height:100px;
+}
+
+/* RADIO */
+
+.source{
+text-align:left;
+margin-top:20px;
+}
+
+.source p{
+font-size:12px;
+letter-spacing:2px;
+margin-bottom:15px;
+opacity:0.5;
+}
+
+.source label{
+display:block;
+margin-bottom:10px;
+font-size:14px;
+cursor:pointer;
+opacity:0.7;
+}
+
+.source input{
+margin-right:10px;
+}
+
+/* BUTTON */
+
+.modern-form button{
+margin-top:30px;
+padding:14px;
+border:1px solid black;
+background:none;
+letter-spacing:2px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.modern-form button:hover{
 background:black;
 color:white;
 }
-.signature{
-width:120px;
-margin-top:40px;
-opacity:0.7;
-filter: brightness(0);
-}
-.about{
-padding-top:100px;
-padding-bottom:60px;
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+.form-row{
+flex-direction:column;
 }
 
-.massages{
-padding-top:60px;
-padding-bottom:100px;
 }
-.about{
-margin-bottom:-40px;
+/* ===== PRICING CLEAN ===== */
+
+.pricing-preview{
+padding:140px 20px;
+text-align:center;
 }
+
+.pricing-card{
+max-width:500px;
+margin:40px auto;
+padding:50px;
+border:1px solid rgba(0,0,0,0.1);
+background:rgba(255,255,255,0.25);
+display:flex;
+flex-direction:column;
+gap:40px;
+}
+
+/* MAIN */
+
+.pricing-main{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.price-item{
+display:flex;
+justify-content:space-between;
+font-size:18px;
+border-bottom:1px solid rgba(0,0,0,0.1);
+padding-bottom:10px;
+}
+
+/* EXTRA */
+
+.pricing-extra{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.price-row{
+display:flex;
+justify-content:space-between;
+font-size:15px;
+opacity:0.8;
+}
+.pricing-card,
+.booking-wrapper,
+.contact-card{
+backdrop-filter: blur(6px);
+}
+a{
+text-decoration:none;
+color:inherit;
+}
+.btn-dark{
+display:inline-block;
+padding:14px 30px;
+border:1px solid black;
+co
