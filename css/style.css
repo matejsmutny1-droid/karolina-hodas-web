@@ -758,3 +758,170 @@ justify-content:space-between;
 border-bottom:1px solid rgba(0,0,0,0.1);
 padding-bottom:8px;
 }
+/* CONTACT UPGRADE */
+
+.contact{
+padding:140px 20px;
+text-align:center;
+}
+
+.contact-card{
+max-width:400px;
+margin:40px auto;
+padding:40px;
+border:1px solid rgba(0,0,0,0.1);
+background:rgba(255,255,255,0.2);
+}
+
+.contact-name{
+font-size:20px;
+margin-bottom:20px;
+}
+
+.contact-info{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-bottom:30px;
+}
+
+.contact-info a{
+text-decoration:none;
+color:black;
+opacity:0.7;
+transition:0.3s;
+}
+
+.contact-info a:hover{
+opacity:1;
+}
+
+.contact-divider{
+width:40px;
+height:1px;
+background:black;
+margin:20px auto;
+opacity:0.3;
+}
+
+.contact-note{
+font-size:14px;
+opacity:0.6;
+}
+/* BOOKING UPGRADE */
+
+.booking{
+padding:160px 20px;
+}
+
+.booking-wrapper{
+max-width:500px;
+margin:auto;
+padding:50px;
+border:1px solid rgba(0,0,0,0.1);
+background:rgba(255,255,255,0.25);
+}
+
+.booking-head{
+text-align:center;
+margin-bottom:40px;
+}
+
+.booking-head p{
+font-size:14px;
+opacity:0.6;
+margin-top:10px;
+}
+
+.booking-form{
+display:flex;
+flex-direction:column;
+gap:25px;
+}
+
+/* INPUTS */
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea{
+border:none;
+border-bottom:1px solid rgba(0,0,0,0.2);
+background:none;
+padding:14px 5px;
+font-family:'Playfair Display', serif;
+font-size:15px;
+outline:none;
+transition:0.3s;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus{
+border-color:black;
+}
+
+/* BUTTON */
+
+.booking-form button{
+margin-top:20px;
+padding:14px;
+border:1px solid black;
+background:none;
+letter-spacing:2px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.booking-form button:hover{
+background:black;
+color:white;
+}
+.thanks{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#E4DBC9;
+}
+
+.thanks-inner{
+text-align:center;
+max-width:400px;
+padding:20px;
+}
+
+.thanks h1{
+font-size:64px;
+margin-bottom:20px;
+}
+
+.thanks-line{
+width:40px;
+height:1px;
+background:black;
+margin:20px auto;
+opacity:0.3;
+}
+
+.thanks-text{
+font-size:18px;
+line-height:1.8;
+opacity:0.7;
+margin-bottom:40px;
+}
+
+.thanks-btn{
+display:inline-block;
+padding:14px 30px;
+border:1px solid black;
+text-decoration:none;
+color:black;
+letter-spacing:2px;
+font-size:12px;
+transition:0.3s;
+}
+
+.thanks-btn:hover{
+background:black;
+color:white;
+}

@@ -140,54 +140,56 @@ Zobraziť celý cenník
 
 <h2>Kontakt</h2>
 
-<p>Karolína Hodas</p>
-<p>+421 944 388 697</p>
+<div class="contact-card">
+
+<p class="contact-name">Karolína Hodas</p>
+
+<div class="contact-info">
+<a href="tel:+421944388697">+421 944 388 697</a>
+<a href="mailto:hello@karamasaze.sk">hello@karamasaze.sk</a>
+</div>
+
+<div class="contact-divider"></div>
+
+<p class="contact-note">
+Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
+</p>
+
+</div>
 
 </section>
 
 <!-- BOOKING -->
+```html id="booking_new"
 <section class="booking" id="booking">
 
-<h2>Rezervácia</h2>
+<div class="booking-wrapper">
 
-<p class="booking-sub">
+<div class="booking-head">
+<h2>Rezervácia</h2>
+<p>
 Vyplňte formulár a čoskoro vás budem kontaktovať.
 </p>
+</div>
 
-<form action="https://formsubmit.co/matejsmutny1@gmail.com" method="POST">
+<form action="https://formsubmit.co/matejsmutny1@gmail.com" method="POST" class="booking-form">
 
-<!-- FORM SETTINGS -->
 <input type="hidden" name="_next" value="https://matejsmutny1-droid.github.io/karolina-hodas-web/dakujeme.html">
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_subject" value="Nová rezervácia - KARA masáže">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_autoresponse" value="Dobrý deň,
-
-ďakujeme za Vašu rezerváciu masáže.
-
-Vašu žiadosť sme prijali a čoskoro sa Vám ozveme s potvrdením termínu.
-
-Tešíme sa na Vás.
-KARA masáže">
-
-<!-- INPUTS -->
 
 <input type="text" name="Meno" placeholder="Meno a priezvisko" required>
 <input type="tel" name="Telefón" placeholder="Telefón" required>
 <input type="email" name="email" placeholder="Email" required>
-<input type="text" name="Termín" placeholder="Preferovaný termín">
 
 <select name="Masáž" required>
   <option value="">Vyberte masáž</option>
-  <option>Masáž tváre, hlavy a dekoltu</option>
-  <option>Masáž chrbta a krčnej chrbtice</option>
-  <option>Masáž dolných končatín</option>
   <option>Celotelová masáž</option>
+  <option>Čiastočná masáž</option>
+  <option>Peelingová masáž</option>
 </select>
 
 <textarea name="Poznámka" placeholder="Poznámka (voliteľné)"></textarea>
-
-<!-- SOURCE -->
 
 <div class="source">
 <p>Odkiaľ ste sa o nás dozvedeli?</p>
@@ -203,11 +205,6 @@ KARA masáže">
 
 </form>
 
-<div class="booking-alt">
-<p>prípadne</p>
-<a href="https://wa.me/421944388697">WhatsApp</a>
-<a href="tel:+421944388697">Zavolať</a>
-<a href="sms:+421944388697">SMS</a>
 </div>
 
 </section>
