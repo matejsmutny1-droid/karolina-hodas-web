@@ -170,3 +170,107 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 <label><input type="radio" name="Zdroj" value="Instagram" required> Instagram</label>
 <label><input type="radio" name="Zdroj" value="Facebook"> Facebook</label>
 <label><input type="radio" name="Zdroj" value="Google"> Google</label>
+<label><input type="radio" name="Zdroj" value="Odporúčanie"> Odporúčanie</label>
+<label><input type="radio" name="Zdroj" value="Iné"> Iné</label>
+</div>
+
+<button type="submit">Odoslať rezerváciu</button>
+
+</form>
+
+</div>
+
+</section>
+
+<!-- VALIDATION SCRIPT -->
+<script>
+document.getElementById("bookingForm").addEventListener("submit", function(e){
+
+let valid = true;
+
+const name = this.querySelector('[name="Meno"]');
+const phone = this.querySelector('[name="Telefón"]');
+const email = this.querySelector('[name="email"]');
+const date = this.querySelector('[name="Dátum"]');
+const source = this.querySelectorAll('[name="Zdroj"]:checked');
+
+if(!/^[A-Za-zÁ-ž ]+$/.test(name.value)){
+alert("Zadajte správne meno");
+valid = false;
+}
+
+if(!/^[0-9+ ]{9,}$/.test(phone.value)){
+alert("Zadajte správne telefónne číslo");
+valid = false;
+}
+
+if(email.value === ""){
+alert("Zadajte email");
+valid = false;
+}
+
+if(date.value === ""){
+alert("Vyberte dátum");
+valid = false;
+}
+
+if(source.length === 0){
+alert("Vyberte, odkiaľ ste sa o nás dozvedeli");
+valid = false;
+}
+
+if(!valid){
+e.preventDefault();
+}
+
+});
+</script>
+
+<script>
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll(){
+  reveals.forEach(el => {
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+
+    if(elementTop < windowHeight - 80){
+      el.classList.add("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+revealOnScroll();
+</script>
+
+<script>
+window.addEventListener("scroll", () => {
+  const scrolled = window.scrollY;
+  const hero = document.querySelector(".hero-video");
+  if(hero){
+    hero.style.transform = `translate(-50%, -50%) scale(1.05) translateY(${scrolled * 0.05}px)`;
+  }
+});
+</script>
+
+<script>
+const glow = document.querySelector(".cursor-glow");
+
+document.addEventListener("mousemove", e => {
+  glow.style.left = e.clientX + "px";
+  glow.style.top = e.clientY + "px";
+});
+</script>
+
+<script>
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.querySelector(".scroll-bar").style.width = progress + "%";
+});
+</script>
+
+</body>
+</html>

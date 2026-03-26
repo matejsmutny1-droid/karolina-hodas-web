@@ -1007,3 +1007,13 @@ transform:translateY(0);
 border-bottom:1px solid black;
 box-shadow:0 5px 15px rgba(0,0,0,0.05);
 }
+.reveal{
+opacity:1;
+transform:translateY(0);
+transition:all 0.8s ease;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
