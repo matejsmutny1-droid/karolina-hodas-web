@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Kara Masáže</title>
+<style>
+  body { font-family: 'Raleway', sans-serif; background: #121212; color: #fff; padding: 20px; max-width: 1000px; margin: auto; }
+  h1, h2 { color: #c5a059; font-family: 'Playfair Display', serif; }
+  .box { background: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #333; }
+  input, button { padding: 10px; margin: 5px 0; border-radius: 4px; border: 1px solid #444; background: #2a2a2a; color: #fff; font-size: 16px; }
+  button { background: #c5a059; color: #000; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+  button:hover { opacity: 0.8; }
+  table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+  th, td { border: 1px solid #333; padding: 12px; text-align: left; }
+  th { background: #2a2a2a; color: #c5a059; }
+  .status-free { color: #55ff55; font-weight: bold; }
+  .status-booked { color: #ff5555; font-weight: bold; }
+  .btn-delete { background: #ff4444; color: #fff; padding: 6px 12px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<h1>Správa termínov – Kara Masáže</h1>
+
+
+<div class="box">
+  <h2>Pridať nový voľný termín</h2>
+  <form id="addSlotForm">
+    <label>Dátum:</label><br>
+    <input type="date" id="newDate" required><br><br>
+    <label>Čas (napr. 09:00 alebo 14:30):</label><br>
+    <input type="time" id="newTime" required><br><br>
+    <button type="submit">Pridať termín do ponuky</button>
+  </form>
+</div>
+
+
+<div class="box">
+  <h2>Zoznam všetkých termínov</h2>
+  <button id="refreshBtn">Obnoviť zoznam</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Dátum</th>
+        <th>Čas</th>
+        <th>Stav</th>
+        <th>Meno klienta</th>
+        <th>Telefón</th>
+        <th>E-mail</th>
+        <th>Akcia</th>
+      </tr>
+    </thead>
+    <tbody id="slotsTableBody">
+      <tr><td colspan="7">Načítavam dáta...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBAUiW5uWKkj_aDq_4KXz2bdBIuxTQbadE",
+    authDomain: "kara-masaze.firebaseapp.com",
+    projectId: "kara-masaze",
+    storageBucket: "kara-masaze.firebasestorage.app",
+    messagingSenderId: "786304506671",
+    appId: "1:786304506671:web:b24473b8298107da955fda",
+    measurementId: "G-QQH0H51RZH"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Pridanie nového slotu
+  document.getElementById("addSlotForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const date = document.getElementById("newDate").value;
+    const time = document.getElementById("newTime").value;
+
+    try {
+      await addDoc(collection(db, "terminy"), {
+        datum: date,
+        cas: time,
+        obsadene: false
+      });
+      alert("Voľný termín bol pridaný!");
+      loadSlots();
+    } catch (err) {
+      alert("Chyba: " + err);
+    }
+  });
+
+  // Načítanie všetkých slotov z databázy
+  async function loadSlots() {
+    const tbody = document.getElementById("slotsTableBody");
+    tbody.innerHTML = "<tr><td colspan='7'>Načítavam...</td></tr>";
+
+    try {
+      const q = query(collection(db, "terminy"));
+      const querySnapshot = await getDocs(q);
+      tbody.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        tbody.innerHTML = "<tr><td colspan='7'>Žiadne termíny v databáze.</td></tr>";
+        return;
+      }
+
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${data.datum}</td>
+          <td>${data.cas}</td>
+          <td class="\({data.obsadene ? 'status-booked' : 'status-free'}">\){data.obsadene ? 'OBSADENÉ' : 'Voľné'}</td>
+          <td>${data.meno || '-'}</td>
+          <td>${data.telefon ? `[${data.telefon}](tel:${data.telefon})` : '-'}</td>
+          <td>${data.email || '-'}</td>
+          <td><button class="btn-delete" onclick="window.deleteSlot('${docSnap.id}')">Vymazať</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    } catch (err) {
+      tbody.innerHTML = `<tr><td colspan='7'>Chyba pri načítaní: ${err}</td></tr>`;
+    }
+  }
+
+  window.deleteSlot = async function(id) {
+    if (confirm("Naozaj chcete vymazať tento termín?")) {
+      await deleteDoc(doc(db, "terminy", id));
+      loadSlots();
+    }
+  };
+
+  document.getElementById("refreshBtn").addEventListener("click", loadSlots);
+  loadSlots();
+</script>
+
+</body>
+</html>

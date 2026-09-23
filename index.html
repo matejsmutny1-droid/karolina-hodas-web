@@ -6,9 +6,50 @@
 <title>KARA MASÁŽE</title>
 
 <link rel="stylesheet" href="css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
 
 <meta name="description" content="Masáže pre uvoľnenie tela a mysle. Doprajte si relax a regeneráciu.">
+
+<style>
+  .time-slots-container {
+    margin-top: 15px;
+    margin-bottom: 25px;
+  }
+  .time-slots-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .time-slot-btn {
+    padding: 12px 22px;
+    background-color: transparent;
+    border: 1px solid #1a1a1a;
+    color: #1a1a1a;
+    cursor: pointer;
+    border-radius: 0px;
+    font-family: inherit;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+  }
+  .time-slot-btn:hover {
+    border-color: #c5a059;
+    color: #c5a059;
+  }
+  .time-slot-btn.selected {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #fff;
+    font-weight: 500;
+  }
+  .no-slots-text {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+    font-style: italic;
+  }
+</style>
 
 </head>
 
@@ -18,7 +59,7 @@
 
   <div class="cursor-glow"></div>
 
-<!-- HERO -->
+
 <section class="hero">
 <video autoplay muted loop playsinline class="hero-video">
   <source src="images/video.mp4" type="video/mp4">
@@ -32,7 +73,7 @@
 </div>
 </section>
 
-<!-- ABOUT -->
+
 <section class="about reveal">
 <div class="about-grid">
 
@@ -57,34 +98,60 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 </div>
 </section>
 
-<!-- MASÁŽE -->
+
 <section class="massages reveal">
+
 <h2 class="massages-title">Masáže</h2>
 
 <div class="massages-grid">
-<a href="celotelove.html" class="massage-card">
-<img src="images/m1.jpg">
-<div class="card-overlay"><h3>Celotelové masáže</h3></div>
+
+<a href="deep-balance.html" class="massage-card">
+  <img src="images/m1.jpg">
+  <div class="card-overlay center">
+    <h3 class="title-wide">DEEP BALANCE</h3>
+  </div>
 </a>
 
-<a href="ciastocne.html" class="massage-card">
-<img src="images/m2.jpg">
-<div class="card-overlay"><h3>Čiastočné masáže</h3></div>
+<a href="sedavy-detox.html" class="massage-card">
+  <img src="images/m2.jpg">
+  <div class="card-overlay center">
+    <h3 class="title-wide">SEDAVÝ DETOX</h3>
+  </div>
 </a>
 
-<a href="celotelove-peeling.html" class="massage-card">
-<img src="images/m3.jpg">
-<div class="card-overlay"><h3>Celotelová peelingová</h3></div>
+<a href="active-recovery.html" class="massage-card">
+  <img src="images/m3.jpg">
+  <div class="card-overlay center">
+    <h3 class="title-wide">ACTIVE RECOVERY</h3>
+  </div>
 </a>
 
-<a href="ciastocne-peeling.html" class="massage-card">
-<img src="images/m4.jpg">
-<div class="card-overlay"><h3>Čiastočná peelingová</h3></div>
+<a href="cista-hlava.html" class="massage-card">
+  <img src="images/m4.jpg">
+  <div class="card-overlay center">
+    <h3 class="title-wide">ČISTÁ HLAVA</h3>
+  </div>
 </a>
+
+<a href="face-contouring.html" class="massage-card">
+  <img src="images/m1.jpg">
+  <div class="card-overlay center">
+    <h3 class="title-wide">FACE CONTOURING</h3>
+  </div>
+</a>
+
+<a href="back-neck.html" class="massage-card">
+  <img src="images/m2.jpg">
+  <div class="card-overlay center">
+    <h3 class="title-wide">BACK & NECK</h3>
+  </div>
+</a>
+
 </div>
+
 </section>
 
-<!-- CENNÍK -->
+
 <section class="pricing-preview reveal">
 <h2>Cenník</h2>
 
@@ -97,13 +164,12 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 <div class="price-item"><span>120 min</span><strong>89€</strong></div>
 </div>
 
-
 <a href="cennik.html" class="btn-dark">Zobraziť celý cenník</a>
 
 </div>
 </section>
 
-<!-- CONTACT -->
+
 <section class="contact reveal">
 <h2>Kontakt</h2>
 
@@ -123,107 +189,239 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 </div>
 </section>
 
-<!-- BOOKING -->
+
 <section class="booking reveal" id="booking">
 
-<div class="booking-wrapper">
+  <div class="booking-wrapper">
 
-<div class="booking-head">
-<h2>Rezervácia</h2>
-<p>Vyplňte formulár a čoskoro vás budeme kontaktovať</p>
-</div>
+    <div class="booking-head">
+      <h2>Rezervácia termínu</h2>
+      <p class="booking-sub">Vyplňte krátky formulár a do 24 hodín sa vám ozveme s potvrdením.</p>
+    </div>
 
-<form action="https://formsubmit.co/karolinahodas@gmail.com" method="POST" class="booking-form">
+    <form action="https://formsubmit.co/karolinahodas@gmail.com" method="POST" class="booking-form" id="bookingForm">
 
-<input type="hidden" name="_next" value="https://matejsmutny1-droid.github.io/karolina-hodas-web/dakujeme.html">
-<input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://matejsmutny1-droid.github.io/karolina-hodas-web/dakujeme.html">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" id="selectedTime" name="Vybraný čas" required>
 
-<!-- ROW 1 -->
-<div class="form-row">
-  <input type="text" name="Meno" placeholder="Meno a priezvisko" required pattern="[A-Za-zÁ-ž ]+">
-  <input type="tel" name="Telefón" placeholder="Telefón" required pattern="[0-9+ ]{9,}">
-</div>
+      <div class="form-grid">
 
-<!-- ROW 2 -->
-<div class="form-row">
-  <input type="email" name="email" placeholder="Email" required>
-  <input type="date" name="Termín" required>
-</div>
+        
+        <div class="form-group">
+          <input type="text" id="name" name="Meno" placeholder=" " required pattern="[A-Za-zÁ-ž ]+">
+          <label for="name">Meno a priezvisko *</label>
+        </div>
 
-<!-- ROW 3 -->
-<div class="form-row single">
-  <select name="Masáž" required>
-    <option value="">Vyberte masáž</option>
-    <option>Celotelová masáž</option>
-    <option>Čiastočná masáž</option>
-    <option>Peelingová masáž</option>
-  </select>
-</div>
+        
+        <div class="form-group">
+          <input type="tel" id="phone" name="Telefón" placeholder=" " required pattern="[0-9+ ]{9,}">
+          <label for="phone">Telefónne číslo *</label>
+        </div>
 
-<!-- ROW 4 -->
-<div class="form-row single">
-  <textarea name="Poznámka" placeholder="Poznámka (voliteľné)"></textarea>
-</div>
+        
+        <div class="form-group">
+          <input type="email" id="email" name="email" placeholder=" ">
+          <label for="email">E-mailová adresa *</label>
+        </div>
 
-<!-- SOURCE -->
-<div class="source-inline">
-<label><input type="radio" name="Zdroj" value="Instagram" required> Instagram</label>
-<label><input type="radio" name="Zdroj" value="Facebook"> Facebook</label>
-<label><input type="radio" name="Zdroj" value="Google"> Google</label>
-<label><input type="radio" name="Zdroj" value="Odporúčanie"> Odporúčanie</label>
-<label><input type="radio" name="Zdroj" value="Iné"> Iné</label>
-</div>
+        
+        <div class="form-group">
+          <input type="date" id="date" name="Termín" required>
+          <label for="date" class="label-fixed">Preferovaný dátum *</label>
+        </div>
 
-<button type="submit">Odoslať rezerváciu</button>
+        
+        <div class="form-group full-width time-slots-container">
+          <label style="position: static; font-size: 0.9em; color: #c5a059;">Dostupné časy pre zvolený dátum *</label>
+          <div id="slotsContainer" class="time-slots-grid">
+            <p class="no-slots-text">Najprv zvoľte dátum vyššie.</p>
+          </div>
+        </div>
 
-</form>
+        
+        <div class="form-group full-width">
+          <select id="massage" name="Masáž" required>
+            <option value="" disabled selected hidden></option>
+            <option value="Deep Balance">DEEP BALANCE</option>
+            <option value="Sedavý Detox">SEDAVÝ DETOX</option>
+            <option value="Active Recovery">ACTIVE RECOVERY</option>
+            <option value="Čistá Hlava">ČISTÁ HLAVA</option>
+            <option value="Face Contouring">FACE CONTOURING</option>
+            <option value="Back & Neck">BACK & NECK</option>
+          </select>
+          <label for="massage">Výber masáže *</label>
+        </div>
 
-</div>
+        
+        <div class="form-group full-width">
+          <textarea id="note" name="Poznámka" placeholder=" " rows="3"></textarea>
+          <label for="note">Poznámka (napr. zdravotné obmedzenia)</label>
+        </div>
+
+      </div>
+
+      
+      <div class="source-group">
+        <p class="source-title">Odkiaľ ste sa o nás dozvedeli? *</p>
+        <div class="source-options">
+          <label class="custom-radio">
+            <input type="radio" name="Zdroj" value="Instagram" required>
+            <span class="radio-box"></span>
+            <span class="radio-label">Instagram</span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" name="Zdroj" value="Facebook">
+            <span class="radio-box"></span>
+            <span class="radio-label">Facebook</span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" name="Zdroj" value="Google">
+            <span class="radio-box"></span>
+            <span class="radio-label">Google</span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" name="Zdroj" value="Odporúčanie">
+            <span class="radio-box"></span>
+            <span class="radio-label">Odporúčanie</span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" name="Zdroj" value="Iné">
+            <span class="radio-box"></span>
+            <span class="radio-label">Iné</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <span>Odoslať rezerváciu</span>
+      </button>
+
+    </form>
+
+  </div>
 
 </section>
 
-<!-- VALIDATION SCRIPT -->
-<script>
-document.getElementById("bookingForm").addEventListener("submit", function(e){
 
-let valid = true;
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-const name = this.querySelector('[name="Meno"]');
-const phone = this.querySelector('[name="Telefón"]');
-const email = this.querySelector('[name="email"]');
-const date = this.querySelector('[name="Dátum"]');
-const source = this.querySelectorAll('[name="Zdroj"]:checked');
+  const firebaseConfig = {
+    apiKey: "AIzaSyBAUiW5uWKkj_aDq_4KXz2bdBIuxTQbadE",
+    authDomain: "kara-masaze.firebaseapp.com",
+    projectId: "kara-masaze",
+    storageBucket: "kara-masaze.firebasestorage.app",
+    messagingSenderId: "786304506671",
+    appId: "1:786304506671:web:b24473b8298107da955fda",
+    measurementId: "G-QQH0H51RZH"
+  };
 
-if(!/^[A-Za-zÁ-ž ]+$/.test(name.value)){
-alert("Zadajte správne meno");
-valid = false;
-}
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-if(!/^[0-9+ ]{9,}$/.test(phone.value)){
-alert("Zadajte správne telefónne číslo");
-valid = false;
-}
+  let selectedSlotId = null;
 
-if(email.value === ""){
-alert("Zadajte email");
-valid = false;
-}
+  const dateInput = document.getElementById("date");
+  const slotsContainer = document.getElementById("slotsContainer");
+  const selectedTimeInput = document.getElementById("selectedTime");
 
-if(date.value === ""){
-alert("Vyberte dátum");
-valid = false;
-}
+  dateInput.addEventListener("change", async (e) => {
+    const selectedDate = e.target.value;
+    slotsContainer.innerHTML = "<p class='no-slots-text'>Načítavam voľné časy...</p>";
+    selectedTimeInput.value = "";
+    selectedSlotId = null;
 
-if(source.length === 0){
-alert("Vyberte, odkiaľ ste sa o nás dozvedeli");
-valid = false;
-}
+    try {
+      const q = query(collection(db, "terminy"), where("datum", "==", selectedDate), where("obsadene", "==", false));
+      const querySnapshot = await getDocs(q);
 
-if(!valid){
-e.preventDefault();
-}
+      slotsContainer.innerHTML = "";
 
-});
+      if (querySnapshot.empty) {
+        slotsContainer.innerHTML = "<p class='no-slots-text'>Pre tento dátum nie sú dostupné žiadne voľné časy.</p>";
+        return;
+      }
+
+      querySnapshot.forEach((docSnap) => {
+        const slot = docSnap.data();
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "time-slot-btn";
+        btn.innerText = slot.cas;
+
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".time-slot-btn").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          selectedTimeInput.value = slot.cas;
+          selectedSlotId = docSnap.id;
+        });
+
+        slotsContainer.appendChild(btn);
+      });
+    } catch (err) {
+      console.error(err);
+      slotsContainer.innerHTML = "<p class='no-slots-text'>Chyba pri načítavaní časov.</p>";
+    }
+  });
+
+  document.getElementById("bookingForm").addEventListener("submit", async function(e) {
+    let valid = true;
+
+    const name = this.querySelector('[name="Meno"]');
+    const phone = this.querySelector('[name="Telefón"]');
+    const email = this.querySelector('[name="email"]');
+    const date = this.querySelector('[name="Termín"]');
+    const source = this.querySelectorAll('[name="Zdroj"]:checked');
+
+    if(!/^[A-Za-zÁ-ž ]+$/.test(name.value)){
+      alert("Zadajte správne meno");
+      valid = false;
+    }
+
+    if(!/^[0-9+ ]{9,}$/.test(phone.value)){
+      alert("Zadajte správne telefónne číslo");
+      valid = false;
+    }
+
+    if(email.value === ""){
+      alert("Zadajte email");
+      valid = false;
+    }
+
+    if(date.value === ""){
+      alert("Vyberte dátum");
+      valid = false;
+    }
+
+    if(!selectedTimeInput.value || !selectedSlotId){
+      alert("Vyberte si prosím konkrétny čas masáže");
+      valid = false;
+    }
+
+    if(source.length === 0){
+      alert("Vyberte, odkiaľ ste sa o nás dozvedeli");
+      valid = false;
+    }
+
+    if(!valid){
+      e.preventDefault();
+      return;
+    }
+
+    try {
+      const slotRef = doc(db, "terminy", selectedSlotId);
+      await updateDoc(slotRef, {
+        obsadene: true,
+        meno: name.value,
+        telefon: phone.value,
+        email: email.value
+      });
+    } catch (err) {
+      console.error("Chyba pri rezervácii slotu:", err);
+    }
+  });
 </script>
 
 <script>
