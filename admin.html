@@ -5,18 +5,90 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin – Kara Masáže</title>
 <style>
-  body { font-family: 'Raleway', sans-serif; background: #121212; color: #fff; padding: 20px; max-width: 1000px; margin: auto; }
-  h1, h2 { color: #c5a059; font-family: 'Playfair Display', serif; }
-  .box { background: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #333; }
-  input, button { padding: 10px; margin: 5px 0; border-radius: 4px; border: 1px solid #444; background: #2a2a2a; color: #fff; font-size: 16px; }
-  button { background: #c5a059; color: #000; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-  button:hover { opacity: 0.8; }
+  * { box-sizing: border-box; }
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    background: #121212; 
+    color: #fff; 
+    padding: 15px; 
+    max-width: 900px; 
+    margin: auto; 
+  }
+  h1 { color: #c5a059; font-size: 1.6rem; text-align: center; margin-bottom: 20px; }
+  h2 { color: #c5a059; font-size: 1.2rem; margin-top: 0; }
+  .box { background: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #333; }
+  
+  form { display: flex; flex-direction: column; gap: 10px; }
+  label { font-size: 0.9rem; color: #aaa; }
+  input, button { 
+    width: 100%; 
+    padding: 12px; 
+    border-radius: 6px; 
+    border: 1px solid #444; 
+    background: #2a2a2a; 
+    color: #fff; 
+    font-size: 16px; 
+  }
+  button { 
+    background: #c5a059; 
+    color: #000; 
+    border: none; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: 0.2s; 
+    margin-top: 5px;
+  }
+  button:active { transform: scale(0.98); }
+
+  /* MOBILNÁ TABUĽKA -> KARTY */
+  .table-wrapper { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-  th, td { border: 1px solid #333; padding: 12px; text-align: left; }
-  th { background: #2a2a2a; color: #c5a059; }
+  th, td { border: 1px solid #333; padding: 10px; text-align: left; }
+  th { background: #2a2a2a; color: #c5a059; font-size: 0.85rem; }
+  
   .status-free { color: #55ff55; font-weight: bold; }
   .status-booked { color: #ff5555; font-weight: bold; }
-  .btn-delete { background: #ff4444; color: #fff; padding: 6px 12px; font-size: 14px; }
+  .btn-delete { background: #ff4444; color: #fff; padding: 8px 12px; font-size: 13px; border-radius: 4px; width: auto; }
+
+  /* Štýly čisto pre mobily */
+  @media (max-width: 768px) {
+    body { padding: 10px; }
+    .box { padding: 15px; }
+    
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute; top: -9999px; left: -9999px; }
+    
+    tr { 
+      border: 1px solid #333; 
+      border-radius: 6px; 
+      margin-bottom: 12px; 
+      background: #252525; 
+      padding: 10px;
+    }
+    
+    td { 
+      border: none;
+      position: relative;
+      padding-left: 45%; 
+      text-align: right;
+      font-size: 0.95rem;
+      border-bottom: 1px solid #333;
+    }
+    td:last-child { border-bottom: none; }
+    
+    td:before { 
+      position: absolute;
+      left: 10px;
+      width: 40%; 
+      padding-right: 10px; 
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+      color: #c5a059;
+      content: attr(data-label);
+    }
+    .btn-delete { width: 100%; margin-top: 5px; }
+  }
 </style>
 </head>
 <body>
@@ -27,10 +99,12 @@
 <div class="box">
   <h2>Pridať nový voľný termín</h2>
   <form id="addSlotForm">
-    <label>Dátum:</label><br>
-    <input type="date" id="newDate" required><br><br>
-    <label>Čas (napr. 09:00 alebo 14:30):</label><br>
-    <input type="time" id="newTime" required><br><br>
+    <label for="newDate">Dátum:</label>
+    <input type="date" id="newDate" required>
+    
+    <label for="newTime">Čas (napr. 09:00, 14:30):</label>
+    <input type="time" id="newTime" required>
+    
     <button type="submit">Pridať termín do ponuky</button>
   </form>
 </div>
@@ -39,22 +113,24 @@
 <div class="box">
   <h2>Zoznam všetkých termínov</h2>
   <button id="refreshBtn">Obnoviť zoznam</button>
-  <table>
-    <thead>
-      <tr>
-        <th>Dátum</th>
-        <th>Čas</th>
-        <th>Stav</th>
-        <th>Meno klienta</th>
-        <th>Telefón</th>
-        <th>E-mail</th>
-        <th>Akcia</th>
-      </tr>
-    </thead>
-    <tbody id="slotsTableBody">
-      <tr><td colspan="7">Načítavam dáta...</td></tr>
-    </tbody>
-  </table>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Dátum</th>
+          <th>Čas</th>
+          <th>Stav</th>
+          <th>Meno klienta</th>
+          <th>Telefón</th>
+          <th>E-mail</th>
+          <th>Akcia</th>
+        </tr>
+      </thead>
+      <tbody id="slotsTableBody">
+        <tr><td colspan="7">Načítavam dáta...</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script type="module">
@@ -74,7 +150,6 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Pridanie nového slotu
   document.getElementById("addSlotForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const date = document.getElementById("newDate").value;
@@ -93,7 +168,6 @@
     }
   });
 
-  // Načítanie všetkých slotov z databázy
   async function loadSlots() {
     const tbody = document.getElementById("slotsTableBody");
     tbody.innerHTML = "<tr><td colspan='7'>Načítavam...</td></tr>";
@@ -113,13 +187,13 @@
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
-          <td>${data.datum}</td>
-          <td>${data.cas}</td>
-          <td class="\({data.obsadene ? 'status-booked' : 'status-free'}">\){data.obsadene ? 'OBSADENÉ' : 'Voľné'}</td>
-          <td>${data.meno || '-'}</td>
-          <td>${data.telefon ? `[${data.telefon}](tel:${data.telefon})` : '-'}</td>
-          <td>${data.email || '-'}</td>
-          <td><button class="btn-delete" onclick="window.deleteSlot('${docSnap.id}')">Vymazať</button></td>
+          <td data-label="Dátum">${data.datum}</td>
+          <td data-label="Čas">${data.cas}</td>
+          <td data-label="Stav" class="\({data.obsadene ? 'status-booked' : 'status-free'}">\){data.obsadene ? 'OBSADENÉ' : 'Voľné'}</td>
+          <td data-label="Meno">${data.meno || '-'}</td>
+          <td data-label="Telefón">${data.telefon ? `[${data.telefon}](tel:${data.telefon})` : '-'}</td>
+          <td data-label="E-mail">${data.email || '-'}</td>
+          <td data-label="Akcia"><button class="btn-delete" onclick="window.deleteSlot('${docSnap.id}')">Vymazať</button></td>
         `;
         tbody.appendChild(tr);
       });
