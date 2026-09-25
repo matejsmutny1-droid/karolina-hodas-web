@@ -24,23 +24,24 @@
   .time-slot-btn {
     padding: 12px 22px;
     background-color: transparent;
-    border: 1px solid #1a1a1a;
-    color: #1a1a1a;
+    border: 1px solid rgba(8, 43, 15, 0.3);
+    color: #173c20;
     cursor: pointer;
-    border-radius: 0px;
+    border-radius: 999px;
     font-family: inherit;
     font-size: 0.9em;
     letter-spacing: 1px;
     transition: all 0.3s ease;
   }
   .time-slot-btn:hover {
-    border-color: #c5a059;
-    color: #c5a059;
+    border-color: #173c20;
+    background: rgba(23, 60, 32, 0.06);
+    color: #173c20;
   }
   .time-slot-btn.selected {
-    background-color: #1a1a1a;
-    border-color: #1a1a1a;
-    color: #fff;
+    background-color: #173c20;
+    border-color: #173c20;
+    color: #f7f3e9;
     font-weight: 500;
   }
   .no-slots-text {
@@ -48,6 +49,114 @@
     font-size: 0.9em;
     margin-top: 5px;
     font-style: italic;
+  }
+  .calendar-form-group { grid-column: span 2; }
+  .calendar-step-label {
+    position: static !important;
+    margin: 0 0 10px;
+    color: #173c20 !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+  }
+  .booking-calendar {
+    padding: 18px 20px 14px;
+    border: 1px solid rgba(23, 60, 32, 0.14);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.28);
+    transition: opacity 180ms ease;
+  }
+  .booking-calendar.is-locked { opacity: 0.62; }
+  .calendar-toolbar {
+    display: grid;
+    grid-template-columns: 42px 1fr 42px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+  .calendar-toolbar h3 {
+    margin: 0;
+    color: #173c20;
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-transform: capitalize;
+  }
+  .calendar-nav-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid rgba(23, 60, 32, 0.2);
+    border-radius: 50%;
+    background: transparent;
+    color: #173c20;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .calendar-nav-btn:hover:not(:disabled) { background: rgba(23, 60, 32, 0.08); }
+  .calendar-nav-btn:disabled { cursor: default; opacity: 0.35; }
+  .calendar-weekdays,
+  .calendar-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+  .calendar-weekdays { margin-bottom: 6px; }
+  .calendar-weekdays span {
+    color: #758174;
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+  .calendar-empty { min-height: 42px; }
+  .calendar-day {
+    position: relative;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    color: #8a8d82;
+    font: inherit;
+    font-size: 13px;
+  }
+  .calendar-day:disabled { cursor: default; opacity: 0.42; }
+  .calendar-day.has-slots {
+    border-color: rgba(23, 60, 32, 0.18);
+    background: rgba(23, 60, 32, 0.07);
+    color: #173c20;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .calendar-day.has-slots::after {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #24552e;
+    content: '';
+    transform: translateX(-50%);
+  }
+  .calendar-day.has-slots:hover { background: rgba(23, 60, 32, 0.14); }
+  .calendar-day.is-selected,
+  .calendar-day.is-selected:hover { background: #173c20; color: #f7f3e9; }
+  .calendar-day.is-selected::after { background: #f7f3e9; }
+  .calendar-hint {
+    min-height: 20px;
+    margin: 12px 0 0;
+    color: #697668;
+    font-size: 11px;
+    text-align: center;
+  }
+  @media (max-width: 768px) {
+    .calendar-form-group { grid-column: span 1; }
+    .booking-calendar { padding: 15px 12px 12px; }
+    .calendar-weekdays, .calendar-days { gap: 2px; }
+    .calendar-day, .calendar-empty { min-height: 38px; }
   }
 </style>
 
@@ -216,21 +325,9 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           <label for="email">E-mailová adresa *</label>
         </div>
 
-        <div class="form-group">
-          <input type="date" id="date" name="Termín" required>
-          <label for="date" class="label-fixed">Preferovaný dátum *</label>
-        </div>
-
-        <div class="form-group full-width time-slots-container">
-          <label style="position: static; font-size: 0.9em; color: #c5a059;">Dostupné časy pre zvolený dátum *</label>
-          <div id="slotsContainer" class="time-slots-grid">
-            <p class="no-slots-text">Najprv zvoľte dátum vyššie.</p>
-          </div>
-        </div>
-
         <div class="form-group full-width">
           <select id="massage" name="Masáž" required>
-            <option value="" disabled selected hidden>Najprv zvoľte čas masáže...</option>
+            <option value="" disabled selected hidden>Najprv zvoľte masáž...</option>
             
             <option value="DEEP BALANCE - 90 min" data-duration="90">DEEP BALANCE (90 min / 65€)</option>
             <option value="DEEP BALANCE - 120 min" data-duration="120">DEEP BALANCE (120 min / 85€)</option>
@@ -253,6 +350,30 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
             <option value="FACECONTOURING - 90 min" data-duration="90">FACECONTOURING A STAROSTLIVOSŤ O PLEŤ (90 min / 90€)</option>
           </select>
           <label for="massage">Výber masáže *</label>
+        </div>
+
+        <div class="form-group full-width calendar-form-group">
+          <p class="calendar-step-label" id="calendarLabel">Dostupné termíny pre zvolenú masáž *</p>
+          <input type="hidden" id="date" name="Termín">
+          <div class="booking-calendar is-locked" id="bookingCalendar" role="group" aria-labelledby="calendarLabel">
+            <div class="calendar-toolbar">
+              <button type="button" class="calendar-nav-btn" id="previousMonth" aria-label="Predchádzajúci mesiac" disabled>‹</button>
+              <h3 id="calendarMonth">Najprv vyberte masáž</h3>
+              <button type="button" class="calendar-nav-btn" id="nextMonth" aria-label="Nasledujúci mesiac" disabled>›</button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Po</span><span>Ut</span><span>St</span><span>Št</span><span>Pi</span><span>So</span><span>Ne</span>
+            </div>
+            <div class="calendar-days" id="calendarDays" aria-live="polite"></div>
+            <p class="calendar-hint" id="calendarHint">Najprv vyberte masáž.</p>
+          </div>
+        </div>
+
+        <div class="form-group full-width time-slots-container">
+          <label id="availableTimesLabel" style="position: static; font-size: 0.9em; color: #173c20;">Dostupné časy *</label>
+          <div id="slotsContainer" class="time-slots-grid" aria-live="polite">
+            <p class="no-slots-text">Najprv vyberte masáž.</p>
+          </div>
         </div>
 
         <div class="form-group full-width">
@@ -324,8 +445,21 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
   const dateInput = document.getElementById("date");
   const slotsContainer = document.getElementById("slotsContainer");
+  const availableTimesLabel = document.getElementById("availableTimesLabel");
   const selectedTimeInput = document.getElementById("selectedTime");
   const massageSelect = document.getElementById("massage");
+  const bookingCalendar = document.getElementById("bookingCalendar");
+  const calendarMonthLabel = document.getElementById("calendarMonth");
+  const calendarDays = document.getElementById("calendarDays");
+  const calendarHint = document.getElementById("calendarHint");
+  const previousMonthButton = document.getElementById("previousMonth");
+  const nextMonthButton = document.getElementById("nextMonth");
+  const today = new Date();
+  const todayKey = toDateKey(today);
+  let currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  let availableDates = new Map();
+  let calendarRequest = 0;
+  let slotRequest = 0;
 
   function toMinutes(time) {
     const [hours, minutes] = (time || "0:0").split(":").map(Number);
@@ -346,53 +480,169 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     return startA < endB && startB < endA;
   }
 
-  function filterMassagesByDuration(maxMinutes) {
-    const options = massageSelect.querySelectorAll("option[data-duration]");
-    massageSelect.value = "";
-    
-    options.forEach(opt => {
-      const dur = parseInt(opt.getAttribute("data-duration"));
-      const originalText = opt.text.split(" - (")[0]; 
-
-      if (maxMinutes && dur > maxMinutes) {
-        opt.disabled = true;
-        opt.text = originalText + " - (Nezmestí sa: max " + maxMinutes + " min)";
-      } else {
-        opt.disabled = false;
-        opt.text = originalText;
-      }
-    });
+  function toDateKey(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   }
 
-  dateInput.addEventListener("change", async (e) => {
-    const selectedDate = e.target.value;
+  function getBookedDuration(slot) {
+    return Number.parseInt(slot.trvanieRezervacie, 10) ||
+      Number.parseInt((slot.masaz || "").match(/(\d+)\s*min/i)?.[1], 10) || 0;
+  }
+
+  function bookedPause(slot, duration) {
+    const savedPause = Number.parseInt(slot.prestavka, 10);
+    return Number.isNaN(savedPause) ? breakMinutes(duration) : savedPause;
+  }
+
+  function availableSlotsForDay(items, requestedDuration) {
+    const booked = items.filter(item => item.data.obsadene);
+    return items.filter(item => {
+      if (item.data.obsadene || slotDuration(item.data) < requestedDuration) return false;
+      const start = toMinutes(item.data.cas);
+      const end = start + requestedDuration + breakMinutes(requestedDuration);
+      return !booked.some(booking => {
+        const duration = getBookedDuration(booking.data);
+        if (!duration) return false;
+        const bookedStart = toMinutes(booking.data.cas);
+        const bookedEnd = bookedStart + duration + bookedPause(booking.data, duration);
+        return overlaps(start, end, bookedStart, bookedEnd);
+      });
+    }).sort((a, b) => toMinutes(a.data.cas) - toMinutes(b.data.cas));
+  }
+
+  function updateCalendarControls() {
+    const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastMonthStart = new Date(today.getFullYear(), today.getMonth() + 12, 1);
+    previousMonthButton.disabled = bookingCalendar.classList.contains("is-locked") || currentMonth <= currentMonthStart;
+    nextMonthButton.disabled = bookingCalendar.classList.contains("is-locked") || currentMonth >= lastMonthStart;
+  }
+
+  function renderCalendar() {
+    calendarMonthLabel.textContent = new Intl.DateTimeFormat("sk-SK", {
+      month: "long",
+      year: "numeric"
+    }).format(currentMonth);
+    calendarDays.innerHTML = "";
+
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
+    const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let index = 0; index < firstWeekday; index += 1) {
+      const emptyDay = document.createElement("span");
+      emptyDay.className = "calendar-empty";
+      calendarDays.appendChild(emptyDay);
+    }
+
+    for (let day = 1; day <= daysInMonth; day += 1) {
+      const date = new Date(year, month, day);
+      const dateKey = toDateKey(date);
+      const slots = availableDates.get(dateKey) || [];
+      const hasSlots = slots.length > 0;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `calendar-day${hasSlots ? " has-slots" : ""}${dateInput.value === dateKey ? " is-selected" : ""}`;
+      button.textContent = String(day);
+      button.disabled = !hasSlots || dateKey < todayKey;
+      button.setAttribute("aria-pressed", dateInput.value === dateKey ? "true" : "false");
+      button.setAttribute("aria-label", `${new Intl.DateTimeFormat("sk-SK", {
+        weekday: "long", day: "numeric", month: "long"
+      }).format(date)}${hasSlots ? `, voľných časov: ${slots.length}` : ", bez voľného termínu"}`);
+
+      if (hasSlots) {
+        button.addEventListener("click", () => {
+          dateInput.value = dateKey;
+          selectedSlotId = null;
+          selectedTimeInput.value = "";
+          renderCalendar();
+          loadAvailableSlots(dateKey);
+        });
+      }
+
+      calendarDays.appendChild(button);
+    }
+
+    updateCalendarControls();
+  }
+
+  async function loadCalendarMonth(month = currentMonth) {
+    if (!massageSelect.value) return;
+
+    currentMonth = new Date(month.getFullYear(), month.getMonth(), 1);
+    const requestId = ++calendarRequest;
+    availableDates = new Map();
+    const duration = Number.parseInt(massageSelect.selectedOptions[0].dataset.duration, 10);
+    const firstDate = toDateKey(currentMonth);
+    const lastDate = toDateKey(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0));
+
+    calendarHint.textContent = "Načítavam voľné termíny…";
+    renderCalendar();
+
+    try {
+      const monthQuery = query(
+        collection(db, "terminy"),
+        where("datum", ">=", firstDate),
+        where("datum", "<=", lastDate)
+      );
+      const snapshot = await getDocs(monthQuery);
+      if (requestId !== calendarRequest) return;
+
+      const slotsByDate = new Map();
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        if (!slotsByDate.has(data.datum)) slotsByDate.set(data.datum, []);
+        slotsByDate.get(data.datum).push({ id: docSnap.id, ref: docSnap.ref, data });
+      });
+
+      slotsByDate.forEach((slots, date) => {
+        if (date < todayKey) return;
+        const available = availableSlotsForDay(slots, duration);
+        if (available.length) availableDates.set(date, available);
+      });
+
+      const availableCount = availableDates.size;
+      calendarHint.textContent = availableCount
+        ? "Zelené dni majú voľný termín pre vybranú masáž."
+        : "V tomto mesiaci nie sú voľné termíny pre vybranú masáž.";
+      renderCalendar();
+    } catch (err) {
+      console.error("Chyba pri načítaní kalendára:", err);
+      if (requestId !== calendarRequest) return;
+      calendarHint.textContent = "Kalendár sa nepodarilo načítať. Skúste to znova.";
+      renderCalendar();
+    }
+  }
+
+  async function loadAvailableSlots(selectedDate) {
+    if (!selectedDate || !massageSelect.value) return;
+
+    const requestId = ++slotRequest;
+    const requestedDuration = Number.parseInt(massageSelect.selectedOptions[0].dataset.duration, 10);
+    const displayDate = new Intl.DateTimeFormat("sk-SK", { day: "numeric", month: "long" }).format(new Date(`${selectedDate}T00:00:00`));
+    availableTimesLabel.textContent = `Dostupné časy – ${displayDate}`;
     slotsContainer.innerHTML = "<p class='no-slots-text'>Načítavam voľné časy...</p>";
     selectedTimeInput.value = "";
     selectedSlotId = null;
-    filterMassagesByDuration(null);
 
     try {
       const q = query(collection(db, "terminy"), where("datum", "==", selectedDate));
       const querySnapshot = await getDocs(q);
+      if (requestId !== slotRequest || selectedDate !== dateInput.value || requestedDuration !== Number.parseInt(massageSelect.selectedOptions[0]?.dataset.duration, 10)) return;
 
       const allSlots = querySnapshot.docs.map(docSnap => ({ id: docSnap.id, ref: docSnap.ref, data: docSnap.data() }));
-      const booked = allSlots.filter(item => item.data.obsadene);
-      const available = allSlots.filter(item => {
-        if (item.data.obsadene) return false;
-        const start = toMinutes(item.data.cas);
-        return !booked.some(booking => {
-          const bookedStart = toMinutes(booking.data.cas);
-          const duration = Number.parseInt(booking.data.trvanieRezervacie, 10) ||
-            Number.parseInt((booking.data.masaz || "").match(/(\d+)\s*min/i)?.[1], 10) || 0;
-          if (!duration) return false;
-          const blockedEnd = bookedStart + duration + (Number.parseInt(booking.data.prestavka, 10) || breakMinutes(duration));
-          return overlaps(start, start + slotDuration(item.data), bookedStart, blockedEnd);
-        });
-      });
+      const available = availableSlotsForDay(allSlots, requestedDuration);
 
       slotsContainer.innerHTML = "";
 
       if (available.length === 0) {
+        availableDates.delete(selectedDate);
+        dateInput.value = "";
+        availableTimesLabel.textContent = "Dostupné časy *";
+        renderCalendar();
         slotsContainer.innerHTML = "<p class='no-slots-text'>Pre tento dátum nie sú dostupné žiadne voľné časy.</p>";
         return;
       }
@@ -409,17 +659,60 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           btn.classList.add("selected");
           selectedTimeInput.value = slot.cas;
           selectedSlotId = item.id;
-
-          const slotDuration = slot.trvanie ? parseInt(slot.trvanie) : 180;
-          filterMassagesByDuration(slotDuration);
         });
 
         slotsContainer.appendChild(btn);
       });
     } catch (err) {
+      if (requestId !== slotRequest) return;
       console.error(err);
       slotsContainer.innerHTML = "<p class='no-slots-text'>Chyba pri načítavaní časov.</p>";
     }
+  }
+
+  previousMonthButton.addEventListener("click", () => {
+    slotRequest += 1;
+    dateInput.value = "";
+    availableTimesLabel.textContent = "Dostupné časy *";
+    selectedSlotId = null;
+    selectedTimeInput.value = "";
+    slotsContainer.innerHTML = "<p class='no-slots-text'>Vyberte deň v kalendári.</p>";
+    loadCalendarMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+  });
+
+  nextMonthButton.addEventListener("click", () => {
+    slotRequest += 1;
+    dateInput.value = "";
+    availableTimesLabel.textContent = "Dostupné časy *";
+    selectedSlotId = null;
+    selectedTimeInput.value = "";
+    slotsContainer.innerHTML = "<p class='no-slots-text'>Vyberte deň v kalendári.</p>";
+    loadCalendarMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+  });
+
+  massageSelect.addEventListener("change", () => {
+    slotRequest += 1;
+    availableTimesLabel.textContent = "Dostupné časy *";
+    selectedTimeInput.value = "";
+    selectedSlotId = null;
+    dateInput.value = "";
+    slotsContainer.innerHTML = "<p class='no-slots-text'>Vyberte deň v kalendári.</p>";
+
+    if (!massageSelect.value) {
+      calendarRequest += 1;
+      bookingCalendar.classList.add("is-locked");
+      calendarMonthLabel.textContent = "Najprv vyberte masáž";
+      calendarDays.innerHTML = "";
+      calendarHint.textContent = "Najprv vyberte masáž.";
+      availableDates = new Map();
+      updateCalendarControls();
+      slotsContainer.innerHTML = "<p class='no-slots-text'>Najprv vyberte masáž.</p>";
+      return;
+    }
+
+    bookingCalendar.classList.remove("is-locked");
+    currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    loadCalendarMonth(currentMonth);
   });
 
   document.getElementById("bookingForm").addEventListener("submit", async function(e) {
@@ -487,15 +780,18 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
         const chosenIndex = slotRefs.findIndex(item => item.id === selectedSlotId);
         const chosen = snapshots[chosenIndex];
         if (!chosen || !chosen.exists() || chosen.data().obsadene) throw new Error("Tento termín už bol rezervovaný. Obnovte výber času.");
+        if (slotDuration(chosen.data()) < duration || chosen.data().cas !== selectedTimeInput.value) {
+          throw new Error("Vybraný termín už nie je dostupný pre túto masáž. Vyberte si iný.");
+        }
 
         const conflict = snapshots.some((snapshot, index) => {
           if (index === chosenIndex || !snapshot.exists() || !snapshot.data().obsadene) return false;
           const booked = snapshot.data();
-          const bookedDuration = Number.parseInt(booked.trvanieRezervacie, 10) || Number.parseInt((booked.masaz || "").match(/(\d+)\s*min/i)?.[1], 10) || 0;
+          const bookedDuration = getBookedDuration(booked);
           if (!bookedDuration) return false;
           const bookedStart = toMinutes(booked.cas);
-          const bookedEnd = bookedStart + bookedDuration + (Number.parseInt(booked.prestavka, 10) || breakMinutes(bookedDuration));
-          return overlaps(start, start + duration, bookedStart, bookedEnd);
+          const bookedEnd = bookedStart + bookedDuration + bookedPause(booked, bookedDuration);
+          return overlaps(start, start + duration + pause, bookedStart, bookedEnd);
         });
         if (conflict) throw new Error("Tento čas sa prekrýva s inou rezerváciou alebo prestávkou. Obnovte výber času.");
 

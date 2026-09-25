@@ -1,0 +1,391 @@
+/* Shared visual system for the six massage and pricing pages. */
+:root {
+  --space-bg: #e9dfcc;
+  --space-line: rgba(8, 43, 15, 0.16);
+  --space-text: #12351b;
+  --space-muted: #667467;
+  --brand-green: #082b0f;
+  --brand-green-soft: #3f6544;
+}
+
+body.service-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.52), transparent 38rem),
+    linear-gradient(145deg, #f0e9dc 0%, var(--space-bg) 62%, #e5e8dc 100%);
+  color: var(--space-text);
+  font-family: "DM Sans", "Raleway", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.service-page *,
+.service-page *::before,
+.service-page *::after { box-sizing: border-box; }
+
+.service-page a { color: inherit; }
+
+.service-page section {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.service-nav {
+  position: relative;
+  z-index: 2;
+  width: min(1240px, calc(100% - 56px));
+  min-height: 82px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--space-line);
+}
+
+.service-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--space-text);
+}
+
+.service-brand img {
+  display: block;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.service-nav-links { display: flex; align-items: center; gap: 26px; }
+
+.service-nav-links a {
+  color: #35513a;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.service-nav-links a:hover { color: var(--brand-green); }
+
+.service-nav-links .service-nav-cta {
+  padding: 10px 16px;
+  border: 1px solid rgba(8, 43, 15, 0.45);
+  border-radius: 999px;
+  color: var(--brand-green);
+}
+
+.service-nav-links .service-nav-cta:hover {
+  background: #082b0f;
+  color: #e9dfcc;
+}
+
+.service-nav-links a[aria-current="page"] { color: var(--brand-green); }
+
+.service-hero {
+  min-height: clamp(400px, 55vh, 620px);
+  padding: 105px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.service-kicker {
+  margin: 0 0 20px;
+  color: var(--brand-green);
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.service-hero h1 {
+  position: relative;
+  max-width: 1000px;
+  margin: 0;
+  color: var(--space-text);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(56px, 9.5vw, 112px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.service-hero p:not(.service-kicker) {
+  max-width: 550px;
+  margin: 24px 0 0;
+  color: var(--space-muted);
+  font-size: clamp(14px, 1.6vw, 17px);
+  font-weight: 300;
+  letter-spacing: 0.035em;
+  line-height: 1.7;
+  text-wrap: balance;
+}
+
+.service-content {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 0 0 112px;
+}
+
+.service-intro,
+.service-quote,
+.service-card,
+.service-price-card,
+.pricing-block,
+.detail-card,
+.detail-grid {
+  border: 1px solid var(--space-line);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.2));
+  box-shadow: 0 22px 60px rgba(8, 43, 15, 0.07);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.peeling { padding: 0 24px 112px; }
+.peeling-container { width: min(1080px, 100%); margin: 0 auto; }
+
+.peeling .intro {
+  max-width: 920px;
+  margin: 0 auto 28px;
+  padding: 34px 40px;
+  border: 1px solid var(--space-line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.35);
+  color: #25462c;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(21px, 2.6vw, 29px);
+  line-height: 1.55;
+  text-align: center;
+}
+
+.peeling-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+
+.peeling-block {
+  min-height: 245px;
+  padding: 30px 32px;
+  border: 1px solid var(--space-line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.peeling-block h3,
+.pricing-block h3 {
+  margin: 0 0 20px;
+  color: var(--brand-green);
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+.peeling-block ul,
+.detail-card ul { display: grid; gap: 12px; list-style: none; }
+
+.peeling-block li,
+.detail-card li {
+  position: relative;
+  padding-left: 20px;
+  color: #4b604e;
+  font-size: 14px;
+}
+
+.peeling-block li::before,
+.detail-card li::before {
+  position: absolute;
+  top: 0.73em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brand-green-soft);
+  box-shadow: none;
+  content: "";
+}
+
+.peeling .relax {
+  max-width: 820px;
+  margin: 28px auto 0;
+  padding: 30px 38px;
+  border-left: 1px solid rgba(8, 43, 15, 0.5);
+  color: #405742;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 21px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.peeling-price { display: flex; justify-content: center; gap: 14px; margin: 28px 0; }
+
+.price-box {
+  min-width: 170px;
+  padding: 20px 28px;
+  display: grid;
+  gap: 4px;
+  border: 1px solid rgba(8, 43, 15, 0.18);
+  border-radius: 16px;
+  background: rgba(8, 43, 15, 0.04);
+  text-align: center;
+}
+
+.price-box span { color: var(--space-muted); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; }
+.price-box strong { color: var(--space-text); font-family: "Cormorant Garamond", Georgia, serif; font-size: 30px; font-weight: 500; }
+.peeling-cta { margin-top: 32px; text-align: center; }
+
+.service-page .btn-dark,
+.service-page .book-btn {
+  position: relative;
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  border: 1px solid rgba(8, 43, 15, 0.45);
+  border-radius: 999px;
+  background: rgba(8, 43, 15, 0.055);
+  color: var(--brand-green);
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.service-page .btn-dark:hover,
+.service-page .book-btn:hover {
+  transform: translateY(-2px);
+  background: var(--brand-green);
+  color: #e9dfcc;
+}
+
+.service-page .btn-dark::before,
+.service-page .btn-dark::after,
+.service-page .book-btn::before,
+.service-page .book-btn::after { content: none; }
+
+.massage-detail { padding: 0 24px 112px; }
+.massage-detail .detail-header { display: none; }
+
+.massage-detail .detail-grid {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: clamp(26px, 5vw, 58px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  border-radius: 26px;
+}
+
+.massage-detail .detail-text { max-width: none; gap: 18px; }
+.massage-detail .detail-text p { margin: 0; color: #405742; font-size: 14px; line-height: 1.85; }
+.massage-detail .detail-text .highlight { color: #12351b; font-family: "Cormorant Garamond", Georgia, serif; font-size: 26px; font-style: normal; line-height: 1.4; }
+.massage-detail .duration-info { margin-top: 6px; padding-top: 20px; border-top: 1px solid var(--space-line); }
+.massage-detail .duration-info h3 { margin: 0 0 14px !important; color: #24482c; font-family: "DM Sans", sans-serif; font-size: 10px !important; letter-spacing: 0.2em; text-transform: uppercase; }
+.massage-detail .duration-info li { color: #405742; font-size: 13px; line-height: 1.7; }
+.massage-detail .contraindications { margin-top: 0 !important; padding-top: 18px; border-top: 1px solid var(--space-line); color: #657365 !important; font-size: 12px !important; line-height: 1.7; }
+
+.detail { padding: 0 24px 112px; }
+.detail .detail-title { display: none; }
+.detail-list { width: min(1120px, 100%); margin: 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+
+.detail-card {
+  min-height: 330px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.detail-card:hover { transform: translateY(-4px); border-color: rgba(8, 43, 15, 0.28); background: rgba(255, 255, 255, 0.46); }
+.detail-card h3 { margin: 0 0 12px; color: var(--space-text); font-family: "Cormorant Garamond", Georgia, serif; font-size: 28px; font-weight: 500; line-height: 1.15; }
+.detail-card .desc { margin: 0 0 18px; color: var(--space-muted); font-size: 13px; line-height: 1.7; }
+.detail-card ul { margin-bottom: 24px; }
+.detail-card li { font-size: 12px; }
+.detail-card .bottom { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--space-line); }
+.detail-card .price { display: grid; gap: 5px; color: var(--space-muted); font-size: 12px; }
+.detail-card .price .highlight { color: var(--brand-green); }
+.detail-card .book-btn { min-height: 40px; padding: 0 15px; font-size: 9px; }
+
+.pricing { padding: 0 24px 112px; }
+.pricing .pricing-title { display: none; }
+.pricing-wrapper { width: min(1120px, 100%); max-width: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; background: transparent; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.pricing-wrapper:hover { transform: none; box-shadow: none; }
+.pricing-block { margin: 0; padding: 30px; border-radius: 20px; text-align: left; }
+.pricing-block h3 { margin-bottom: 20px; font-size: 10px; }
+.pricing .price-list { gap: 0; margin-bottom: 0; }
+.pricing .price-item,
+.pricing .price-item:hover { padding: 13px 0; border-bottom: 1px solid var(--space-line); border-radius: 0; background: transparent; }
+.pricing .price-item span { color: #4e634f; font-size: 11px; letter-spacing: 0.12em; }
+.pricing .price-item strong { color: var(--space-text); font-family: "Cormorant Garamond", Georgia, serif; font-size: 23px; font-weight: 500; }
+.pricing-note { margin-top: 20px; color: var(--space-muted); font-size: 12px; line-height: 1.6; }
+.pricing > .btn-dark { margin-top: 28px; }
+
+.service-footer {
+  width: min(1240px, calc(100% - 56px));
+  min-height: 88px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid var(--space-line);
+  color: #667467;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.service-footer a { color: var(--brand-green); text-decoration: none; }
+.service-footer a:hover { color: var(--space-text); }
+
+@media (max-width: 760px) {
+  .service-nav { width: calc(100% - 36px); min-height: 70px; }
+  .service-brand img { width: 64px; height: 64px; }
+  .service-nav-links { gap: 12px; }
+  .service-nav-links a { font-size: 9px; letter-spacing: 0.1em; }
+  .service-nav-links .service-nav-cta { padding: 9px 11px; }
+  .service-hero { min-height: 390px; padding: 85px 22px 75px; }
+  .service-content { width: calc(100% - 36px); padding-bottom: 76px; }
+  .peeling { padding: 0 18px 76px; }
+  .peeling .intro { padding: 25px 22px; font-size: 22px; }
+  .peeling-grid, .detail-list, .pricing-wrapper { grid-template-columns: 1fr; }
+  .peeling-block { min-height: 0; padding: 25px; }
+  .peeling .relax { padding: 20px 24px; font-size: 19px; }
+  .massage-detail, .detail, .pricing { padding-right: 18px; padding-bottom: 76px; padding-left: 18px; }
+  .massage-detail .detail-grid { grid-template-columns: 1fr; padding: 25px; gap: 32px; border-radius: 20px; }
+  .detail-card { min-height: 0; padding: 25px; }
+  .pricing-block { padding: 25px; }
+  .service-footer { width: calc(100% - 36px); min-height: 76px; }
+}
+
+@media (max-width: 440px) {
+  .service-brand img { width: 56px; height: 56px; }
+  .service-nav-links { gap: 9px; }
+  .service-nav-links a:first-child { display: none; }
+  .service-nav-links .service-nav-cta { padding: 8px 10px; font-size: 8px; }
+  .service-hero { min-height: 345px; }
+  .service-hero h1 { font-size: clamp(51px, 16vw, 72px); }
+  .peeling-price { gap: 9px; }
+  .price-box { min-width: 0; flex: 1; padding: 17px 10px; }
+  .detail-card .bottom { align-items: flex-start; flex-direction: column; }
+  .service-footer { align-items: flex-start; flex-direction: column; justify-content: center; gap: 2px; padding: 16px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-page *, .service-page *::before, .service-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
