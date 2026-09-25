@@ -56,6 +56,7 @@
   }
   
   .status-free { color: #55ff55; font-weight: bold; }
+  .status-partial { color: #e0bd73; font-weight: bold; }
   .status-booked { color: #ff5555; font-weight: bold; }
   .btn-delete { background: #ff4444; color: #fff; padding: 8px 12px; font-size: 13px; border-radius: 4px; width: auto; }
 
@@ -129,15 +130,17 @@
     <label for="newTime">Čas (začiatok termínu, napr. 13:30):</label>
     <input type="time" id="newTime" required>
 
-    <label for="newDuration">Maximálne dostupné časové okno (dĺžka):</label>
+    <label for="newDuration">Dostupné časové okno (vrátane masáží a prestávok):</label>
     <select id="newDuration" required>
-      <option value="180" selected>Bez obmedzenia / max 180 min (3 hod)</option>
-      <option value="30">max 30 minút</option>
-      <option value="60">max 60 minút (1 hod)</option>
-      <option value="90">max 90 minút (1,5 hod)</option>
-      <option value="120">max 120 minút (2 hod)</option>
-      <option value="150">max 150 minút (2,5 hod)</option>
+      <option value="180" selected>180 minút (3 hodiny)</option>
+      <option value="45">45 minút (30 min masáž + 15 min prestávka)</option>
+      <option value="60">60 minút (1 hodina)</option>
+      <option value="90">90 minút (1,5 hodiny)</option>
+      <option value="120">120 minút (2 hodiny)</option>
+      <option value="150">150 minút (2,5 hodiny)</option>
+      <option value="210">210 minút (3,5 hodiny; aj na 180 min masáž + 30 min prestávku)</option>
     </select>
+    <small style="color:#aaa;line-height:1.5">Prestávka sa počíta do okna dostupnosti. Napríklad 30 min masáž + 15 min prestávka obsadí 45 minút.</small>
     
     <button type="submit">Pridať termín do ponuky</button>
   </form>
@@ -153,8 +156,8 @@
         <tr>
           <th>Dátum</th>
           <th>Čas</th>
-          <th>Max okno</th>
-          <th>Stav</th>
+          <th>Dĺžka</th>
+          <th>Voľný čas / stav</th>
           <th>Meno klienta / Masáž</th>
           <th>Kontakt</th>
           <th>Akcia</th>
@@ -169,7 +172,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBAUiW5uWKkj_aDq_4KXz2bdBIuxTQbadE",
@@ -204,6 +207,113 @@
     }
   });
 
+  function slotDuration(slot) {
+    return Number.parseInt(slot.trvanie, 10) || 180;
+  }
+
+  function getBookedDuration(booking) {
+    return Number.parseInt(booking.trvanieRezervacie, 10) ||
+      Number.parseInt((booking.masaz || '').match(/(\d+)\s*min/i)?.[1], 10) || 0;
+  }
+
+  function breakMinutes(duration) {
+    if (duration === 30) return 15;
+    if (duration === 150 || duration === 180) return 30;
+    return 20;
+  }
+
+  function bookedPause(booking, duration) {
+    const savedPause = Number.parseInt(booking.prestavka, 10);
+    return Number.isNaN(savedPause) ? breakMinutes(duration) : savedPause;
+  }
+
+  function reservationsForSlot(slot) {
+    if (Array.isArray(slot.rezervacie)) return slot.rezervacie;
+    if (!slot.obsadene) return [];
+    const duration = getBookedDuration(slot) || slotDuration(slot);
+    return [{
+      id: 'legacy', cas: slot.cas, meno: slot.meno || '', telefon: slot.telefon || '',
+      email: slot.email || '', masaz: slot.masaz || '', trvanieRezervacie: duration,
+      prestavka: bookedPause(slot, duration)
+    }];
+  }
+
+  function toMinutes(time) {
+    const [hours, minutes] = (time || '0:0').split(':').map(Number);
+    return hours * 60 + minutes;
+  }
+
+  function formatTime(minutes) {
+    return `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+  }
+
+  function freeIntervals(slot, reservations) {
+    const start = toMinutes(slot.cas);
+    const end = start + slotDuration(slot);
+    const blocked = reservations.map(booking => {
+      const duration = getBookedDuration(booking);
+      const bookingStart = toMinutes(booking.cas);
+      return {
+        start: Math.max(start, bookingStart),
+        end: Math.min(end, bookingStart + duration + bookedPause(booking, duration))
+      };
+    }).filter(interval => interval.end > interval.start).sort((a, b) => a.start - b.start);
+
+    const merged = [];
+    blocked.forEach(interval => {
+      const last = merged[merged.length - 1];
+      if (last && interval.start <= last.end) last.end = Math.max(last.end, interval.end);
+      else merged.push({ ...interval });
+    });
+
+    const free = [];
+    let cursor = start;
+    merged.forEach(interval => {
+      if (interval.start > cursor) free.push({ start: cursor, end: interval.start });
+      cursor = Math.max(cursor, interval.end);
+    });
+    if (cursor < end) free.push({ start: cursor, end });
+    return free.filter(interval => interval.end > interval.start);
+  }
+
+  function renderWindowRow(docId, data) {
+    const reservations = reservationsForSlot(data);
+    const intervals = freeIntervals(data, reservations);
+    const remaining = intervals.length
+      ? intervals.map(interval => `${formatTime(interval.start)}–${formatTime(interval.end)} (${interval.end - interval.start} min)`).join('<br>')
+      : 'Žiadny voľný čas';
+    const statusClass = intervals.length ? (reservations.length ? 'status-partial' : 'status-free') : 'status-booked';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td data-label="Dátum">${escapeHtml(data.datum || '')}</td>
+      <td data-label="Začiatok okna">${escapeHtml(data.cas || '')}</td>
+      <td data-label="Dostupné okno">${slotDuration(data)} min</td>
+      <td data-label="Voľný čas" class="${statusClass}">${remaining}</td>
+      <td data-label="Klient / Masáž">Dostupnosť</td>
+      <td data-label="Kontakt">–</td>
+      <td data-label="Akcia"><button class="btn-delete btn-delete-window" data-id="${escapeHtml(docId)}">Vymazať okno</button></td>
+    `;
+    tr.querySelector('.btn-delete-window').addEventListener('click', () => window.deleteSlot(docId));
+    return tr;
+  }
+
+  function renderReservationRow(docId, data, booking) {
+    const duration = getBookedDuration(booking);
+    const tr = document.createElement('tr');
+    tr.className = 'reservation-row';
+    tr.innerHTML = `
+      <td data-label="Dátum">${escapeHtml(data.datum || '')}</td>
+      <td data-label="Čas rezervácie">${escapeHtml(booking.cas || '')}</td>
+      <td data-label="Masáž + prestávka">${duration} + ${bookedPause(booking, duration)} min</td>
+      <td data-label="Stav" class="status-booked">OBSADENÉ</td>
+      <td data-label="Klient / Masáž">${escapeHtml(booking.meno || 'Klient')}<br><small style="color:#c5a059">${escapeHtml(booking.masaz || '')}</small></td>
+      <td data-label="Kontakt">${booking.telefon ? `<a href="tel:${escapeHtml(booking.telefon)}" style="color:#c5a059">${escapeHtml(booking.telefon)}</a>` : '–'}<br><small>${escapeHtml(booking.email || '')}</small></td>
+      <td data-label="Akcia"><button class="btn-delete btn-cancel-reservation" data-slot-id="${escapeHtml(docId)}" data-reservation-id="${escapeHtml(booking.id || 'legacy')}">Zrušiť rezerváciu</button></td>
+    `;
+    tr.querySelector('.btn-cancel-reservation').addEventListener('click', () => window.cancelReservation(docId, booking.id || 'legacy'));
+    return tr;
+  }
+
   async function loadSlots() {
     const tbody = document.getElementById("slotsTableBody");
     tbody.innerHTML = "<tr><td colspan='7'>Načítavam...</td></tr>";
@@ -225,6 +335,11 @@
           String(first.cas || '').localeCompare(String(second.cas || ''));
       });
 
+      if (sortedDocs.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='7'>Žiadne termíny v databáze.</td></tr>";
+        return;
+      }
+
       let previousDate = null;
       sortedDocs.forEach((docSnap) => {
         const data = docSnap.data();
@@ -238,26 +353,8 @@
           dateHeading.appendChild(headingCell);
           tbody.appendChild(dateHeading);
         }
-        const tr = document.createElement("tr");
-
-        const clientInfo = data.meno
-          ? `${escapeHtml(data.meno)}<br><small style="color:#c5a059">${escapeHtml(data.masaz || '')}</small>`
-          : '-';
-        const contactInfo = data.telefon
-          ? `<a href="tel:${escapeHtml(data.telefon)}" style="color:#c5a059">${escapeHtml(data.telefon)}</a><br><small>${escapeHtml(data.email || '')}</small>`
-          : '-';
-        const maxTime = data.trvanie ? `${data.trvanie} min` : '180 min';
-        tr.innerHTML = `
-          <td data-label="Dátum">${escapeHtml(data.datum || '')}</td>
-          <td data-label="Čas">${escapeHtml(data.cas || '')}</td>
-          <td data-label="Max okno">${maxTime}</td>
-          <td data-label="Stav" class="${data.obsadene ? 'status-booked' : 'status-free'}">${data.obsadene ? 'OBSADENÉ' : 'Voľné'}</td>
-          <td data-label="Klient / Masáž">${clientInfo}</td>
-          <td data-label="Kontakt">${contactInfo}</td>
-          <td data-label="Akcia"><button class="btn-delete" data-id="${docSnap.id}">Vymazať</button></td>
-        `;
-        tr.querySelector('.btn-delete').addEventListener('click', () => window.deleteSlot(docSnap.id));
-        tbody.appendChild(tr);
+        tbody.appendChild(renderWindowRow(docSnap.id, data));
+        reservationsForSlot(data).forEach(booking => tbody.appendChild(renderReservationRow(docSnap.id, data, booking)));
       });
 } catch (err) {
   tbody.innerHTML = `<tr><td colspan='7'>Chyba pri načítaní: ${err}</td></tr>`;
@@ -280,10 +377,22 @@
   }
 
   window.deleteSlot = async function(id) {
-    if (confirm("Naozaj chcete vymazať tento termín?")) {
+    if (confirm("Naozaj chcete vymazať celé časové okno vrátane rezervácií?")) {
       await deleteDoc(doc(db, "terminy", id));
       loadSlots();
     }
+  };
+
+  window.cancelReservation = async function(slotId, reservationId) {
+    if (!confirm("Naozaj chcete zrušiť túto rezerváciu a uvoľniť jej čas?")) return;
+    const slotRef = doc(db, 'terminy', slotId);
+    await runTransaction(db, async transaction => {
+      const slotSnapshot = await transaction.get(slotRef);
+      if (!slotSnapshot.exists()) return;
+      const reservations = reservationsForSlot(slotSnapshot.data()).filter(booking => booking.id !== reservationId);
+      transaction.update(slotRef, { rezervacie: reservations, obsadene: reservations.length > 0 });
+    });
+    loadSlots();
   };
   document.getElementById("refreshBtn").addEventListener("click", loadSlots);
   loadSlots();
