@@ -389,3 +389,400 @@ body.service-page {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Shared editorial layout for all six massage detail pages. */
+.massage-page .massage-hero {
+  width: min(1240px, calc(100% - 56px));
+  min-height: clamp(430px, 55vh, 590px);
+  margin: 0 auto;
+  padding: clamp(76px, 10vw, 132px) 0 clamp(62px, 8vw, 100px);
+  align-items: stretch;
+  text-align: left;
+}
+
+.massage-hero-inner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 290px);
+  align-items: end;
+  gap: clamp(36px, 8vw, 120px);
+}
+
+.massage-hero-copy { max-width: 800px; }
+.massage-page .massage-hero h1 { max-width: 850px; font-size: clamp(58px, 9vw, 112px); }
+.massage-page .massage-hero .massage-hero-summary { max-width: 570px; margin-top: 26px; }
+
+.massage-hero-prices {
+  min-height: 170px;
+  padding: 25px 27px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-content: center;
+  gap: 7px 18px;
+  border: 1px solid var(--space-line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.33);
+  box-shadow: 0 18px 48px rgba(8, 43, 15, 0.06);
+}
+
+.massage-hero-prices span {
+  color: var(--space-muted);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.massage-hero-prices strong {
+  color: var(--brand-green);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 21px;
+  font-weight: 500;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.massage-content { width: min(1120px, calc(100% - 48px)); margin: 0 auto; padding: 0 0 110px; }
+
+.massage-overview {
+  padding: 35px 0 48px;
+  display: grid;
+  grid-template-columns: minmax(145px, 0.6fr) minmax(0, 1.4fr);
+  gap: 36px;
+  border-top: 1px solid var(--space-line);
+}
+
+.massage-index,
+.massage-eyebrow {
+  margin: 0;
+  color: var(--brand-green-soft);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.21em;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+
+.massage-overview-copy { max-width: 700px; }
+.massage-overview-copy h2,
+.massage-booking-callout h2 {
+  margin: 8px 0 16px;
+  color: var(--space-text);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(34px, 5vw, 54px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+.massage-overview-copy p:last-child { margin: 0; color: #506451; font-size: 14px; line-height: 1.9; }
+
+.massage-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.massage-option-card {
+  min-height: 290px;
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid var(--space-line);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.49), rgba(255, 255, 255, 0.22));
+  box-shadow: 0 20px 54px rgba(8, 43, 15, 0.055);
+}
+
+.massage-option-card h2 {
+  margin: 8px 0 24px;
+  color: var(--space-text);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.massage-price-list { margin: 0; padding: 0; display: grid; list-style: none; }
+.massage-price-list li {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-top: 1px solid var(--space-line);
+}
+
+.massage-price-list li > span { color: #526653; font-size: 13px; }
+.massage-price-list li > strong { color: var(--brand-green); font-family: "Cormorant Garamond", Georgia, serif; font-size: 24px; font-weight: 500; white-space: nowrap; }
+.massage-price-list .massage-addon-row { min-height: 65px; }
+.massage-price-list .massage-addon-row > span { display: grid; gap: 1px; }
+.massage-price-list .massage-addon-row b { color: #294b30; font-size: 12px; font-weight: 500; }
+.massage-price-list .massage-addon-row small { color: var(--space-muted); font-size: 10px; letter-spacing: 0.08em; }
+
+.massage-note {
+  margin-top: 18px;
+  padding: 20px 25px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  border: 1px solid var(--space-line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.massage-note .massage-eyebrow { min-width: 95px; padding-top: 2px; }
+.massage-note p:last-child { margin: 0; color: #607061; font-size: 12px; line-height: 1.7; }
+
+.massage-booking-callout {
+  margin-top: 18px;
+  padding: 30px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  border: 1px solid var(--space-line);
+  border-radius: 22px;
+  background: rgba(8, 43, 15, 0.035);
+}
+
+.massage-booking-callout h2 { max-width: 520px; margin-bottom: 0; font-size: clamp(27px, 4vw, 38px); }
+.massage-booking-callout .massage-eyebrow { margin-bottom: 6px; }
+
+@media (max-width: 760px) {
+  .massage-page .massage-hero { width: calc(100% - 36px); min-height: 0; padding: 75px 0 58px; }
+  .massage-hero-inner { grid-template-columns: 1fr; gap: 30px; }
+  .massage-hero-prices { width: min(100%, 390px); min-height: 0; }
+  .massage-content { width: calc(100% - 36px); padding-bottom: 76px; }
+  .massage-overview { grid-template-columns: 1fr; gap: 14px; padding: 28px 0 34px; }
+  .massage-options { grid-template-columns: 1fr; }
+  .massage-option-card { min-height: 0; }
+  .massage-note { flex-direction: column; gap: 8px; padding: 20px; }
+  .massage-note .massage-eyebrow { min-width: 0; }
+  .massage-booking-callout { align-items: flex-start; flex-direction: column; padding: 26px; }
+}
+
+@media (max-width: 440px) {
+  .massage-page .massage-hero h1 { font-size: clamp(48px, 14vw, 68px); }
+  .massage-hero-prices { padding: 21px; }
+  .massage-option-card { padding: 24px; }
+  .massage-price-list li > span { font-size: 12px; }
+}
+
+.pricing-page .pricing-hero { min-height: clamp(330px, 42vh, 470px); }
+.pricing-page-content .pricing { width: min(1240px, calc(100% - 48px)); margin: 0 auto; padding: 0 0 100px; }
+.pricing-page-content .massage-pricing-grid { width: 100%; margin: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.pricing-page-content .massage-pricing-card { min-height: 0; padding: 26px; }
+.massage-pricing-card h3 { margin: 3px 0 14px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 26px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.massage-pricing-card h3 a { color: var(--space-text); text-decoration: none; }
+.massage-pricing-card h3 a:hover { color: var(--brand-green-soft); }
+.pricing-page-content .pricing .price-list { margin-bottom: 0; }
+.pricing-addons-heading { margin: 24px 0 2px; padding-top: 16px; border-top: 1px solid var(--space-line); color: var(--brand-green-soft); font-size: 9px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+.pricing-page-content .pricing .pricing-addons .price-item { min-height: 48px; gap: 12px; padding: 9px 0; }
+.pricing-addons .price-item span { display: grid; gap: 1px; letter-spacing: 0.015em !important; text-transform: none !important; }
+.pricing-addons .price-item small { color: var(--space-muted); font-size: 10px; letter-spacing: 0.06em; }
+.pricing-page-content .pricing .pricing-addons .price-item strong { font-size: 20px; }
+.pricing-page-content .pricing .pricing-pass-card { width: min(450px, 100%); margin: 20px auto 0; display: block; }
+.pricing-page-content .pricing-pass-card .pricing-block { padding: 28px; }
+.pricing-cta { margin-top: 30px; text-align: center; }
+
+@media (max-width: 760px) {
+  .pricing-page-content .pricing { width: calc(100% - 36px); padding-bottom: 76px; }
+  .pricing-page-content .massage-pricing-grid { grid-template-columns: 1fr; }
+}
+
+/* Calm, balanced finish for the massage pages and full price list. */
+.service-page.massage-page,
+.service-page.pricing-page {
+  background: #e9dfcc;
+  color: #173c20;
+  font-family: "Manrope", sans-serif;
+}
+
+.massage-page .service-nav,
+.pricing-page .service-nav { border-color: rgba(23, 60, 32, 0.15); }
+.massage-page .service-nav-links a,
+.pricing-page .service-nav-links a { font-family: "Manrope", sans-serif; letter-spacing: 0.1em; }
+.massage-page .service-nav-links .service-nav-cta,
+.pricing-page .service-nav-links .service-nav-cta { border-radius: 7px; }
+
+.massage-page .massage-hero {
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: clamp(72px, 10vw, 120px) 24px 62px;
+  align-items: center;
+  text-align: center;
+}
+
+.massage-page .massage-hero-inner {
+  width: min(920px, 100%);
+  margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 26px;
+}
+
+.massage-page .massage-hero-copy { max-width: 850px; text-align: center; }
+.massage-page .service-kicker { margin-bottom: 14px; font-family: "Manrope", sans-serif; letter-spacing: 0.17em; }
+.massage-page .massage-hero h1 {
+  max-width: 100%;
+  color: #173c20;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(42px, 7vw, 76px);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  line-height: 1.06;
+}
+
+.massage-page .massage-hero .massage-hero-summary {
+  max-width: 620px;
+  margin: 19px auto 0;
+  color: #536b56;
+  font-size: clamp(14px, 1.5vw, 16px);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.8;
+}
+
+.massage-page .massage-hero-prices {
+  width: max-content;
+  min-height: 0;
+  padding: 13px 22px;
+  grid-template-columns: auto auto auto auto;
+  align-items: baseline;
+  gap: 8px 13px;
+  border: 1px solid rgba(23, 60, 32, 0.16);
+  border-radius: 8px;
+  background: #f3eee3;
+  box-shadow: none;
+}
+
+.massage-page .massage-hero-prices span { font-size: 9px; letter-spacing: 0.12em; }
+.massage-page .massage-hero-prices strong { color: #173c20; font-family: "Manrope", sans-serif; font-size: 13px; font-weight: 600; text-align: left; }
+
+.massage-page .massage-content { width: min(1040px, calc(100% - 48px)); padding-bottom: 88px; }
+.massage-page .massage-overview {
+  max-width: 790px;
+  margin: 0 auto 32px;
+  padding: 36px 0 39px;
+  display: block;
+  border-top: 1px solid rgba(23, 60, 32, 0.17);
+  text-align: center;
+}
+
+.massage-page .massage-index { display: none; }
+.massage-page .massage-overview-copy { max-width: 710px; margin: 0 auto; }
+.massage-page .massage-eyebrow { color: #55765b; font-size: 9px; letter-spacing: 0.16em; }
+.massage-page .massage-overview-copy h2,
+.massage-page .massage-booking-callout h2 {
+  color: #173c20;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+}
+
+.massage-page .massage-overview-copy p:last-child { color: #536b56; font-size: 14px; line-height: 1.85; }
+.massage-page .massage-options { max-width: 920px; margin: 0 auto; align-items: stretch; gap: 16px; }
+.massage-page .massage-option-card {
+  min-height: 278px;
+  padding: 28px 30px;
+  border: 1px solid rgba(23, 60, 32, 0.15);
+  border-radius: 10px;
+  background: #f3eee3;
+  box-shadow: none;
+}
+
+.massage-page .massage-option-card > .massage-eyebrow,
+.massage-page .massage-option-card > h2 { text-align: center; }
+.massage-page .massage-option-card h2 {
+  margin: 7px 0 21px;
+  color: #173c20;
+  font-family: "Manrope", sans-serif;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.35;
+}
+
+.massage-page .massage-price-list li { min-height: 49px; border-color: rgba(23, 60, 32, 0.13); }
+.massage-page .massage-price-list li > span { color: #536b56; font-size: 12px; }
+.massage-page .massage-price-list li > strong { color: #173c20; font-family: "Manrope", sans-serif; font-size: 15px; font-weight: 600; }
+.massage-page .massage-price-list .massage-addon-row { min-height: 62px; }
+.massage-page .massage-price-list .massage-addon-row b { color: #294b30; font-size: 12px; font-weight: 600; }
+.massage-page .massage-note { max-width: 920px; margin: 16px auto 0; padding: 17px 20px; align-items: center; border-radius: 8px; background: #f3eee3; }
+.massage-page .massage-note .massage-eyebrow { min-width: 112px; }
+.massage-page .massage-note p:last-child { color: #536b56; }
+
+.massage-page .massage-booking-callout {
+  margin: 32px auto 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.massage-page .massage-booking-callout .btn-dark,
+.pricing-preview .pricing-only-button {
+  min-height: 54px;
+  padding: 0 34px;
+  border: 1px solid #173c20;
+  border-radius: 8px;
+  background: #173c20;
+  color: #f3eee3;
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  box-shadow: none;
+  text-transform: uppercase;
+}
+
+.massage-page .massage-booking-callout .btn-dark:hover,
+.pricing-preview .pricing-only-button:hover { transform: translateY(-1px); background: #214c2a; color: #f3eee3; }
+
+.pricing-page .pricing-hero {
+  min-height: 0;
+  padding: 76px 24px 58px;
+}
+
+.pricing-page .pricing-hero h1 {
+  color: #173c20;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(42px, 7vw, 72px);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+}
+
+.pricing-page .pricing-hero p:not(.service-kicker) { color: #536b56; font-size: 14px; font-weight: 400; letter-spacing: 0; }
+.pricing-page-content .pricing { width: min(1120px, calc(100% - 48px)); padding-bottom: 80px; }
+.pricing-page-content .massage-pricing-grid { align-items: stretch; gap: 15px; }
+.pricing-page-content .massage-pricing-card {
+  padding: 24px;
+  border: 1px solid rgba(23, 60, 32, 0.15);
+  border-radius: 10px;
+  background: #f3eee3;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.pricing-page .massage-pricing-card h3 { font-family: "Manrope", sans-serif; font-size: 15px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.4; }
+.pricing-page-content .pricing .price-item span { color: #536b56; font-family: "Manrope", sans-serif; font-size: 11px; letter-spacing: 0.04em; }
+.pricing-page-content .pricing .price-item strong { color: #173c20; font-family: "Manrope", sans-serif; font-size: 14px; font-weight: 600; }
+.pricing-page .pricing-addons-heading { color: #55765b; font-family: "Manrope", sans-serif; }
+
+@media (max-width: 760px) {
+  .massage-page .massage-hero { padding: 64px 20px 48px; }
+  .massage-page .massage-hero-inner { gap: 22px; }
+  .massage-page .massage-hero-prices { width: min(100%, 380px); justify-content: center; grid-template-columns: auto auto; }
+  .massage-page .massage-content { width: calc(100% - 36px); padding-bottom: 68px; }
+  .massage-page .massage-overview { padding: 28px 0 32px; }
+  .massage-page .massage-options { grid-template-columns: 1fr; }
+  .massage-page .massage-option-card { min-height: 0; }
+  .massage-page .massage-note { align-items: flex-start; }
+  .massage-page .massage-booking-callout { justify-content: center; align-items: center; padding: 0; }
+  .pricing-page-content .pricing { width: calc(100% - 36px); padding-bottom: 64px; }
+  .pricing-page-content .massage-pricing-grid { grid-template-columns: 1fr; }
+}

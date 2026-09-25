@@ -6,7 +6,7 @@
 <title>KARA MASÁŽE</title>
 
 <link rel="stylesheet" href="css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <meta name="description" content="Masáže pre uvoľnenie tela a mysle. Doprajte si relax a regeneráciu.">
 
@@ -77,7 +77,7 @@
   .calendar-toolbar h3 {
     margin: 0;
     color: #173c20;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Manrope", sans-serif;
     font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -103,7 +103,7 @@
   .calendar-weekdays { margin-bottom: 6px; }
   .calendar-weekdays span {
     color: #758174;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Manrope", sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -168,7 +168,7 @@
 
   <div class="cursor-glow"></div>
 
-<section class="hero">
+<section class="hero" id="top">
 <video autoplay muted loop playsinline class="hero-video">
   <source src="images/video.mp4" type="video/mp4">
 </video>
@@ -205,73 +205,47 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 </div>
 </section>
 
-<section class="massages reveal">
-
-<h2 class="massages-title">Masáže</h2>
+<section class="massages reveal" id="massages">
 
 <div class="massages-grid">
+<h2 class="massages-title">Masáže</h2>
 
 <a href="deep-balance.html" class="massage-card">
-  <img src="images/m1.jpg">
-  <div class="card-overlay center">
-    <h3 class="title-wide">DEEP BALANCE</h3>
-  </div>
+  <img src="images/m1.jpg" alt="Masáž Deep Balance">
+  <div class="card-overlay center"><h3 class="title-wide">Deep Balance</h3></div>
 </a>
 
 <a href="sedavy-detox.html" class="massage-card">
-  <img src="images/m2.jpg">
-  <div class="card-overlay center">
-    <h3 class="title-wide">SEDAVÝ DETOX</h3>
-  </div>
+  <img src="images/m2.jpg" alt="Masáž Sedavý detox">
+  <div class="card-overlay center"><h3 class="title-wide">Sedavý detox</h3></div>
 </a>
 
 <a href="active-recovery.html" class="massage-card">
-  <img src="images/m3.jpg">
-  <div class="card-overlay center">
-    <h3 class="title-wide">ACTIVE RECOVERY</h3>
-  </div>
+  <img src="images/m3.jpg" alt="Masáž Active Recovery">
+  <div class="card-overlay center"><h3 class="title-wide">Active Recovery</h3></div>
 </a>
 
 <a href="cista-hlava.html" class="massage-card">
-  <img src="images/m4.jpg">
-  <div class="card-overlay center">
-    <h3 class="title-wide">ČISTÁ HLAVA</h3>
-  </div>
+  <img src="images/m4.jpg" alt="Masáž Čistá hlava">
+  <div class="card-overlay center"><h3 class="title-wide">Čistá hlava</h3></div>
 </a>
 
 <a href="face-contouring.html" class="massage-card">
-  <img src="images/m1.jpg">
-  <div class="card-overlay center">
-    <h3 class="title-wide">FACE CONTOURING</h3>
-  </div>
+  <img src="images/m1.jpg" alt="Face contouring a starostlivosť o pleť">
+  <div class="card-overlay center"><h3 class="title-wide">Face Contouring</h3></div>
 </a>
 
 <a href="back-neck.html" class="massage-card">
-  <img src="images/m2.jpg">
-  <div class="card-overlay center">
-    <h3 class="title-wide">BACK & NECK</h3>
-  </div>
+  <img src="images/m2.jpg" alt="Masáž Back &amp; Neck Revival">
+  <div class="card-overlay center"><h3 class="title-wide">Back &amp; Neck Revival</h3></div>
 </a>
 
 </div>
 
 </section>
 
-<section class="pricing-preview reveal">
-<h2>Cenník</h2>
-
-<div class="pricing-card">
-
-<div class="pricing-main">
-<div class="price-item"><span>30 min</span><strong>29€</strong></div>
-<div class="price-item"><span>60 min</span><strong>49€</strong></div>
-<div class="price-item"><span>90 min</span><strong>69€</strong></div>
-<div class="price-item"><span>120 min</span><strong>89€</strong></div>
-</div>
-
-<a href="cennik.html" class="btn-dark">Zobraziť celý cenník</a>
-
-</div>
+<section class="pricing-preview pricing-button-section reveal" aria-label="Cenník">
+  <a href="cennik.html" class="pricing-only-button">Cenník</a>
 </section>
 
 <section class="contact reveal">
@@ -329,25 +303,25 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           <select id="massage" name="Masáž" required>
             <option value="" disabled selected hidden>Najprv zvoľte masáž...</option>
             
-            <option value="DEEP BALANCE - 90 min" data-duration="90">DEEP BALANCE (90 min / 65€)</option>
-            <option value="DEEP BALANCE - 120 min" data-duration="120">DEEP BALANCE (120 min / 85€)</option>
-            <option value="DEEP BALANCE - 150 min" data-duration="150">DEEP BALANCE (150 min / 105€)</option>
-            <option value="DEEP BALANCE - 180 min" data-duration="180">DEEP BALANCE (180 min / 125€)</option>
+            <option value="DEEP BALANCE - 90 min" data-duration="90">DEEP BALANCE (90 min / 65 €)</option>
+            <option value="DEEP BALANCE - 120 min" data-duration="120">DEEP BALANCE (120 min / 85 €)</option>
+            <option value="DEEP BALANCE - 150 min" data-duration="150">DEEP BALANCE (150 min / 105 €)</option>
+            <option value="DEEP BALANCE - 180 min" data-duration="180">DEEP BALANCE (180 min / 125 €)</option>
             
-            <option value="ČISTÁ HLAVA - 30 min" data-duration="30">ČISTÁ HLAVA (30 min / 35€)</option>
-            <option value="ČISTÁ HLAVA - 60 min" data-duration="60">ČISTÁ HLAVA (60 min / 45€)</option>
+            <option value="ČISTÁ HLAVA - 30 min" data-duration="30">ČISTÁ HLAVA (30 min / 35 €)</option>
+            <option value="ČISTÁ HLAVA - 60 min" data-duration="60">ČISTÁ HLAVA (60 min / 45 €)</option>
             
-            <option value="SEDAVÝ DETOX - 60 min" data-duration="60">SEDAVÝ DETOX (60 min / 45€)</option>
-            <option value="SEDAVÝ DETOX - 90 min" data-duration="90">SEDAVÝ DETOX (90 min / 65€)</option>
-            <option value="SEDAVÝ DETOX - 120 min" data-duration="120">SEDAVÝ DETOX (120 min / 85€)</option>
+            <option value="SEDAVÝ DETOX - 60 min" data-duration="60">SEDAVÝ DETOX (60 min / 45 €)</option>
+            <option value="SEDAVÝ DETOX - 90 min" data-duration="90">SEDAVÝ DETOX (90 min / 65 €)</option>
+            <option value="SEDAVÝ DETOX - 120 min" data-duration="120">SEDAVÝ DETOX (120 min / 85 €)</option>
             
-            <option value="ACTIVE RECOVERY - 60 min" data-duration="60">ACTIVE RECOVERY (60 min / 45€)</option>
-            <option value="ACTIVE RECOVERY - 90 min" data-duration="90">ACTIVE RECOVERY (90 min / 65€)</option>
+            <option value="ACTIVE RECOVERY - 60 min" data-duration="60">ACTIVE RECOVERY (60 min / 45 €)</option>
+            <option value="ACTIVE RECOVERY - 90 min" data-duration="90">ACTIVE RECOVERY (90 min / 65 €)</option>
             
-            <option value="BACK AND NECK REVIVAL - 30 min" data-duration="30">BACK AND NECK REVIVAL (30 min / 35€)</option>
-            <option value="BACK AND NECK REVIVAL - 60 min" data-duration="60">BACK AND NECK REVIVAL (60 min / 45€)</option>
+            <option value="BACK AND NECK REVIVAL - 30 min" data-duration="30">BACK AND NECK REVIVAL (30 min / 35 €)</option>
+            <option value="BACK AND NECK REVIVAL - 60 min" data-duration="60">BACK AND NECK REVIVAL (60 min / 45 €)</option>
             
-            <option value="FACECONTOURING - 90 min" data-duration="90">FACECONTOURING A STAROSTLIVOSŤ O PLEŤ (90 min / 90€)</option>
+            <option value="FACECONTOURING - 90 min" data-duration="90">FACE CONTOURING A STAROSTLIVOSŤ O PLEŤ (90 min / 90 €)</option>
           </select>
           <label for="massage">Výber masáže *</label>
         </div>
@@ -423,6 +397,14 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
   </div>
 
 </section>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <span class="site-footer-name">KARA MASÁŽE</span>
+    <p class="site-footer-copy">© 2026 KARA MASÁŽE · Všetky práva vyhradené</p>
+    <a class="site-footer-top" href="#top">NAHOR ↑</a>
+  </div>
+</footer>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
