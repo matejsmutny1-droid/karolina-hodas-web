@@ -1421,3 +1421,31 @@ section {
   .site-footer-inner { grid-template-columns: 1fr; gap: 10px; justify-items: center; text-align: center; }
   .site-footer-top { justify-self: center; }
 }
+
+.hero-content {
+  width: min(520px, calc(100vw - 40px));
+  align-items: center;
+}
+
+.hero .btn {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  padding: 16px 30px;
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  line-height: 1.4;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 500px) {
+  .hero .btn { padding-inline: 22px; letter-spacing: 0.24em; }
+}
