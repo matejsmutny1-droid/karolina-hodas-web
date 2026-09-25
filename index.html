@@ -59,7 +59,6 @@
 
   <div class="cursor-glow"></div>
 
-
 <section class="hero">
 <video autoplay muted loop playsinline class="hero-video">
   <source src="images/video.mp4" type="video/mp4">
@@ -72,7 +71,6 @@
   <a href="#booking" class="btn">Rezervovať termín</a>
 </div>
 </section>
-
 
 <section class="about reveal">
 <div class="about-grid">
@@ -97,7 +95,6 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 
 </div>
 </section>
-
 
 <section class="massages reveal">
 
@@ -151,7 +148,6 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 
 </section>
 
-
 <section class="pricing-preview reveal">
 <h2>Cenník</h2>
 
@@ -168,7 +164,6 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 
 </div>
 </section>
-
 
 <section class="contact reveal">
 <h2>Kontakt</h2>
@@ -189,7 +184,6 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 </div>
 </section>
 
-
 <section class="booking reveal" id="booking">
 
   <div class="booking-wrapper">
@@ -207,31 +201,26 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
       <div class="form-grid">
 
-        
         <div class="form-group">
           <input type="text" id="name" name="Meno" placeholder=" " required pattern="[A-Za-zÁ-ž ]+">
           <label for="name">Meno a priezvisko *</label>
         </div>
 
-        
         <div class="form-group">
           <input type="tel" id="phone" name="Telefón" placeholder=" " required pattern="[0-9+ ]{9,}">
           <label for="phone">Telefónne číslo *</label>
         </div>
 
-        
         <div class="form-group">
           <input type="email" id="email" name="email" placeholder=" ">
           <label for="email">E-mailová adresa *</label>
         </div>
 
-        
         <div class="form-group">
           <input type="date" id="date" name="Termín" required>
           <label for="date" class="label-fixed">Preferovaný dátum *</label>
         </div>
 
-        
         <div class="form-group full-width time-slots-container">
           <label style="position: static; font-size: 0.9em; color: #c5a059;">Dostupné časy pre zvolený dátum *</label>
           <div id="slotsContainer" class="time-slots-grid">
@@ -239,29 +228,40 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           </div>
         </div>
 
-        
         <div class="form-group full-width">
           <select id="massage" name="Masáž" required>
-            <option value="" disabled selected hidden></option>
-            <option value="Deep Balance">DEEP BALANCE</option>
-            <option value="Sedavý Detox">SEDAVÝ DETOX</option>
-            <option value="Active Recovery">ACTIVE RECOVERY</option>
-            <option value="Čistá Hlava">ČISTÁ HLAVA</option>
-            <option value="Face Contouring">FACE CONTOURING</option>
-            <option value="Back & Neck">BACK & NECK</option>
+            <option value="" disabled selected hidden>Najprv zvoľte čas masáže...</option>
+            
+            <option value="DEEP BALANCE - 90 min" data-duration="90">DEEP BALANCE (90 min / 65€)</option>
+            <option value="DEEP BALANCE - 120 min" data-duration="120">DEEP BALANCE (120 min / 85€)</option>
+            <option value="DEEP BALANCE - 150 min" data-duration="150">DEEP BALANCE (150 min / 105€)</option>
+            <option value="DEEP BALANCE - 180 min" data-duration="180">DEEP BALANCE (180 min / 125€)</option>
+            
+            <option value="ČISTÁ HLAVA - 30 min" data-duration="30">ČISTÁ HLAVA (30 min / 35€)</option>
+            <option value="ČISTÁ HLAVA - 60 min" data-duration="60">ČISTÁ HLAVA (60 min / 45€)</option>
+            
+            <option value="SEDAVÝ DETOX - 60 min" data-duration="60">SEDAVÝ DETOX (60 min / 45€)</option>
+            <option value="SEDAVÝ DETOX - 90 min" data-duration="90">SEDAVÝ DETOX (90 min / 65€)</option>
+            <option value="SEDAVÝ DETOX - 120 min" data-duration="120">SEDAVÝ DETOX (120 min / 85€)</option>
+            
+            <option value="ACTIVE RECOVERY - 60 min" data-duration="60">ACTIVE RECOVERY (60 min / 45€)</option>
+            <option value="ACTIVE RECOVERY - 90 min" data-duration="90">ACTIVE RECOVERY (90 min / 65€)</option>
+            
+            <option value="BACK AND NECK REVIVAL - 30 min" data-duration="30">BACK AND NECK REVIVAL (30 min / 35€)</option>
+            <option value="BACK AND NECK REVIVAL - 60 min" data-duration="60">BACK AND NECK REVIVAL (60 min / 45€)</option>
+            
+            <option value="FACECONTOURING - 90 min" data-duration="90">FACECONTOURING A STAROSTLIVOSŤ O PLEŤ (90 min / 90€)</option>
           </select>
           <label for="massage">Výber masáže *</label>
         </div>
 
-        
         <div class="form-group full-width">
           <textarea id="note" name="Poznámka" placeholder=" " rows="3"></textarea>
-          <label for="note">Poznámka (napr. zdravotné obmedzenia)</label>
+          <label for="note">Poznámka (napr. doplnky alebo zdravotné obmedzenia)</label>
         </div>
 
       </div>
 
-      
       <div class="source-group">
         <p class="source-title">Odkiaľ ste sa o nás dozvedeli? *</p>
         <div class="source-options">
@@ -303,7 +303,6 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
 </section>
 
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -326,12 +325,32 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
   const dateInput = document.getElementById("date");
   const slotsContainer = document.getElementById("slotsContainer");
   const selectedTimeInput = document.getElementById("selectedTime");
+  const massageSelect = document.getElementById("massage");
+
+  function filterMassagesByDuration(maxMinutes) {
+    const options = massageSelect.querySelectorAll("option[data-duration]");
+    massageSelect.value = "";
+    
+    options.forEach(opt => {
+      const dur = parseInt(opt.getAttribute("data-duration"));
+      const originalText = opt.text.split(" - (")[0]; 
+
+      if (maxMinutes && dur > maxMinutes) {
+        opt.disabled = true;
+        opt.text = originalText + " - (Nezmestí sa: max " + maxMinutes + " min)";
+      } else {
+        opt.disabled = false;
+        opt.text = originalText;
+      }
+    });
+  }
 
   dateInput.addEventListener("change", async (e) => {
     const selectedDate = e.target.value;
     slotsContainer.innerHTML = "<p class='no-slots-text'>Načítavam voľné časy...</p>";
     selectedTimeInput.value = "";
     selectedSlotId = null;
+    filterMassagesByDuration(null);
 
     try {
       const q = query(collection(db, "terminy"), where("datum", "==", selectedDate), where("obsadene", "==", false));
@@ -356,6 +375,9 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           btn.classList.add("selected");
           selectedTimeInput.value = slot.cas;
           selectedSlotId = docSnap.id;
+
+          const slotDuration = slot.trvanie ? parseInt(slot.trvanie) : 180;
+          filterMassagesByDuration(slotDuration);
         });
 
         slotsContainer.appendChild(btn);
@@ -416,7 +438,8 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
         obsadene: true,
         meno: name.value,
         telefon: phone.value,
-        email: email.value
+        email: email.value,
+        masaz: massageSelect.value
       });
     } catch (err) {
       console.error("Chyba pri rezervácii slotu:", err);

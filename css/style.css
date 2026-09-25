@@ -1,1202 +1,501 @@
-:root{
---bg:#E9DFCC;
---text:#1a1a1a;
---accent:#000;
---soft:rgba(0,0,0,0.15);
---overlay:rgba(0,0,0,0.3);
+:root {
+  --bg: #E9DFCC;
+  --text: #1a1a1a;
+  --accent: #000;
+  --soft: rgba(0, 0, 0, 0.15);
+  --overlay: rgba(0, 0, 0, 0.3);
 }
 
 /* RESET */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-background:var(--bg);
-color:var(--text);
-font-family:'Playfair Display', serif;
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Playfair Display', serif;
+  overflow-x: hidden;
 }
 
-/* GLOBAL */
-
-section{
-padding:100px 20px;
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-h2{
-font-size:42px;
-text-align:center;
-margin-bottom:60px;
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3 {
+  letter-spacing: 1.5px;
+}
+
+h2 {
+  font-size: 42px;
+  text-align: center;
+  margin-bottom: 60px;
+  letter-spacing: 2px;
+}
+
+p {
+  letter-spacing: 0.3px;
+}
+
+section {
+  padding: 100px 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* SCROLLBAR & CURSOR GLOW */
+.scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: black;
+  width: 0%;
+  z-index: 9999;
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0,0,0,0.08), transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
 /* HERO */
-
-.hero{
-position:relative;
-height:100vh;
-overflow:hidden;
+.hero {
+  position: relative;
+  height: 100vh;
+  max-height: 900px;
+  width: 100vw;
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-.hero-video{
-position:absolute;
-top:50%;
-left:50%;
-width:100%;
-height:100%;
-object-fit:cover;
-transform:translate(-50%,-50%);
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  animation: zoomHero 12s ease-in-out infinite alternate;
 }
 
-.overlay{
-position:absolute;
-width:100%;
-height:100%;
-background:var(--overlay);
+@keyframes zoomHero {
+  from { transform: translate(-50%, -50%) scale(1); }
+  to { transform: translate(-50%, -50%) scale(1.08); }
 }
 
-.hero-content{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:40px;
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay);
 }
 
-.logo{
-width:520px;
-max-width:90%;
-filter:invert(1);
-opacity:0.95;
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
 }
 
-/* BUTTON */
-
-.btn{
-padding:14px 36px;
-border:1px solid rgba(255,255,255,0.6);
-color:white;
-text-decoration:none;
-letter-spacing:2px;
+.logo {
+  width: 520px;
+  max-width: 90%;
+  filter: invert(1);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1.5s ease forwards;
 }
 
-.btn:hover{
-background:white;
-color:black;
+.hero .btn {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1.5s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* BUTTONS */
+.btn {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: white;
+  text-decoration: none;
+  letter-spacing: 2px;
+  z-index: 1;
+  transition: color 0.4s;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: -100%;
+  background: white;
+  transition: 0.4s;
+  z-index: -1;
+}
+
+.btn:hover::after {
+  left: 0;
+}
+
+.btn:hover {
+  color: black;
+}
+
+.btn-dark {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  padding: 14px 30px;
+  border: 1px solid black;
+  color: black;
+  letter-spacing: 2px;
+  font-size: 12px;
+  transition: color 0.4s;
+  background: transparent;
+  z-index: 1;
+}
+
+.btn-dark::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: -100%;
+  background: black;
+  transition: 0.4s;
+  z-index: -1;
+}
+
+.btn-dark:hover::after {
+  left: 0;
+}
+
+.btn-dark:hover {
+  color: white;
 }
 
 /* ABOUT */
-
-.about{
-padding-top:100px;
-padding-bottom:60px;
+.about {
+  padding-top: 100px;
+  padding-bottom: 60px;
 }
 
-.about-grid{
-max-width:1100px;
-margin:auto;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:80px;
-align-items:center;
+.about-grid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
 }
 
-.about-title{
-font-size:48px;
-margin-bottom:30px;
-text-align:left;
+.about-left {
+  max-width: 520px;
+  margin: 0 auto;
+  padding-left: 20px;
 }
 
-.about-text{
-margin-bottom:20px;
+.about-title {
+  font-size: 48px;
+  margin-bottom: 30px;
+  text-align: left;
 }
 
-.signature{
-width:120px;
-margin-top:30px;
-filter:brightness(0);
-opacity:0.7;
+.about-text {
+  text-align: left;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.about-right img {
+  height: 500px;
+  object-fit: cover;
+}
+
+.signature {
+  width: 120px;
+  margin-top: 30px;
+  filter: brightness(0);
+  opacity: 0.7;
 }
 
 /* MASÁŽE */
-
-.massages{
-max-width:1200px;
-margin:auto;
-padding-top:60px;
-padding-bottom:100px;
+.massages {
+  max-width: 1100px;
+  margin: auto;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
-.massages-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
+.massages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
 }
 
-.massage-card{
-position:relative;
-height:300px;
-overflow:hidden;
-text-decoration:none;
-color:white;
-border-radius:10px;
+.massage-card {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
-.massage-card img{
-width:100%;
-height:100%;
-object-fit:cover;
-transition:0.6s ease;
+.massage-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.6s ease;
 }
 
-.massage-card::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.2);
-transition:0.4s;
+.massage-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  transition: 0.4s;
 }
 
-.massage-card:hover img{
-transform:scale(1.08);
+.massage-card:hover img {
+  transform: scale(1.08);
 }
 
-.massage-card:hover::after{
-background:rgba(0,0,0,0.4);
+.massage-card:hover::after {
+  background: rgba(0, 0, 0, 0.55);
 }
 
-.card-overlay{
-position:absolute;
-bottom:0;
-width:100%;
-padding:25px;
-background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+.massage-card:hover {
+  transform: translateY(-6px);
 }
 
-/* CONTACT */
-
-.contact{
-padding:140px 20px 60px;
-text-align:center;
+.card-overlay.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
 }
 
-.contact-card{
-max-width:500px;
-margin:auto;
-padding:50px;
-border:1px solid rgba(0,0,0,0.1);
-background:rgba(255,255,255,0.2);
+.title-wide {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 300;
+  line-height: 1.6;
+  text-align: center;
+  padding: 0 10px;
+  transition: 0.4s;
 }
 
-.contact-info{
-margin-top:20px;
-display:flex;
-flex-direction:column;
-gap:10px;
+.massage-card:hover .title-wide {
+  transform: scale(1.05);
+  letter-spacing: 0.65em;
 }
 
-.contact-info a{
-text-decoration:none;
-color:black;
-opacity:0.7;
+/* MASSAGE DETAIL */
+.massage-detail {
+  padding: 120px 20px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.contact-divider{
-margin:25px auto;
-width:40px;
-height:1px;
-background:black;
-opacity:0.3;
+.detail-header {
+  text-align: center;
+  margin-bottom: 80px;
 }
 
-/* BOOKING */
-
-.booking{
-padding:100px 20px 160px;
+.detail-header h1 {
+  font-size: 48px;
+  letter-spacing: 0.6em;
+  margin-bottom: 10px;
 }
 
-.booking-wrapper{
-max-width:800px;
-margin:auto;
-padding:60px;
-border:1px solid rgba(0,0,0,0.1);
-background:rgba(255,255,255,0.5);
+.subtitle {
+  opacity: 0.6;
+  margin-bottom: 30px;
 }
 
-.booking-head{
-text-align:center;
-margin-bottom:40px;
+.detail-logo {
+  width: 60px;
+  opacity: 0.6;
 }
 
-/* FORM */
-
-.booking-form{
-display:flex;
-flex-direction:column;
-gap:25px;
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
 }
 
-/* DESKTOP GRID */
-
-@media(min-width:900px){
-.booking-form{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:30px;
+.detail-text {
+  max-width: 500px;
 }
 
-.booking-form textarea,
-.booking-form button,
-.source{
-grid-column:span 2;
-}
-}
-
-/* INPUTS */
-
-.booking-form input,
-.booking-form select,
-.booking-form textarea{
-border:none;
-border-bottom:1px solid var(--soft);
-background:none;
-padding:14px 5px;
-font-size:15px;
-outline:none;
-transition:0.3s;
+.highlight {
+  font-style: italic;
+  margin-bottom: 25px;
+  opacity: 0.8;
 }
 
-.booking-form input:focus,
-.booking-form select:focus{
-border-color:black;
+.detail-text p {
+  margin-bottom: 20px;
+  line-height: 1.8;
 }
 
-/* BUTTON */
-
-.booking-form button{
-padding:14px;
-border:1px solid black;
-background:none;
-letter-spacing:2px;
-cursor:pointer;
+.detail-visual img {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  display: block;
 }
 
-.booking-form button:hover{
-background:black;
-color:white;
-}
-
-/* SOURCE */
-
-.source{
-margin-top:20px;
-}
-
-.source label{
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:10px;
-cursor:pointer;
-}
-
-.source input{
-appearance:none;
-width:16px;
-height:16px;
-border:1px solid black;
-}
-
-.source input:checked{
-background:black;
-}
-
-/* ERRORS */
-
-.form-group.error input,
-.form-group.error select{
-border-bottom:1px solid #b00020;
-}
-
-.error-message{
-display:none;
-color:#b00020;
-font-size:12px;
-}
-
-.form-group.error .error-message{
-display:block;
-}
-
-.source.error{
-border:1px solid #b00020;
-padding:15px;
-}
-
-/* THANK YOU */
-
-.thanks{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:var(--bg);
-}
-
-.thanks-inner{
-text-align:center;
-}
-
-.thanks h1{
-font-size:64px;
-margin-bottom:20px;
-}
-
-.thanks-line{
-width:40px;
-height:1px;
-background:black;
-margin:20px auto;
-}
-
-.thanks-btn{
-padding:14px 30px;
-border:1px solid black;
-text-decoration:none;
-color:black;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:900px){
-.about-grid{
-grid-template-columns:1fr;
-text-align:center;
-}
-
-.massages-grid{
-grid-template-columns:1fr 1fr;
-}
-}
-
-@media(max-width:500px){
-.massages-grid{
-grid-template-columns:1fr;
-}
-
-.logo{
-width:260px;
-}
-}
-/* ===== GLOBAL FIX ===== */
-
-section{
-max-width:1200px;
-margin:auto;
-}
-
-/* ===== HERO FIX ===== */
-
-.hero{
-height:100vh;
-max-height:900px;
-}
-
-/* ===== ABOUT FIX ===== */
-
-.about-grid{
-max-width:1100px;
-margin:auto;
-}
-
-.about-right img{
-height:500px;
-object-fit:cover;
-}
-
-/* ===== MASSAGES FIX ===== */
-
-.massages{
-max-width:1100px;
-margin:auto;
-}
-
-/* ===== PRICING FIX ===== */
-
+/* PRICING */
 .pricing,
-.pricing-preview{
-max-width:800px;
-margin:auto;
-text-align:center;
+.pricing-preview {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
-/* ===== CONTACT FIX ===== */
-
-.contact{
-max-width:900px;
-margin:auto;
-}
-
-/* ===== BOOKING FIX ===== */
-
-.booking{
-max-width:900px;
-margin:auto;
-}
-
-.booking-wrapper{
-max-width:700px;
-margin:auto;
-padding:50px;
-}
-
-/* FORM späť na clean (žiadny rozbitý grid) */
-
-.booking-form{
-display:flex !important;
-flex-direction:column !important;
-gap:25px;
-}
-
-/* ===== IMAGE OVERFLOW FIX ===== */
-
-img{
-max-width:100%;
-height:auto;
-display:block;
-}
-
-/* ===== MOBILE FIX ===== */
-
-@media(max-width:900px){
-
-section{
-padding:80px 20px;
-}
-
-.about-right img{
-height:350px;
-}
-
-}
-.hero{
-width:100vw;
-max-width:100%;
-}
-h1,h2,h3{
-letter-spacing:1.5px;
-}
-
-h2{
-letter-spacing:2px;
-}
-
-p{
-letter-spacing:0.3px;
-}
-/* ===== MODERN BOOKING ===== */
-
-.booking{
-padding:160px 20px;
-}
-
-.booking-container{
-max-width:700px;
-margin:auto;
-text-align:center;
-}
-
-.booking-sub{
-margin-top:10px;
-margin-bottom:60px;
-opacity:0.6;
-}
-
-.modern-form{
-display:flex;
-flex-direction:column;
-gap:30px;
-}
-
-/* ROW */
-
-.form-row{
-display:flex;
-gap:20px;
-}
-
-.form-row input{
-flex:1;
-}
-
-/* INPUTS */
-
-.modern-form input,
-.modern-form select,
-.modern-form textarea{
-border:none;
-border-bottom:1px solid rgba(0,0,0,0.2);
-background:none;
-padding:16px 5px;
-font-size:15px;
-font-family:'Playfair Display', serif;
-outline:none;
-transition:0.3s;
-}
-
-.modern-form input:focus,
-.modern-form select:focus,
-.modern-form textarea:focus{
-border-color:black;
-}
-
-/* TEXTAREA */
-
-.modern-form textarea{
-min-height:100px;
-}
-
-/* RADIO */
-
-.source{
-text-align:left;
-margin-top:20px;
-}
-
-.source p{
-font-size:12px;
-letter-spacing:2px;
-margin-bottom:15px;
-opacity:0.5;
-}
-
-.source label{
-display:block;
-margin-bottom:10px;
-font-size:14px;
-cursor:pointer;
-opacity:0.7;
-}
-
-.source input{
-margin-right:10px;
-}
-
-/* BUTTON */
-
-.modern-form button{
-margin-top:30px;
-padding:14px;
-border:1px solid black;
-background:none;
-letter-spacing:2px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.modern-form button:hover{
-background:black;
-color:white;
-}
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-.form-row{
-flex-direction:column;
-}
-
-}
-/* ===== PRICING CLEAN ===== */
-
-.pricing-preview{
-padding:140px 20px;
-text-align:center;
-}
-
-.pricing-card{
-max-width:500px;
-margin:40px auto;
-padding:50px;
-border:1px solid rgba(0,0,0,0.1);
-background:rgba(255,255,255,0.25);
-display:flex;
-flex-direction:column;
-gap:40px;
-}
-
-/* MAIN */
-
-.pricing-main{
-display:flex;
-flex-direction:column;
-gap:20px;
-}
-
-.price-item{
-display:flex;
-justify-content:space-between;
-font-size:18px;
-border-bottom:1px solid rgba(0,0,0,0.1);
-padding-bottom:10px;
-}
-
-/* EXTRA */
-
-.pricing-extra{
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-.price-row{
-display:flex;
-justify-content:space-between;
-font-size:15px;
-opacity:0.8;
-}
-.pricing-card,
-.booking-wrapper,
-.contact-card{
-backdrop-filter: blur(6px);
-}
-a{
-text-decoration:none;
-color:inherit;
-}
-.btn-dark{
-display:inline-block;
-padding:14px 30px;
-border:1px solid black;
-color:black;
-letter-spacing:2px;
-font-size:12px;
-transition:0.3s;
-background:transparent;
-}
-
-.btn-dark:hover{
-background:black;
-color:white;
-}
-.booking{
-padding:160px 20px;
-background:#E4DBC9; /* tvoje pozadie */
-}
-
-.booking-wrapper{
-max-width:700px;
-margin:auto;
-padding:60px;
-border:1px solid rgba(0,0,0,0.1);
-background:rgba(255,255,255,0.4);
-}
-.hero{
-margin:0;
-padding:0;
-}
-.booking-wrapper,
-.contact-card,
-.pricing-card{
-background:rgba(255,255,255,0.5);
-}
-.logo{
-animation:fadeLogo 1.5s ease;
-}
-
-@keyframes fadeLogo{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-to{
-opacity:0.95;
-transform:translateY(0);
-}
-}
-.about-left{
-max-width:520px;
-margin:0 auto;
-}
-.about-text{
-text-align:left;
-line-height:1.8;
-}
-.about-left{
-padding-left:20px;
-}
-.pricing-wrapper{
-max-width:600px;
-margin:60px auto;
-padding:50px;
-background:rgba(255,255,255,0.3);
-border:1px solid rgba(0,0,0,0.1);
-}
-
-.pricing-block{
-margin-bottom:50px;
-text-align:center;
-}
-
-.pricing-block h3{
-margin-bottom:25px;
-font-size:20px;
-letter-spacing:2px;
-}
-
-.price-list{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.price-item{
-display:flex;
-justify-content:space-between;
-border-bottom:1px solid rgba(0,0,0,0.1);
-padding-bottom:6px;
-font-size:16px;
+.pricing-wrapper {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 50px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
 }
 
-.price-item span{
-opacity:0.7;
+.pricing-wrapper:hover {
+  transform: translateY(-6px);
 }
 
-.price-item strong{
-font-weight:500;
+.pricing-block {
+  margin-bottom: 50px;
+  text-align: center;
 }
 
-.pricing-note{
-margin-top:20px;
-font-size:13px;
-opacity:0.5;
+.pricing-block h3 {
+  margin-bottom: 25px;
+  font-size: 20px;
+  letter-spacing: 2px;
 }
 
-.pricing .btn-dark{
-margin-top:40px;
-display:inline-block;
+.price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.booking-wrapper{
-max-width:700px;
-margin:auto;
-padding:40px;
-background:rgba(255,255,255,0.35);
-border:1px solid rgba(0,0,0,0.1);
-}
-
-.booking-head{
-text-align:center;
-margin-bottom:30px;
-}
-
-.form-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-.form-row.single{
-grid-template-columns:1fr;
-}
-
-.booking-form{
-display:flex;
-flex-direction:column;
-gap:18px;
-}
-
-.booking-form input,
-.booking-form select,
-.booking-form textarea{
-border:none;
-border-bottom:1px solid rgba(0,0,0,0.2);
-background:none;
-padding:10px 5px;
-font-size:14px;
-font-family:'Playfair Display', serif;
-}
-
-.booking-form textarea{
-min-height:70px;
-}
-
-.source-inline{
-display:flex;
-flex-wrap:wrap;
-gap:15px;
-justify-content:center;
-font-size:13px;
-opacity:0.7;
-margin-top:10px;
-}
-
-.source-inline input{
-margin-right:5px;
-}
-
-.booking-form button{
-margin-top:20px;
-padding:12px;
-border:1px solid black;
-background:none;
-letter-spacing:2px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.booking-form button:hover{
-background:black;
-color:white;
-}
-.massages{
-padding-top:60px;
-padding-bottom:60px;
-}
-
-.pricing-preview{
-padding-top:60px;
-padding-bottom:60px;
-}
-
-.contact{
-padding-top:100px;
-padding-bottom:100px;
-}
-.reveal{
-opacity:0;
-transform:translateY(40px);
-transition:all 0.8s ease;
-}
-
-.reveal.active{
-opacity:1;
-transform:translateY(0);
-}
-.btn,
-.btn-dark{
-position:relative;
-overflow:hidden;
-}
-
-.btn::after,
-.btn-dark::after{
-content:"";
-position:absolute;
-width:100%;
-height:100%;
-top:0;
-left:-100%;
-background:white;
-transition:0.4s;
-z-index:-1;
-}
-
-.btn:hover::after,
-.btn-dark:hover::after{
-left:0;
-}
-
-.btn:hover{
-color:black;
-}
-
-.btn-dark::after{
-background:black;
-}
-
-.btn-dark:hover{
-color:white;
-}
-.hero-video{
-animation:zoomHero 12s ease-in-out infinite alternate;
-}
-
-@keyframes zoomHero{
-from{ transform:translate(-50%,-50%) scale(1); }
-to{ transform:translate(-50%,-50%) scale(1.08); }
-}
-.logo{
-opacity:0;
-transform:translateY(20px);
-animation:fadeIn 1.5s ease forwards;
-}
-
-@keyframes fadeIn{
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-.reveal{
-opacity:0;
-transform:translateY(50px);
-transition:all 0.9s ease;
-}
-
-.reveal.active{
-opacity:1;
-transform:translateY(0);
-}
-.massage-card,
-.contact-card,
-.pricing-wrapper,
-.booking-wrapper{
-transition:all 0.3s ease;
-}
-
-.massage-card:hover,
-.contact-card:hover,
-.pricing-wrapper:hover,
-.booking-wrapper:hover{
-transform:translateY(-6px);
-}
-.cursor-glow{
-position:fixed;
-width:300px;
-height:300px;
-background:radial-gradient(circle, rgba(0,0,0,0.08), transparent 70%);
-pointer-events:none;
-transform:translate(-50%,-50%);
-z-index:0;
-}
-.scroll-bar{
-position:fixed;
-top:0;
-left:0;
-height:2px;
-background:black;
-width:0%;
-z-index:9999;
-}
-.pricing-wrapper,
-.booking-wrapper,
-.contact-card{
-background:rgba(255,255,255,0.35);
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-border:1px solid rgba(0,0,0,0.08);
-}
-.logo{
-opacity:0;
-transform:translateY(30px);
-animation:fadeUp 1.5s ease forwards;
-}
-
-.hero .btn{
-opacity:0;
-transform:translateY(20px);
-animation:fadeUp 1.5s ease forwards;
-animation-delay:0.5s;
-}
-
-@keyframes fadeUp{
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-.booking-form input:focus,
-.booking-form select:focus,
-.booking-form textarea:focus{
-border-bottom:1px solid black;
-box-shadow:0 5px 15px rgba(0,0,0,0.05);
-}
-.reveal{
-opacity:1;
-transform:translateY(0);
-transition:all 0.8s ease;
-}
-
-.reveal.active{
-opacity:1;
-transform:translateY(0);
-}
-/* CENTER TEXT IN CARD */
-/* GRID FIX - vždy 3 v rade (lepšie rozloženie) */
-.massages-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:30px;
-}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-.massages-grid{
-grid-template-columns:repeat(2,1fr);
-}
-}
-
-@media(max-width:500px){
-.massages-grid{
-grid-template-columns:1fr;
-}
-}
-
-/* CENTER overlay */
-.card-overlay.center{
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
-
-/* DARK overlay pre kontrast */
-.massage-card::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.35);
-transition:0.4s;
-}
-
-/* TEXT */
-.title-wide{
-font-family:'Raleway', sans-serif;
-font-size:14px;
-letter-spacing:0.55em; /* ≈ 550 */
-text-transform:uppercase;
-color:white;
-font-weight:300;
-line-height:1.6;
-text-align:center;
-padding:0 10px;
-}
-
-/* HOVER = premium efekt */
-.massage-card:hover::after{
-background:rgba(0,0,0,0.55);
-}
 
-.massage-card:hover .title-wide{
-transform:scale(1.05);
-letter-spacing:0.65em;
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 6px;
+  font-size: 16px;
 }
 
-/* SMOOTH */
-.title-wide{
-transition:0.4s;
+.price-item span {
+  opacity: 0.7;
 }
 
-/* DARKEN IMAGE FOR READABILITY */
-.massage-card::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.25);
+.price-item strong {
+  font-weight: 500;
 }
-
-/* HOVER EFFECT */
-.massage-card:hover::after{
-background:rgba(0,0,0,0.45);
-}
-/* ===== MASSAGE DETAIL ===== */
-
-.massage-detail{
-padding:120px 20px;
-max-width:1200px;
-margin:auto;
-}
-
-/* HEADER */
-
-.detail-header{
-text-align:center;
-margin-bottom:80px;
-}
-
-.detail-header h1{
-font-size:48px;
-letter-spacing:0.6em;
-margin-bottom:10px;
-}
-
-.subtitle{
-opacity:0.6;
-margin-bottom:30px;
-}
-
-.detail-logo{
-width:60px;
-opacity:0.6;
-}
-
-/* GRID */
-
-.detail-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:80px;
-align-items:center;
-}
-
-/* TEXT */
-
-.detail-text{
-max-width:500px;
-}
-
-.highlight{
-font-style:italic;
-margin-bottom:25px;
-opacity:0.8;
-}
-
-.detail-text p{
-margin-bottom:20px;
-line-height:1.8;
-}
-
-/* DURATION */
-
-.duration{
-display:flex;
-align-items:center;
-gap:15px;
-margin-top:30px;
+/* CONTACT */
+.contact {
+  padding: 100px 20px;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
 }
 
-.duration img{
-width:28px;
-opacity:0.7;
+.contact-card {
+  max-width: 500px;
+  margin: auto;
+  padding: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
 }
-
-/* VISUAL */
 
-.detail-visual img{
-width:100%;
-max-width:500px;
-margin:auto;
-display:block;
+.contact-card:hover {
+  transform: translateY(-6px);
 }
-
-/* MOBILE */
-
-@media(max-width:900px){
 
-.detail-grid{
-grid-template-columns:1fr;
-text-align:center;
+.contact-info {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.detail-text{
-margin:auto;
+.contact-info a {
+  text-decoration: none;
+  color: black;
+  opacity: 0.7;
 }
 
+.contact-divider {
+  margin: 25px auto;
+  width: 40px;
+  height: 1px;
+  background: black;
+  opacity: 0.3;
 }
-/* ==========================================
-   MODERN REFINED BOOKING FORM
-   ========================================== */
 
+/* BOOKING FORM - OPRAVA PREKRÝVANIA TEXTU */
 .booking {
   padding: 120px 20px 160px;
+  max-width: 900px;
+  margin: auto;
   background: var(--bg);
 }
 
@@ -1210,6 +509,11 @@ margin:auto;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.booking-wrapper:hover {
+  transform: translateY(-6px);
 }
 
 .booking-head {
@@ -1233,8 +537,6 @@ margin:auto;
   font-weight: 400;
 }
 
-/* FORM GRID */
-
 .booking-form {
   display: flex;
   flex-direction: column;
@@ -1251,12 +553,26 @@ margin:auto;
   grid-column: span 2;
 }
 
-/* FLOATING INPUTS */
-
+/* FLOATING LABELS & INPUTS */
 .form-group {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 20px;
+}
+
+.form-group label {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  transition: all 0.3s ease;
 }
 
 .form-group input,
@@ -1266,7 +582,7 @@ margin:auto;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   background: transparent;
-  padding: 12px 0 8px 0;
+  padding: 10px 0;
   font-family: 'Playfair Display', serif;
   font-size: 16px;
   color: #000;
@@ -1280,28 +596,15 @@ margin:auto;
   min-height: 80px;
 }
 
-.form-group label {
-  position: absolute;
-  top: 12px;
-  left: 0;
-  font-family: 'Raleway', sans-serif;
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-/* Label Floating Effect */
+/* Zabezpečenie správneho odsadnutia nadpisu pri selecte a zadanom texte */
+.form-group select ~ label,
 .form-group input:focus ~ label,
 .form-group input:not(:placeholder-shown) ~ label,
 .form-group textarea:focus ~ label,
 .form-group textarea:not(:placeholder-shown) ~ label,
 .form-group select:focus ~ label,
-.form-group select:valid ~ label,
 .form-group .label-fixed {
-  top: -16px;
+  top: 0px;
   font-size: 10px;
   letter-spacing: 2px;
   color: #000;
@@ -1312,9 +615,8 @@ margin:auto;
 .form-group select:focus,
 .form-group textarea:focus {
   border-bottom: 1.5px solid #000;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
-
-/* SELECT SPECIFIC */
 
 .form-group select {
   cursor: pointer;
@@ -1329,8 +631,7 @@ margin:auto;
   padding: 10px;
 }
 
-/* CUSTOM RADIO BUTTONS (ZDROJ) */
-
+/* RADIO BUTTONS */
 .source-group {
   margin-top: 10px;
 }
@@ -1401,8 +702,6 @@ margin:auto;
   text-transform: uppercase;
 }
 
-/* SUBMIT BUTTON */
-
 .btn-submit {
   margin-top: 15px;
   width: 100%;
@@ -1441,7 +740,101 @@ margin:auto;
   transform-origin: left;
 }
 
-/* RESPONSIVE */
+/* ERRORS & THANK YOU */
+.form-group.error input,
+.form-group.error select {
+  border-bottom: 1px solid #b00020;
+}
+
+.error-message {
+  display: none;
+  color: #b00020;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.form-group.error .error-message {
+  display: block;
+}
+
+.thanks {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+}
+
+.thanks-inner {
+  text-align: center;
+}
+
+.thanks h1 {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.thanks-line {
+  width: 40px;
+  height: 1px;
+  background: black;
+  margin: 20px auto;
+}
+
+.thanks-btn {
+  padding: 14px 30px;
+  border: 1px solid black;
+  text-decoration: none;
+  color: black;
+}
+
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s ease;
+}
+
+/* RESPONSIVE (MOBILE FIX) */
+@media (max-width: 900px) {
+  section {
+    padding: 80px 20px;
+  }
+
+  h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .about-left {
+    padding-left: 0;
+  }
+
+  .about-title {
+    text-align: center;
+  }
+
+  .about-right img {
+    height: 350px;
+  }
+
+  .massages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .detail-text {
+    margin: auto;
+  }
+}
 
 @media (max-width: 768px) {
   .booking-wrapper {
@@ -1459,5 +852,367 @@ margin:auto;
 
   .source-options {
     gap: 14px 18px;
+  }
+}
+
+@media (max-width: 500px) {
+  .logo {
+    width: 260px;
+  }
+
+  .massages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-wrapper,
+  .pricing-wrapper,
+  .contact-card {
+    padding: 30px 20px;
+  }
+
+  .detail-header h1 {
+    font-size: 32px;
+    letter-spacing: 0.3em;
+  }
+}
+/* ==========================================
+   PRICING & PRICING PREVIEW (MODERN LUXURY 2027)
+   ========================================== */
+.pricing,
+.pricing-preview {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.pricing-wrapper {
+  max-width: 680px;
+  margin: 40px auto 0;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.pricing-wrapper:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.07);
+}
+
+.price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.price-item:hover {
+  background: rgba(255, 255, 255, 0.5);
+  padding-left: 24px;
+  padding-right: 24px;
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+
+.price-item span {
+  font-family: 'Raleway', sans-serif;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #2b2b2b;
+  font-weight: 500;
+}
+
+.price-item strong {
+  font-family: 'Raleway', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #000;
+}
+
+/* modernizované tlačidlo cenníka */
+.pricing-preview .btn-dark,
+.pricing .btn-dark {
+  display: inline-block;
+  padding: 16px 42px;
+  border: 1px solid #000;
+  border-radius: 40px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #000;
+  background: transparent;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.pricing-preview .btn-dark::after,
+.pricing .btn-dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.pricing-preview .btn-dark:hover,
+.pricing .btn-dark:hover {
+  color: #fff;
+  border-color: #000;
+}
+
+.pricing-preview .btn-dark:hover::after,
+.pricing .btn-dark:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
+/* ==========================================
+   CONTACT SECTION (MODERN LUXURY 2027)
+   ========================================== */
+.contact {
+  padding: 100px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-card {
+  max-width: 580px;
+  margin: 40px auto 0;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.07);
+}
+
+.contact-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.contact-info a {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  color: #333;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.contact-info a:hover {
+  color: #000;
+  transform: scale(1.03);
+}
+
+.contact-divider {
+  margin: 30px auto;
+  width: 50px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.contact-note {
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.65);
+}
+/* ==========================================
+   MASSAGE DETAIL (MODERN LUXURY 2027)
+   ========================================== */
+.massage-detail {
+  padding: 100px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.detail-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  padding: 60px 50px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.detail-text {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.detail-tagline {
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #000;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.detail-lead {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  font-style: italic;
+}
+
+/* Benefit List - Clean Bullets */
+.benefit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 10px 0;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.benefit-item::before {
+  content: "—";
+  color: #000;
+  font-weight: bold;
+}
+
+/* Duration Tags (Pills) */
+.duration-section {
+  margin-top: 10px;
+}
+
+.duration-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 12px;
+}
+
+.duration-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.duration-pill {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 30px;
+  padding: 10px 18px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.duration-pill strong {
+  font-weight: 600;
+}
+
+.duration-pill:hover {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+  transform: translateY(-2px);
+}
+
+/* Contraindications Note */
+.contraindications {
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1.5;
+  margin-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 16px;
+}
+
+/* Visual Image Hover Effect */
+.detail-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detail-visual img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.08));
+}
+
+.detail-card:hover .detail-visual img {
+  transform: scale(1.03) rotate(1deg);
+}
+
+/* Responsive adjustment */
+@media (max-width: 900px) {
+  .detail-card {
+    padding: 40px 24px;
+  }
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
