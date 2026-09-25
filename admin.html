@@ -45,6 +45,15 @@
   table { width: 100%; border-collapse: collapse; margin-top: 15px; }
   th, td { border: 1px solid #333; padding: 10px; text-align: left; }
   th { background: #2a2a2a; color: #c5a059; font-size: 0.85rem; }
+  #refreshBtn { width: auto; min-width: 190px; }
+  .date-group-row td {
+    background: #302a1d;
+    color: #e0bd73;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 12px 14px;
+    border-top: 2px solid #c5a059;
+  }
   
   .status-free { color: #55ff55; font-weight: bold; }
   .status-booked { color: #ff5555; font-weight: bold; }
@@ -87,6 +96,21 @@
       color: #c5a059;
       content: attr(data-label);
     }
+    .date-group-row {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin: 18px 0 8px;
+    }
+    .date-group-row td {
+      display: block;
+      border: 1px solid #6e592f;
+      border-radius: 6px;
+      padding: 11px 12px;
+      text-align: left;
+      background: #302a1d;
+    }
+    .date-group-row td:before { content: none; }
     .btn-delete { width: 100%; margin-top: 5px; }
   }
 </style>
@@ -194,24 +218,75 @@
         return;
       }
 
-      querySnapshot.forEach((docSnap) => {
+      const sortedDocs = querySnapshot.docs.slice().sort((a, b) => {
+        const first = a.data();
+        const second = b.data();
+        return String(first.datum || '').localeCompare(String(second.datum || '')) ||
+          String(first.cas || '').localeCompare(String(second.cas || ''));
+      });
+
+      let previousDate = null;
+      sortedDocs.forEach((docSnap) => {
         const data = docSnap.data();
+        if (data.datum !== previousDate) {
+          previousDate = data.datum;
+          const dateHeading = document.createElement('tr');
+          dateHeading.className = 'date-group-row';
+          const headingCell = document.createElement('td');
+          headingCell.colSpan = 7;
+          headingCell.textContent = formatDateHeading(data.datum);
+          dateHeading.appendChild(headingCell);
+          tbody.appendChild(dateHeading);
+        }
         const tr = document.createElement("tr");
 
-        const clientInfo = data.meno ? `${data.meno}
-<small style='color:#c5a059'>${data.masaz || ''}</small>: '-'; const contactInfo = data.telefon ?<a href="tel:${data.telefon}" style="color:#c5a059">${data.telefon}</a><small>${data.email || ''}</small>` : '-';
-const maxTime = data.trvanie ? `${data.trvanie} min` : '180 min';    tr.innerHTML = `
-      <td data-label="Dátum">${data.datum}</td>
-      <td data-label="Čas">${data.cas}</td>
-      <td data-label="Max okno">${maxTime}</td>
-      <td data-label="Stav" class="\({data.obsadene ? 'status-booked' : 'status-free'}">\){data.obsadene ? 'OBSADENÉ' : 'Voľné'}</td>
-      <td data-label="Klient / Masáž">${clientInfo}</td>
-      <td data-label="Kontakt">${contactInfo}</td>
-      <td data-label="Akcia"><button class="btn-delete" onclick="window.deleteSlot('${docSnap.id}')">Vymazať</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
+        const clientInfo = data.meno
+          ? `${escapeHtml(data.meno)}<br><small style="color:#c5a059">${escapeHtml(data.masaz || '')}</small>`
+          : '-';
+        const contactInfo = data.telefon
+          ? `<a href="tel:${escapeHtml(data.telefon)}" style="color:#c5a059">${escapeHtml(data.telefon)}</a><br><small>${escapeHtml(data.email || '')}</small>`
+          : '-';
+        const maxTime = data.trvanie ? `${data.trvanie} min` : '180 min';
+        tr.innerHTML = `
+          <td data-label="Dátum">${escapeHtml(data.datum || '')}</td>
+          <td data-label="Čas">${escapeHtml(data.cas || '')}</td>
+          <td data-label="Max okno">${maxTime}</td>
+          <td data-label="Stav" class="${data.obsadene ? 'status-booked' : 'status-free'}">${data.obsadene ? 'OBSADENÉ' : 'Voľné'}</td>
+          <td data-label="Klient / Masáž">${clientInfo}</td>
+          <td data-label="Kontakt">${contactInfo}</td>
+          <td data-label="Akcia"><button class="btn-delete" data-id="${docSnap.id}">Vymazať</button></td>
+        `;
+        tr.querySelector('.btn-delete').addEventListener('click', () => window.deleteSlot(docSnap.id));
+        tbody.appendChild(tr);
+      });
 } catch (err) {
   tbody.innerHTML = `<tr><td colspan='7'>Chyba pri načítaní: ${err}</td></tr>`;
 }
-}window.deleteSlot = async function(id) {if (confirm("Naozaj chcete vymazať tento termín?")) {await deleteDoc(doc(db, "terminy", id));loadSlots();}};document.getElementById("refreshBtn").addEventListener("click", loadSlots);loadSlots();</script></body></html>
+}
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[character]);
+  }
+
+  function formatDateHeading(value) {
+    if (!value) return 'Dátum neuvedený';
+    const date = new Date(`${value}T00:00:00`);
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat('sk-SK', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    }).format(date);
+  }
+
+  window.deleteSlot = async function(id) {
+    if (confirm("Naozaj chcete vymazať tento termín?")) {
+      await deleteDoc(doc(db, "terminy", id));
+      loadSlots();
+    }
+  };
+  document.getElementById("refreshBtn").addEventListener("click", loadSlots);
+  loadSlots();
+</script>
+</body>
+</html>

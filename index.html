@@ -305,7 +305,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, query, where, getDocs, doc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBAUiW5uWKkj_aDq_4KXz2bdBIuxTQbadE",
@@ -326,6 +326,25 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
   const slotsContainer = document.getElementById("slotsContainer");
   const selectedTimeInput = document.getElementById("selectedTime");
   const massageSelect = document.getElementById("massage");
+
+  function toMinutes(time) {
+    const [hours, minutes] = (time || "0:0").split(":").map(Number);
+    return hours * 60 + minutes;
+  }
+
+  function breakMinutes(duration) {
+    if (duration === 30) return 15;
+    if (duration === 150 || duration === 180) return 30;
+    return 20;
+  }
+
+  function slotDuration(slot) {
+    return Number.parseInt(slot.trvanie, 10) || 180;
+  }
+
+  function overlaps(startA, endA, startB, endB) {
+    return startA < endB && startB < endA;
+  }
 
   function filterMassagesByDuration(maxMinutes) {
     const options = massageSelect.querySelectorAll("option[data-duration]");
@@ -353,18 +372,33 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     filterMassagesByDuration(null);
 
     try {
-      const q = query(collection(db, "terminy"), where("datum", "==", selectedDate), where("obsadene", "==", false));
+      const q = query(collection(db, "terminy"), where("datum", "==", selectedDate));
       const querySnapshot = await getDocs(q);
+
+      const allSlots = querySnapshot.docs.map(docSnap => ({ id: docSnap.id, ref: docSnap.ref, data: docSnap.data() }));
+      const booked = allSlots.filter(item => item.data.obsadene);
+      const available = allSlots.filter(item => {
+        if (item.data.obsadene) return false;
+        const start = toMinutes(item.data.cas);
+        return !booked.some(booking => {
+          const bookedStart = toMinutes(booking.data.cas);
+          const duration = Number.parseInt(booking.data.trvanieRezervacie, 10) ||
+            Number.parseInt((booking.data.masaz || "").match(/(\d+)\s*min/i)?.[1], 10) || 0;
+          if (!duration) return false;
+          const blockedEnd = bookedStart + duration + (Number.parseInt(booking.data.prestavka, 10) || breakMinutes(duration));
+          return overlaps(start, start + slotDuration(item.data), bookedStart, blockedEnd);
+        });
+      });
 
       slotsContainer.innerHTML = "";
 
-      if (querySnapshot.empty) {
+      if (available.length === 0) {
         slotsContainer.innerHTML = "<p class='no-slots-text'>Pre tento dátum nie sú dostupné žiadne voľné časy.</p>";
         return;
       }
 
-      querySnapshot.forEach((docSnap) => {
-        const slot = docSnap.data();
+      available.sort((a, b) => toMinutes(a.data.cas) - toMinutes(b.data.cas)).forEach((item) => {
+        const slot = item.data;
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "time-slot-btn";
@@ -374,7 +408,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           document.querySelectorAll(".time-slot-btn").forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
           selectedTimeInput.value = slot.cas;
-          selectedSlotId = docSnap.id;
+          selectedSlotId = item.id;
 
           const slotDuration = slot.trvanie ? parseInt(slot.trvanie) : 180;
           filterMassagesByDuration(slotDuration);
@@ -427,22 +461,60 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
       valid = false;
     }
 
+    if (!massageSelect.value) {
+      alert("Vyberte si prosím masáž.");
+      valid = false;
+    }
+
     if(!valid){
       e.preventDefault();
       return;
     }
 
     try {
-      const slotRef = doc(db, "terminy", selectedSlotId);
-      await updateDoc(slotRef, {
-        obsadene: true,
-        meno: name.value,
-        telefon: phone.value,
-        email: email.value,
-        masaz: massageSelect.value
+      e.preventDefault();
+      const selectedDate = dateInput.value;
+      const slotsSnapshot = await getDocs(query(collection(db, "terminy"), where("datum", "==", selectedDate)));
+      const slotRefs = slotsSnapshot.docs.map(item => ({ id: item.id, ref: item.ref }));
+      const chosenRef = doc(db, "terminy", selectedSlotId);
+      const duration = Number.parseInt(massageSelect.selectedOptions[0].dataset.duration, 10);
+      const pause = breakMinutes(duration);
+      const start = toMinutes(selectedTimeInput.value);
+      let submitted = false;
+
+      await runTransaction(db, async transaction => {
+        const snapshots = await Promise.all(slotRefs.map(item => transaction.get(item.ref)));
+        const chosenIndex = slotRefs.findIndex(item => item.id === selectedSlotId);
+        const chosen = snapshots[chosenIndex];
+        if (!chosen || !chosen.exists() || chosen.data().obsadene) throw new Error("Tento termín už bol rezervovaný. Obnovte výber času.");
+
+        const conflict = snapshots.some((snapshot, index) => {
+          if (index === chosenIndex || !snapshot.exists() || !snapshot.data().obsadene) return false;
+          const booked = snapshot.data();
+          const bookedDuration = Number.parseInt(booked.trvanieRezervacie, 10) || Number.parseInt((booked.masaz || "").match(/(\d+)\s*min/i)?.[1], 10) || 0;
+          if (!bookedDuration) return false;
+          const bookedStart = toMinutes(booked.cas);
+          const bookedEnd = bookedStart + bookedDuration + (Number.parseInt(booked.prestavka, 10) || breakMinutes(bookedDuration));
+          return overlaps(start, start + duration, bookedStart, bookedEnd);
+        });
+        if (conflict) throw new Error("Tento čas sa prekrýva s inou rezerváciou alebo prestávkou. Obnovte výber času.");
+
+        transaction.update(chosenRef, {
+          obsadene: true,
+          meno: name.value,
+          telefon: phone.value,
+          email: email.value,
+          masaz: massageSelect.value,
+          trvanieRezervacie: duration,
+          prestavka: pause
+        });
+        submitted = true;
       });
+      if (submitted) this.submit();
     } catch (err) {
       console.error("Chyba pri rezervácii slotu:", err);
+      e.preventDefault();
+      alert(err.message || "Rezerváciu sa nepodarilo uložiť. Skúste to znova.");
     }
   });
 </script>
