@@ -352,16 +352,17 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
         <div class="form-group full-width">
           <textarea id="note" name="Poznámka" placeholder=" " rows="3"></textarea>
-          <label for="note">Poznámka (napr. doplnky alebo zdravotné obmedzenia)</label>
+          <label for="note">Poznámka (napr. doplnky k rezervácii)</label>
+          <p class="booking-privacy-hint">Prosíme, nevpisujte sem diagnózy ani iné zdravotné údaje. Ak máte otázku k vhodnosti masáže, <a href="kontraindikacie.html">prečítajte si tieto informácie</a> alebo nás kontaktujte.</p>
         </div>
 
       </div>
 
       <div class="source-group">
-        <p class="source-title">Odkiaľ ste sa o nás dozvedeli? *</p>
+        <p class="source-title">Odkiaľ ste sa o nás dozvedeli? (nepovinné)</p>
         <div class="source-options">
           <label class="custom-radio">
-            <input type="radio" name="Zdroj" value="Instagram" required>
+            <input type="radio" name="Zdroj" value="Instagram">
             <span class="radio-box"></span>
             <span class="radio-label">Instagram</span>
           </label>
@@ -391,6 +392,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
       <button type="submit" class="btn-submit">
         <span>Odoslať rezerváciu</span>
       </button>
+      <p class="booking-privacy-note">Informácie o spracúvaní údajov nájdete v <a href="ochrana-osobnych-udajov.html">zásadách ochrany osobných údajov</a>.</p>
 
     </form>
 
@@ -402,6 +404,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
   <div class="site-footer-inner">
     <span class="site-footer-name">KARA MASÁŽE</span>
     <p class="site-footer-copy">© 2026 KARA MASÁŽE · Všetky práva vyhradené</p>
+    <a class="site-footer-privacy" href="ochrana-osobnych-udajov.html">Ochrana osobných údajov</a>
     <a class="site-footer-top" href="#top">NAHOR ↑</a>
   </div>
 </footer>
@@ -736,7 +739,6 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     const phone = this.querySelector('[name="Telefón"]');
     const email = this.querySelector('[name="email"]');
     const date = this.querySelector('[name="Termín"]');
-    const source = this.querySelectorAll('[name="Zdroj"]:checked');
 
     if(!/^[A-Za-zÁ-ž ]+$/.test(name.value)){
       alert("Zadajte správne meno");
@@ -760,11 +762,6 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
     if(!selectedTimeInput.value || !selectedSlotId){
       alert("Vyberte si prosím konkrétny čas masáže");
-      valid = false;
-    }
-
-    if(source.length === 0){
-      alert("Vyberte, odkiaľ ste sa o nás dozvedeli");
       valid = false;
     }
 
