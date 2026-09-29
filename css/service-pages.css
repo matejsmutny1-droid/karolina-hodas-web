@@ -682,7 +682,29 @@ body.service-page {
 }
 
 .massage-page .massage-overview-copy p:last-child { color: #536b56; font-size: 14px; line-height: 1.85; }
+.massage-page .massage-overview-copy > p:not(.massage-eyebrow) { margin: 14px 0 0; color: #536b56; font-size: 14px; line-height: 1.85; }
+.massage-focus,
+.massage-benefits { width: min(920px, 100%); margin: 0 auto 28px; }
+.massage-focus {
+  padding: 20px 24px;
+  border: 1px solid rgba(23, 60, 32, 0.15);
+  border-radius: 10px;
+  background: #f3eee3;
+}
+.massage-focus > p:last-child { margin: 7px 0 0; color: #536b56; font-size: 13px; line-height: 1.8; }
+.massage-benefits > .massage-eyebrow { margin-bottom: 13px; }
+.massage-benefit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.massage-benefit-card {
+  padding: 21px 23px;
+  border: 1px solid rgba(23, 60, 32, 0.13);
+  border-radius: 10px;
+  background: rgba(243, 238, 227, 0.72);
+}
+.massage-benefit-card h3 { margin: 0 0 8px; color: #173c20; font-size: 13px; font-weight: 600; letter-spacing: 0.015em; }
+.massage-benefit-card p { margin: 0; color: #536b56; font-size: 12px; line-height: 1.8; }
+.massage-treatment-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .massage-page .massage-options { max-width: 920px; margin: 0 auto; align-items: stretch; gap: 16px; }
+.massage-page .massage-options--single { grid-template-columns: minmax(0, 440px); justify-content: center; }
 .massage-page .massage-option-card {
   min-height: 278px;
   padding: 28px 30px;
@@ -694,6 +716,7 @@ body.service-page {
 
 .massage-page .massage-option-card > .massage-eyebrow,
 .massage-page .massage-option-card > h2 { text-align: center; }
+.massage-page .massage-option-card > .massage-eyebrow { margin-bottom: 21px; }
 .massage-page .massage-option-card h2 {
   margin: 7px 0 21px;
   color: #173c20;
@@ -780,9 +803,17 @@ body.service-page {
   .massage-page .massage-content { width: calc(100% - 36px); padding-bottom: 68px; }
   .massage-page .massage-overview { padding: 28px 0 32px; }
   .massage-page .massage-options { grid-template-columns: 1fr; }
+  .massage-page .massage-options--single { width: min(100%, 440px); margin-right: auto; margin-left: auto; }
+  .massage-treatment-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .massage-page .massage-option-card { min-height: 0; }
   .massage-page .massage-note { align-items: flex-start; }
   .massage-page .massage-booking-callout { justify-content: center; align-items: center; padding: 0; }
   .pricing-page-content .pricing { width: calc(100% - 36px); padding-bottom: 64px; }
   .pricing-page-content .massage-pricing-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 440px) {
+  .massage-benefit-grid,
+  .massage-treatment-grid { grid-template-columns: 1fr; }
+  .massage-focus { padding: 18px 20px; }
 }
