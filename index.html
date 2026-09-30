@@ -217,27 +217,27 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 </a>
 
 <a href="cista-hlava.html" class="massage-card">
-  <img src="images/m4.jpg" alt="Masáž Čistá hlava">
+  <img src="images/m2.jpg" alt="Masáž Čistá hlava">
   <div class="card-overlay center"><h3 class="title-wide">Čistá hlava</h3></div>
 </a>
 
 <a href="sedavy-detox.html" class="massage-card">
-  <img src="images/m2.jpg" alt="Masáž Sedavý detox">
+  <img src="images/m3.jpg" alt="Masáž Sedavý detox">
   <div class="card-overlay center"><h3 class="title-wide">Sedavý detox</h3></div>
 </a>
 
 <a href="back-neck.html" class="massage-card">
-  <img src="images/m2.jpg" alt="Masáž Back &amp; Neck Revival">
+  <img src="images/m4.jpg" alt="Masáž Back &amp; Neck Revival">
   <div class="card-overlay center"><h3 class="title-wide">Back &amp; Neck Revival</h3></div>
 </a>
 
 <a href="active-recovery.html" class="massage-card">
-  <img src="images/m3.jpg" alt="Masáž Active Recovery">
+  <img src="images/m5.jpg" alt="Masáž Active Recovery">
   <div class="card-overlay center"><h3 class="title-wide">Active Recovery</h3></div>
 </a>
 
 <a href="face-contouring.html" class="massage-card">
-  <img src="images/m1.jpg" alt="Face contouring a starostlivosť o pleť">
+  <img src="images/m6.jpg" alt="Face contouring a starostlivosť o pleť">
   <div class="card-overlay center"><h3 class="title-wide">Face Contouring</h3></div>
 </a>
 
@@ -303,31 +303,44 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           <select id="massage" name="Masáž" required>
             <option value="" disabled selected hidden>Najprv zvoľte masáž...</option>
             
-            <option value="DEEP BALANCE - 90 min" data-duration="90">DEEP BALANCE (90 min / 65 €)</option>
-            <option value="DEEP BALANCE - 120 min" data-duration="120">DEEP BALANCE (120 min / 85 €)</option>
-            <option value="DEEP BALANCE - 150 min" data-duration="150">DEEP BALANCE (150 min / 105 €)</option>
-            <option value="DEEP BALANCE - 180 min" data-duration="180">DEEP BALANCE (180 min / 125 €)</option>
+            <option value="DEEP BALANCE - 90 min" data-service="deep-balance" data-duration="90" data-price="65">DEEP BALANCE (90 min / 65 €)</option>
+            <option value="DEEP BALANCE - 120 min" data-service="deep-balance" data-duration="120" data-price="85">DEEP BALANCE (120 min / 85 €)</option>
+            <option value="DEEP BALANCE - 150 min" data-service="deep-balance" data-duration="150" data-price="105">DEEP BALANCE (150 min / 105 €)</option>
+            <option value="DEEP BALANCE - 180 min" data-service="deep-balance" data-duration="180" data-price="125">DEEP BALANCE (180 min / 125 €)</option>
             
-            <option value="ČISTÁ HLAVA - 30 min" data-duration="30">ČISTÁ HLAVA (30 min / 35 €)</option>
-            <option value="ČISTÁ HLAVA - 60 min" data-duration="60">ČISTÁ HLAVA (60 min / 45 €)</option>
+            <option value="ČISTÁ HLAVA - 30 min" data-service="cista-hlava" data-duration="30" data-price="35">ČISTÁ HLAVA (30 min / 35 €)</option>
+            <option value="ČISTÁ HLAVA - 60 min" data-service="cista-hlava" data-duration="60" data-price="45">ČISTÁ HLAVA (60 min / 45 €)</option>
             
-            <option value="SEDAVÝ DETOX - 60 min" data-duration="60">SEDAVÝ DETOX (60 min / 45 €)</option>
-            <option value="SEDAVÝ DETOX - 90 min" data-duration="90">SEDAVÝ DETOX (90 min / 65 €)</option>
-            <option value="SEDAVÝ DETOX - 120 min" data-duration="120">SEDAVÝ DETOX (120 min / 85 €)</option>
+            <option value="SEDAVÝ DETOX - 60 min" data-service="sedavy-detox" data-duration="60" data-price="45">SEDAVÝ DETOX (60 min / 45 €)</option>
+            <option value="SEDAVÝ DETOX - 90 min" data-service="sedavy-detox" data-duration="90" data-price="65">SEDAVÝ DETOX (90 min / 65 €)</option>
+            <option value="SEDAVÝ DETOX - 120 min" data-service="sedavy-detox" data-duration="120" data-price="85">SEDAVÝ DETOX (120 min / 85 €)</option>
             
-            <option value="BACK AND NECK REVIVAL - 30 min" data-duration="30">BACK AND NECK REVIVAL (30 min / 35 €)</option>
-            <option value="BACK AND NECK REVIVAL - 60 min" data-duration="60">BACK AND NECK REVIVAL (60 min / 45 €)</option>
+            <option value="BACK AND NECK REVIVAL - 30 min" data-service="back-neck" data-duration="30" data-price="35">BACK AND NECK REVIVAL (30 min / 35 €)</option>
+            <option value="BACK AND NECK REVIVAL - 60 min" data-service="back-neck" data-duration="60" data-price="45">BACK AND NECK REVIVAL (60 min / 45 €)</option>
 
-            <option value="ACTIVE RECOVERY - 60 min" data-duration="60">ACTIVE RECOVERY (60 min / 45 €)</option>
-            <option value="ACTIVE RECOVERY - 90 min" data-duration="90">ACTIVE RECOVERY (90 min / 65 €)</option>
+            <option value="ACTIVE RECOVERY - 60 min" data-service="active-recovery" data-duration="60" data-price="45">ACTIVE RECOVERY (60 min / 45 €)</option>
+            <option value="ACTIVE RECOVERY - 90 min" data-service="active-recovery" data-duration="90" data-price="65">ACTIVE RECOVERY (90 min / 65 €)</option>
             
-            <option value="FACECONTOURING - 90 min" data-duration="90">FACE CONTOURING A STAROSTLIVOSŤ O PLEŤ (90 min / 90 €)</option>
+            <option value="FACECONTOURING - 90 min" data-service="face-contouring" data-duration="90" data-price="90">FACE CONTOURING A STAROSTLIVOSŤ O PLEŤ (90 min / 90 €)</option>
           </select>
           <label for="massage">Výber masáže *</label>
         </div>
 
+        <fieldset class="booking-addons full-width" id="bookingAddons" hidden>
+          <legend>Doplnkové služby <span>nepovinné</span></legend>
+          <p class="booking-addons-hint">Vyberte si doplnky, ktoré chcete pridať k masáži.</p>
+          <div class="booking-addons-options" id="bookingAddonsOptions"></div>
+          <div class="booking-addons-total" aria-live="polite">
+            <span>Spolu</span>
+            <strong id="bookingTotal">—</strong>
+          </div>
+        </fieldset>
+        <input type="hidden" id="bookingAddonsValue" name="Doplnkové služby" value="">
+        <input type="hidden" id="bookingTotalPrice" name="Celková cena" value="">
+        <input type="hidden" id="bookingTotalDuration" name="Celkové trvanie" value="">
+
         <div class="form-group full-width calendar-form-group">
-          <p class="calendar-step-label" id="calendarLabel">Dostupné termíny pre zvolenú masáž *</p>
+          <p class="calendar-step-label" id="calendarLabel">Dostupné termíny pre zvolenú masáž a doplnky *</p>
           <input type="hidden" id="date" name="Termín">
           <div class="booking-calendar is-locked" id="bookingCalendar" role="group" aria-labelledby="calendarLabel">
             <div class="calendar-toolbar">
@@ -352,7 +365,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
         <div class="form-group full-width">
           <textarea id="note" name="Poznámka" placeholder=" " rows="3"></textarea>
-          <label for="note">Poznámka (napr. doplnky k rezervácii)</label>
+          <label for="note">Poznámka</label>
           <p class="booking-privacy-hint">Prosíme, nevpisujte sem diagnózy ani iné zdravotné údaje. Ak máte otázku k vhodnosti masáže, <a href="kontraindikacie.html">prečítajte si tieto informácie</a> alebo nás kontaktujte.</p>
         </div>
 
@@ -433,6 +446,12 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
   const availableTimesLabel = document.getElementById("availableTimesLabel");
   const selectedTimeInput = document.getElementById("selectedTime");
   const massageSelect = document.getElementById("massage");
+  const bookingAddonsSection = document.getElementById("bookingAddons");
+  const bookingAddonsOptions = document.getElementById("bookingAddonsOptions");
+  const bookingTotal = document.getElementById("bookingTotal");
+  const bookingAddonsValue = document.getElementById("bookingAddonsValue");
+  const bookingTotalPrice = document.getElementById("bookingTotalPrice");
+  const bookingTotalDuration = document.getElementById("bookingTotalDuration");
   const bookingCalendar = document.getElementById("bookingCalendar");
   const calendarMonthLabel = document.getElementById("calendarMonth");
   const calendarDays = document.getElementById("calendarDays");
@@ -446,9 +465,110 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
   let calendarRequest = 0;
   let slotRequest = 0;
 
+  const addonsByService = {
+    "deep-balance": [
+      { name: "Celotelový peeling", duration: 60, price: 60 }
+    ],
+    "cista-hlava": [
+      { name: "Manuálny lifting tváre", duration: 10, price: 20 },
+      { name: "Masáž horných končatín", duration: 20, price: 15 }
+    ],
+    "sedavy-detox": [
+      { name: "Pasívny strečing dolných končatín", duration: 10, price: 10 },
+      { name: "Masáž horných končatín", duration: 20, price: 15 }
+    ],
+    "back-neck": [
+      { name: "Masáž hlavy", duration: 10, price: 10 },
+      { name: "Masáž horných končatín", duration: 20, price: 15 }
+    ],
+    "active-recovery": [
+      { name: "Pasívny strečing dolných končatín", duration: 10, price: 10 },
+      { name: "Trapézy v sede", duration: 10, price: 10 }
+    ],
+    "face-contouring": [
+      { name: "Reflexná masáž chodidiel", duration: 15, price: 15 },
+      { name: "Reflexná masáž dlaní", duration: 15, price: 15 }
+    ]
+  };
+
   function toMinutes(time) {
     const [hours, minutes] = (time || "0:0").split(":").map(Number);
     return hours * 60 + minutes;
+  }
+
+  function selectedAddons() {
+    return [...bookingAddonsOptions.querySelectorAll(".booking-addon-checkbox:checked")].map(input => ({
+      name: input.value,
+      duration: Number.parseInt(input.dataset.duration, 10),
+      price: Number.parseInt(input.dataset.price, 10)
+    }));
+  }
+
+  function selectedBookingDuration() {
+    const baseDuration = Number.parseInt(massageSelect.selectedOptions[0]?.dataset.duration, 10) || 0;
+    return baseDuration + selectedAddons().reduce((total, addon) => total + addon.duration, 0);
+  }
+
+  function selectedBookingPrice() {
+    const basePrice = Number.parseInt(massageSelect.selectedOptions[0]?.dataset.price, 10) || 0;
+    return basePrice + selectedAddons().reduce((total, addon) => total + addon.price, 0);
+  }
+
+  function updateBookingSummary() {
+    if (!massageSelect.value) {
+      bookingTotal.textContent = "—";
+      bookingAddonsValue.value = "";
+      bookingTotalPrice.value = "";
+      bookingTotalDuration.value = "";
+      return;
+    }
+
+    const addons = selectedAddons();
+    const duration = selectedBookingDuration();
+    const price = selectedBookingPrice();
+    bookingTotal.textContent = `${price} € · ${duration} min`;
+    bookingAddonsValue.value = addons.map(addon => `${addon.name} (+${addon.duration} min, ${addon.price} €)`).join(", ");
+    bookingTotalPrice.value = `${price} €`;
+    bookingTotalDuration.value = `${duration} min`;
+  }
+
+  function renderBookingAddons() {
+    const serviceId = massageSelect.selectedOptions[0]?.dataset.service;
+    const addons = addonsByService[serviceId] || [];
+    bookingAddonsOptions.innerHTML = "";
+    bookingAddonsSection.hidden = !massageSelect.value;
+
+    addons.forEach((addon, index) => {
+      const label = document.createElement("label");
+      label.className = "booking-addon-option";
+      label.innerHTML = `
+        <input class="booking-addon-checkbox" type="checkbox" value="${addon.name}" data-duration="${addon.duration}" data-price="${addon.price}" id="bookingAddon${index}">
+        <span class="booking-addon-copy"><strong>${addon.name}</strong><small>+ ${addon.duration} min</small></span>
+        <span class="booking-addon-price">+ ${addon.price} €</span>
+      `;
+      label.querySelector("input").addEventListener("change", () => {
+        updateBookingSummary();
+        refreshBookingAvailability();
+      });
+      bookingAddonsOptions.appendChild(label);
+    });
+
+    updateBookingSummary();
+  }
+
+  function refreshBookingAvailability() {
+    slotRequest += 1;
+    dateInput.value = "";
+    selectedTimeInput.value = "";
+    selectedSlotId = null;
+    availableTimesLabel.textContent = "Dostupné časy *";
+    slotsContainer.innerHTML = "<p class='no-slots-text'>Vyberte deň v kalendári.</p>";
+    availableDates = new Map();
+
+    if (!massageSelect.value) return;
+
+    calendarHint.textContent = "Načítavam voľné termíny…";
+    loadCalendarMonth(currentMonth);
   }
 
   function breakMinutes(duration) {
@@ -592,7 +712,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     currentMonth = new Date(month.getFullYear(), month.getMonth(), 1);
     const requestId = ++calendarRequest;
     availableDates = new Map();
-    const duration = Number.parseInt(massageSelect.selectedOptions[0].dataset.duration, 10);
+    const duration = selectedBookingDuration();
     const firstDate = toDateKey(currentMonth);
     const lastDate = toDateKey(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0));
 
@@ -623,8 +743,8 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
       const availableCount = availableDates.size;
       calendarHint.textContent = availableCount
-        ? "Zelené dni majú voľný termín pre vybranú masáž."
-        : "V tomto mesiaci nie sú voľné termíny pre vybranú masáž.";
+        ? "Zelené dni majú voľný termín pre zvolenú masáž a doplnky."
+        : "V tomto mesiaci nie sú voľné termíny pre tento výber.";
       renderCalendar();
     } catch (err) {
       console.error("Chyba pri načítaní kalendára:", err);
@@ -638,7 +758,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     if (!selectedDate || !massageSelect.value) return;
 
     const requestId = ++slotRequest;
-    const requestedDuration = Number.parseInt(massageSelect.selectedOptions[0].dataset.duration, 10);
+    const requestedDuration = selectedBookingDuration();
     const displayDate = new Intl.DateTimeFormat("sk-SK", { day: "numeric", month: "long" }).format(new Date(`${selectedDate}T00:00:00`));
     availableTimesLabel.textContent = `Dostupné časy – ${displayDate}`;
     slotsContainer.innerHTML = "<p class='no-slots-text'>Načítavam voľné časy...</p>";
@@ -648,7 +768,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     try {
       const q = query(collection(db, "terminy"), where("datum", "==", selectedDate));
       const querySnapshot = await getDocs(q);
-      if (requestId !== slotRequest || selectedDate !== dateInput.value || requestedDuration !== Number.parseInt(massageSelect.selectedOptions[0]?.dataset.duration, 10)) return;
+      if (requestId !== slotRequest || selectedDate !== dateInput.value || requestedDuration !== selectedBookingDuration()) return;
 
       const allSlots = querySnapshot.docs.map(docSnap => ({ id: docSnap.id, ref: docSnap.ref, data: docSnap.data() }));
       const available = availableSlotsForDay(allSlots, requestedDuration);
@@ -660,7 +780,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
         dateInput.value = "";
         availableTimesLabel.textContent = "Dostupné časy *";
         renderCalendar();
-        slotsContainer.innerHTML = "<p class='no-slots-text'>Pre tento dátum nie sú dostupné žiadne voľné časy.</p>";
+        slotsContainer.innerHTML = "<p class='no-slots-text'>Pre tento dátum nie sú dostupné voľné časy pre tento výber.</p>";
         return;
       }
 
@@ -708,12 +828,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
   });
 
   massageSelect.addEventListener("change", () => {
-    slotRequest += 1;
-    availableTimesLabel.textContent = "Dostupné časy *";
-    selectedTimeInput.value = "";
-    selectedSlotId = null;
-    dateInput.value = "";
-    slotsContainer.innerHTML = "<p class='no-slots-text'>Vyberte deň v kalendári.</p>";
+    renderBookingAddons();
 
     if (!massageSelect.value) {
       calendarRequest += 1;
@@ -729,7 +844,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
     bookingCalendar.classList.remove("is-locked");
     currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    loadCalendarMonth(currentMonth);
+    refreshBookingAvailability();
   });
 
   document.getElementById("bookingForm").addEventListener("submit", async function(e) {
@@ -781,7 +896,8 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
       const slotsSnapshot = await getDocs(query(collection(db, "terminy"), where("datum", "==", selectedDate)));
       const slotRefs = slotsSnapshot.docs.map(item => ({ id: item.id, ref: item.ref }));
       const chosenRef = doc(db, "terminy", selectedSlotId);
-      const duration = Number.parseInt(massageSelect.selectedOptions[0].dataset.duration, 10);
+      const addons = selectedAddons();
+      const duration = selectedBookingDuration();
       const pause = breakMinutes(duration);
       const start = toMinutes(selectedTimeInput.value);
       let submitted = false;
@@ -818,6 +934,8 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           telefon: phone.value,
           email: email.value,
           masaz: massageSelect.value,
+          doplnky: addons,
+          cenaSpolu: selectedBookingPrice(),
           trvanieRezervacie: duration,
           prestavka: pause
         };

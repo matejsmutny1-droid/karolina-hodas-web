@@ -300,6 +300,15 @@
 
   function renderReservationRow(docId, data, booking) {
     const duration = getBookedDuration(booking);
+    const addonNames = Array.isArray(booking.doplnky)
+      ? booking.doplnky.map(addon => typeof addon === 'string' ? addon : addon?.name).filter(Boolean)
+      : [];
+    const addonDetails = addonNames.length
+      ? `<br><small style="color:#657365">Doplnky: ${escapeHtml(addonNames.join(', '))}</small>`
+      : '';
+    const priceDetails = booking.cenaSpolu !== undefined && booking.cenaSpolu !== null && Number.isFinite(Number(booking.cenaSpolu))
+      ? `<br><small style="color:#657365">Spolu: ${escapeHtml(booking.cenaSpolu)} €</small>`
+      : '';
     const tr = document.createElement('tr');
     tr.className = 'reservation-row';
     tr.innerHTML = `
@@ -307,7 +316,7 @@
       <td data-label="Čas rezervácie">${escapeHtml(booking.cas || '')}</td>
       <td data-label="Masáž + prestávka">${duration} + ${bookedPause(booking, duration)} min</td>
       <td data-label="Stav" class="status-booked">OBSADENÉ</td>
-      <td data-label="Klient / Masáž">${escapeHtml(booking.meno || 'Klient')}<br><small style="color:#c5a059">${escapeHtml(booking.masaz || '')}</small></td>
+      <td data-label="Klient / Masáž">${escapeHtml(booking.meno || 'Klient')}<br><small style="color:#c5a059">${escapeHtml(booking.masaz || '')}</small>${addonDetails}${priceDetails}</td>
       <td data-label="Kontakt">${booking.telefon ? `<a href="tel:${escapeHtml(booking.telefon)}" style="color:#c5a059">${escapeHtml(booking.telefon)}</a>` : '–'}<br><small>${escapeHtml(booking.email || '')}</small></td>
       <td data-label="Akcia"><button class="btn-delete btn-cancel-reservation" data-slot-id="${escapeHtml(docId)}" data-reservation-id="${escapeHtml(booking.id || 'legacy')}">Zrušiť rezerváciu</button></td>
     `;
