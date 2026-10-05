@@ -1,8 +1,8 @@
 :root {
-  --bg: #E9DFCC;
-  --text: #1a1a1a;
-  --accent: #000;
-  --soft: rgba(0, 0, 0, 0.15);
+  --bg: #F5F5F5;
+  --text: #282120;
+  --accent: #244832;
+  --soft: rgba(40, 33, 32, 0.15);
   --overlay: rgba(0, 0, 0, 0.3);
 }
 
@@ -1647,4 +1647,132 @@ section {
 
 @media (max-width: 500px) {
   .hero .btn { padding-inline: 22px; letter-spacing: 0.24em; }
+}
+
+/* KARA visual identity: light mineral tones, charcoal type and restrained green. */
+body {
+  background: #F5F5F5;
+  color: #282120;
+  font-family: "Manrope", sans-serif;
+}
+
+.about-title,
+.massages .massages-title,
+.contact > h2,
+.booking-head h2 {
+  color: #244832;
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+}
+
+.about-text { color: #5f5b58; }
+.about-right img { border-radius: 3px; }
+
+.hero .btn {
+  border-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2px;
+  background: rgba(40, 33, 32, 0.12);
+  color: #fff;
+  letter-spacing: 0.32em;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.hero .btn::after { background: #F5F5F5; }
+.hero .btn:hover { border-color: #F5F5F5; color: #282120; }
+
+.massages .massage-card {
+  border-color: rgba(40, 33, 32, 0.1);
+  border-radius: 4px;
+  background: #EFEEED;
+}
+.massages .massage-card .card-overlay.center { background: rgba(19, 17, 16, 0.34); }
+.massages .massage-card .title-wide { font-weight: 300; }
+
+.pricing-only-button,
+.hero .btn-submit,
+.booking .btn-submit,
+.thank-you-btn {
+  border-color: #244832;
+  border-radius: 3px;
+  background-color: #244832;
+  color: #F5F5F5;
+}
+.pricing-only-button:hover { background: #1b3928; }
+
+.contact-card,
+.booking-wrapper,
+.thank-you-panel {
+  border: 1px solid rgba(40, 33, 32, 0.1);
+  border-radius: 3px;
+  background: #EFEEED;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.contact-card { margin-top: 30px; transition: none; }
+.contact-card:hover,
+.booking-wrapper:hover { transform: none; box-shadow: none; }
+.contact-name,
+.contact-info a,
+.about-title { color: #282120; }
+.contact-info a:hover { color: #244832; }
+.contact-note { color: #6c6865; }
+.contact-divider { background: #244832; opacity: 0.45; }
+
+.booking { background: #F5F5F5; }
+.booking-wrapper { padding: clamp(32px, 5vw, 60px); }
+.booking-head h2 { letter-spacing: 0.34em; }
+.form-group label { color: #6c6865; }
+.form-group input,
+.form-group select,
+.form-group textarea { color: #282120; border-color: rgba(40, 33, 32, 0.22); }
+.form-group select option { background: #F5F5F5; color: #282120; }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: #244832; }
+.form-group select:focus ~ label,
+.form-group .label-fixed { color: #244832; }
+.booking-addons { border-color: rgba(40, 33, 32, 0.14); }
+.booking-addons legend,
+.booking-addon-price,
+.booking-addons-total strong { color: #244832; }
+.booking-addon-option { border-color: rgba(40, 33, 32, 0.12); background: rgba(245, 245, 245, 0.72); }
+.booking-addon-option:hover,
+.booking-addon-option:has(.booking-addon-checkbox:checked) { border-color: rgba(36, 72, 50, 0.5); background: #F5F5F5; }
+.booking-addon-checkbox { accent-color: #244832; }
+.booking-addon-copy strong { color: #282120; }
+.booking-addons-total { border-color: rgba(40, 33, 32, 0.12); }
+.booking-privacy-hint,
+.booking-privacy-note { color: #6c6865; }
+.booking-privacy-hint a,
+.booking-privacy-note a { color: #244832; }
+.source-title { color: #6c6865; }
+.radio-box { border-color: rgba(40, 33, 32, 0.42); }
+.custom-radio:hover .radio-box { border-color: #244832; }
+.custom-radio input:checked ~ .radio-box { border-color: #244832; background: #244832; }
+.radio-label { color: #282120; }
+.btn-submit { border-color: #244832; background: #244832; color: #F5F5F5; }
+.btn-submit::before { background: #1b3928; }
+
+.site-footer { background: #282120; color: #F5F5F5; }
+.site-footer-copy { color: rgba(245, 245, 245, 0.66); }
+.site-footer-privacy,
+.site-footer-top { color: #F5F5F5; }
+.site-footer-privacy:hover,
+.site-footer-top:hover { color: #d7e0d8; }
+
+.thank-you-page { background: #F5F5F5; }
+.thank-you-panel { border-color: rgba(40, 33, 32, 0.12); }
+.thank-you-brand,
+.thank-you-redirect,
+.thank-you-privacy-link { color: #6c6865; }
+.thank-you-mark { border-color: rgba(36, 72, 50, 0.35); color: #244832; }
+.thank-you-panel h1 { color: #244832; }
+.thank-you-line { background: rgba(36, 72, 50, 0.35); }
+.thank-you-message { color: #5f5b58; }
+.thank-you-btn { border-color: #244832; background: #244832; }
+.thank-you-btn:hover { color: #244832; }
+
+@media (max-width: 600px) {
+  .booking-wrapper { padding: 32px 22px; }
+  .hero .btn { padding-inline: 18px; font-size: 11px; letter-spacing: 0.2em; }
 }
