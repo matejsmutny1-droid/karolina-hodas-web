@@ -26,7 +26,7 @@
     padding: 12px 22px;
     background-color: transparent;
     border: 1px solid rgba(40, 33, 32, 0.24);
-    color: #244832;
+    color: #282120;
     cursor: pointer;
     border-radius: 3px;
     font-family: inherit;
@@ -35,13 +35,13 @@
     transition: all 0.3s ease;
   }
   .time-slot-btn:hover {
-    border-color: #244832;
-    background: rgba(36, 72, 50, 0.06);
-    color: #244832;
+    border-color: #282120;
+    background: rgba(40, 33, 32, 0.06);
+    color: #282120;
   }
   .time-slot-btn.selected {
-    background-color: #244832;
-    border-color: #244832;
+    background-color: #282120;
+    border-color: #282120;
     color: #F5F5F5;
     font-weight: 500;
   }
@@ -55,14 +55,14 @@
   .calendar-step-label {
     position: static !important;
     margin: 0 0 10px;
-    color: #244832 !important;
+    color: #282120 !important;
     font-size: 0.9rem !important;
     letter-spacing: 0.02em !important;
     text-transform: none !important;
   }
   .booking-calendar {
     padding: 18px 20px 14px;
-    border: 1px solid rgba(36, 72, 50, 0.14);
+    border: 1px solid rgba(40, 33, 32, 0.14);
     border-radius: 3px;
     background: #EFEEED;
     transition: opacity 180ms ease;
@@ -77,7 +77,7 @@
   }
   .calendar-toolbar h3 {
     margin: 0;
-    color: #244832;
+    color: #282120;
     font-family: "Manrope", sans-serif;
     font-size: 15px;
     font-weight: 500;
@@ -89,15 +89,15 @@
     width: 38px;
     height: 38px;
     padding: 0;
-    border: 1px solid rgba(36, 72, 50, 0.2);
+    border: 1px solid rgba(40, 33, 32, 0.2);
     border-radius: 3px;
     background: transparent;
-    color: #244832;
+    color: #282120;
     cursor: pointer;
     font-size: 22px;
     line-height: 1;
   }
-  .calendar-nav-btn:hover:not(:disabled) { background: rgba(36, 72, 50, 0.08); }
+  .calendar-nav-btn:hover:not(:disabled) { background: rgba(40, 33, 32, 0.08); }
   .calendar-nav-btn:disabled { cursor: default; opacity: 0.35; }
   .calendar-weekdays,
   .calendar-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
@@ -125,9 +125,9 @@
   }
   .calendar-day:disabled { cursor: default; opacity: 0.42; }
   .calendar-day.has-slots {
-    border-color: rgba(36, 72, 50, 0.18);
-    background: rgba(36, 72, 50, 0.07);
-    color: #244832;
+    border-color: rgba(40, 33, 32, 0.18);
+    background: rgba(40, 33, 32, 0.07);
+    color: #282120;
     cursor: pointer;
     font-weight: 600;
   }
@@ -138,13 +138,13 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: #244832;
+    background: #282120;
     content: '';
     transform: translateX(-50%);
   }
-  .calendar-day.has-slots:hover { background: rgba(36, 72, 50, 0.14); }
+  .calendar-day.has-slots:hover { background: rgba(40, 33, 32, 0.14); }
   .calendar-day.is-selected,
-  .calendar-day.is-selected:hover { background: #244832; color: #F5F5F5; }
+  .calendar-day.is-selected:hover { background: #282120; color: #F5F5F5; }
   .calendar-day.is-selected::after { background: #F5F5F5; }
   .calendar-hint {
     min-height: 20px;
@@ -200,7 +200,7 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 </div>
 
 <div class="about-right">
-<img src="images/kajka.jpg" alt="">
+<img src="images/kajka3.jpg" alt="Karolína Hodas v masážnom štúdiu">
 </div>
 
 </div>
@@ -357,7 +357,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
         </div>
 
         <div class="form-group full-width time-slots-container">
-          <label id="availableTimesLabel" style="position: static; font-size: 0.9em; color: #244832;">Dostupné časy *</label>
+          <label id="availableTimesLabel" style="position: static; font-size: 0.9em; color: #282120;">Dostupné časy *</label>
           <div id="slotsContainer" class="time-slots-grid" aria-live="polite">
             <p class="no-slots-text">Najprv vyberte masáž.</p>
           </div>
@@ -743,7 +743,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
       const availableCount = availableDates.size;
       calendarHint.textContent = availableCount
-        ? "Zelené dni majú voľný termín pre zvolenú masáž a doplnky."
+        ? "Dni označené tmavou farbou majú voľné termíny pre zvolenú masáž a doplnky."
         : "V tomto mesiaci nie sú voľné termíny pre tento výber.";
       renderCalendar();
     } catch (err) {

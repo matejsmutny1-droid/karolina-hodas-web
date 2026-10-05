@@ -1,7 +1,7 @@
 :root {
   --bg: #F5F5F5;
   --text: #282120;
-  --accent: #244832;
+  --accent: #282120;
   --soft: rgba(40, 33, 32, 0.15);
   --overlay: rgba(0, 0, 0, 0.3);
 }
@@ -637,12 +637,12 @@ section {
   margin: 0;
   padding: 20px 0 0;
   border: 0;
-  border-top: 1px solid rgba(23, 60, 32, 0.16);
+  border-top: 1px solid rgba(40, 33, 32, 0.16);
 }
 
 .booking-addons legend {
   padding: 0;
-  color: #173c20;
+  color: #282120;
   font-family: "Manrope", sans-serif;
   font-size: 11px;
   font-weight: 600;
@@ -652,7 +652,7 @@ section {
 
 .booking-addons legend span {
   margin-left: 6px;
-  color: rgba(23, 60, 32, 0.58);
+  color: rgba(40, 33, 32, 0.58);
   font-size: 9px;
   font-weight: 400;
   letter-spacing: 0.08em;
@@ -660,7 +660,7 @@ section {
 
 .booking-addons-hint {
   margin: 7px 0 14px;
-  color: #657365;
+  color: #756963;
   font-size: 12px;
   line-height: 1.6;
 }
@@ -676,7 +676,7 @@ section {
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border: 1px solid rgba(23, 60, 32, 0.14);
+  border: 1px solid rgba(40, 33, 32, 0.14);
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.22);
   cursor: pointer;
@@ -685,7 +685,7 @@ section {
 
 .booking-addon-option:hover,
 .booking-addon-option:has(.booking-addon-checkbox:checked) {
-  border-color: rgba(23, 60, 32, 0.45);
+  border-color: rgba(40, 33, 32, 0.45);
   background: rgba(255, 255, 255, 0.48);
 }
 
@@ -693,7 +693,7 @@ section {
   width: 16px;
   height: 16px;
   margin: 0;
-  accent-color: #173c20;
+  accent-color: #282120;
   cursor: pointer;
 }
 
@@ -703,26 +703,26 @@ section {
 }
 
 .booking-addon-copy strong {
-  color: #294b30;
+  color: #5c4d46;
   font-size: 12px;
   font-weight: 500;
 }
 
 .booking-addon-copy small {
-  color: #657365;
+  color: #756963;
   font-size: 10px;
   letter-spacing: 0.06em;
 }
 
 .booking-addon-price {
-  color: #173c20;
+  color: #282120;
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
 }
 
 .booking-addon-option:focus-within {
-  outline: 2px solid rgba(23, 60, 32, 0.4);
+  outline: 2px solid rgba(40, 33, 32, 0.4);
   outline-offset: 2px;
 }
 
@@ -733,8 +733,8 @@ section {
   gap: 16px;
   margin-top: 14px;
   padding-top: 12px;
-  border-top: 1px solid rgba(23, 60, 32, 0.12);
-  color: #657365;
+  border-top: 1px solid rgba(40, 33, 32, 0.12);
+  color: #756963;
   font-family: "Manrope", sans-serif;
   font-size: 10px;
   letter-spacing: 0.12em;
@@ -742,7 +742,7 @@ section {
 }
 
 .booking-addons-total strong {
-  color: #173c20;
+  color: #282120;
   font-size: 12px;
   letter-spacing: 0.04em;
   white-space: nowrap;
@@ -885,7 +885,7 @@ section {
 .thank-you-panel {
   width: min(100%, 760px);
   padding: clamp(42px, 8vw, 96px) clamp(24px, 8vw, 88px);
-  border: 1px solid rgba(23, 60, 32, 0.16);
+  border: 1px solid rgba(40, 33, 32, 0.16);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.18);
   text-align: center;
@@ -893,7 +893,7 @@ section {
 
 .thank-you-brand,
 .thank-you-redirect {
-  color: rgba(23, 60, 32, 0.68);
+  color: rgba(40, 33, 32, 0.68);
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.24em;
@@ -904,7 +904,7 @@ section {
 .thank-you-privacy-link {
   display: inline-block;
   margin-top: 14px;
-  color: rgba(23, 60, 32, 0.72);
+  color: rgba(40, 33, 32, 0.72);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-decoration: underline;
@@ -918,16 +918,16 @@ section {
   display: grid;
   place-items: center;
   margin: 34px auto 24px;
-  border: 1px solid rgba(23, 60, 32, 0.32);
+  border: 1px solid rgba(40, 33, 32, 0.32);
   border-radius: 50%;
-  color: #173c20;
+  color: #282120;
   font-size: 20px;
   font-weight: 300;
 }
 
 .thank-you-panel h1 {
   margin: 0;
-  color: #173c20;
+  color: #282120;
   font-size: clamp(32px, 6vw, 58px);
   font-weight: 300;
   letter-spacing: 0.19em;
@@ -939,7 +939,7 @@ section {
   width: 42px;
   height: 1px;
   margin: 26px auto;
-  background: rgba(23, 60, 32, 0.38);
+  background: rgba(40, 33, 32, 0.38);
 }
 
 .thank-you-message {
@@ -958,9 +958,9 @@ section {
   align-items: center;
   justify-content: center;
   padding: 16px 30px;
-  border: 1px solid #173c20;
+  border: 1px solid #282120;
   border-radius: 999px;
-  background: #173c20;
+  background: #282120;
   color: var(--bg);
   font-size: 11px;
   font-weight: 400;
@@ -971,7 +971,7 @@ section {
 
 .thank-you-btn:hover {
   background: transparent;
-  color: #173c20;
+  color: #282120;
 }
 
 .thank-you-redirect {
@@ -1409,7 +1409,7 @@ section {
   }
 }
 
-/* Massage catalogue: warm paper, forest green, clear service pricing. */
+/* Massage catalogue: mineral neutrals, dark brown and clear service pricing. */
 .massages {
   width: 100%;
   max-width: none;
@@ -1421,7 +1421,7 @@ section {
   width: 100%;
   flex: 0 0 100%;
   margin: 0 0 24px;
-  color: #173c20;
+  color: #282120;
   font-family: "Manrope", sans-serif;
   font-size: 20px;
   font-weight: 300;
@@ -1432,7 +1432,7 @@ section {
 
 .contact > h2 {
   margin: 0 0 24px;
-  color: #173c20;
+  color: #282120;
   font-family: "Manrope", sans-serif;
   font-size: 20px;
   font-weight: 300;
@@ -1443,7 +1443,7 @@ section {
 
 .booking-head h2 {
   margin: 0 0 12px;
-  color: #173c20;
+  color: #282120;
   font-family: "Manrope", sans-serif;
   font-size: 20px;
   font-weight: 300;
@@ -1471,15 +1471,15 @@ section {
   aspect-ratio: 1 / 1;
   display: block;
   overflow: hidden;
-  border: 1px solid rgba(23, 60, 32, 0.13);
+  border: 1px solid rgba(40, 33, 32, 0.13);
   border-radius: 12px;
   background: #f3eee3;
-  color: #173c20;
+  color: #282120;
   transition: border-color 220ms ease;
 }
 
 .massages .massage-card::after { content: none; }
-.massages .massage-card:focus-visible { outline: 2px solid #3f6544; outline-offset: 4px; }
+.massages .massage-card:focus-visible { outline: 2px solid #6a5b53; outline-offset: 4px; }
 
 .massages .massage-card > img {
   display: block;
@@ -1537,9 +1537,9 @@ section {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #173c20;
+  border: 1px solid #282120;
   border-radius: 8px;
-  background: #173c20;
+  background: #282120;
   color: #f3eee3;
   font-family: "Manrope", sans-serif;
   font-size: 12px;
@@ -1549,7 +1549,7 @@ section {
   transition: background 180ms ease, transform 180ms ease;
 }
 
-.pricing-only-button:hover { transform: translateY(-1px); background: #214c2a; }
+.pricing-only-button:hover { transform: translateY(-1px); background: #3a2d28; }
 
 @media (max-width: 900px) {
   .massages .massages-grid { gap: 20px; }
@@ -1568,7 +1568,7 @@ section {
 .site-footer {
   width: 100%;
   padding: 25px 24px;
-  background: #173c20;
+  background: #282120;
   color: #f3eee3;
 }
 
@@ -1610,7 +1610,7 @@ section {
 
 .booking-privacy-hint,
 .booking-privacy-note {
-  color: #536b56;
+  color: #716660;
   font-size: 11px;
   letter-spacing: 0.015em;
   line-height: 1.7;
@@ -1619,7 +1619,7 @@ section {
 .booking-privacy-hint { margin: 10px 0 0; }
 .booking-privacy-note { margin: 18px 0 0; text-align: center; }
 .booking-privacy-hint a,
-.booking-privacy-note a { color: #173c20; text-decoration: underline; text-underline-offset: 3px; }
+.booking-privacy-note a { color: #282120; text-decoration: underline; text-underline-offset: 3px; }
 
 .hero-content {
   width: min(520px, calc(100vw - 40px));
@@ -1649,7 +1649,7 @@ section {
   .hero .btn { padding-inline: 22px; letter-spacing: 0.24em; }
 }
 
-/* KARA visual identity: light mineral tones, charcoal type and restrained green. */
+/* KARA visual identity: light mineral tones, charcoal and dark brown. */
 body {
   background: #F5F5F5;
   color: #282120;
@@ -1660,7 +1660,7 @@ body {
 .massages .massages-title,
 .contact > h2,
 .booking-head h2 {
-  color: #244832;
+  color: #282120;
   font-family: "Manrope", sans-serif;
   font-weight: 300;
 }
@@ -1691,12 +1691,12 @@ body {
 .hero .btn-submit,
 .booking .btn-submit,
 .thank-you-btn {
-  border-color: #244832;
+  border-color: #282120;
   border-radius: 3px;
-  background-color: #244832;
+  background-color: #282120;
   color: #F5F5F5;
 }
-.pricing-only-button:hover { background: #1b3928; }
+.pricing-only-button:hover { background: #3a2d28; }
 
 .contact-card,
 .booking-wrapper,
@@ -1714,9 +1714,9 @@ body {
 .contact-name,
 .contact-info a,
 .about-title { color: #282120; }
-.contact-info a:hover { color: #244832; }
+.contact-info a:hover { color: #282120; }
 .contact-note { color: #6c6865; }
-.contact-divider { background: #244832; opacity: 0.45; }
+.contact-divider { background: #282120; opacity: 0.45; }
 
 .booking { background: #F5F5F5; }
 .booking-wrapper { padding: clamp(32px, 5vw, 60px); }
@@ -1728,51 +1728,77 @@ body {
 .form-group select option { background: #F5F5F5; color: #282120; }
 .form-group input:focus,
 .form-group select:focus,
-.form-group textarea:focus { border-color: #244832; }
+.form-group textarea:focus { border-color: #282120; }
 .form-group select:focus ~ label,
-.form-group .label-fixed { color: #244832; }
+.form-group .label-fixed { color: #282120; }
 .booking-addons { border-color: rgba(40, 33, 32, 0.14); }
 .booking-addons legend,
 .booking-addon-price,
-.booking-addons-total strong { color: #244832; }
+.booking-addons-total strong { color: #282120; }
 .booking-addon-option { border-color: rgba(40, 33, 32, 0.12); background: rgba(245, 245, 245, 0.72); }
 .booking-addon-option:hover,
-.booking-addon-option:has(.booking-addon-checkbox:checked) { border-color: rgba(36, 72, 50, 0.5); background: #F5F5F5; }
-.booking-addon-checkbox { accent-color: #244832; }
+.booking-addon-option:has(.booking-addon-checkbox:checked) { border-color: rgba(40, 33, 32, 0.5); background: #F5F5F5; }
+.booking-addon-checkbox { accent-color: #282120; }
 .booking-addon-copy strong { color: #282120; }
 .booking-addons-total { border-color: rgba(40, 33, 32, 0.12); }
 .booking-privacy-hint,
 .booking-privacy-note { color: #6c6865; }
 .booking-privacy-hint a,
-.booking-privacy-note a { color: #244832; }
+.booking-privacy-note a { color: #282120; }
 .source-title { color: #6c6865; }
 .radio-box { border-color: rgba(40, 33, 32, 0.42); }
-.custom-radio:hover .radio-box { border-color: #244832; }
-.custom-radio input:checked ~ .radio-box { border-color: #244832; background: #244832; }
+.custom-radio:hover .radio-box { border-color: #282120; }
+.custom-radio input:checked ~ .radio-box { border-color: #282120; background: #282120; }
 .radio-label { color: #282120; }
-.btn-submit { border-color: #244832; background: #244832; color: #F5F5F5; }
-.btn-submit::before { background: #1b3928; }
+.btn-submit { border-color: #282120; background: #282120; color: #F5F5F5; }
+.btn-submit::before { background: #3a2d28; }
 
 .site-footer { background: #282120; color: #F5F5F5; }
 .site-footer-copy { color: rgba(245, 245, 245, 0.66); }
 .site-footer-privacy,
 .site-footer-top { color: #F5F5F5; }
 .site-footer-privacy:hover,
-.site-footer-top:hover { color: #d7e0d8; }
+.site-footer-top:hover { color: #d6cfcb; }
 
 .thank-you-page { background: #F5F5F5; }
 .thank-you-panel { border-color: rgba(40, 33, 32, 0.12); }
 .thank-you-brand,
 .thank-you-redirect,
 .thank-you-privacy-link { color: #6c6865; }
-.thank-you-mark { border-color: rgba(36, 72, 50, 0.35); color: #244832; }
-.thank-you-panel h1 { color: #244832; }
-.thank-you-line { background: rgba(36, 72, 50, 0.35); }
+.thank-you-mark { border-color: rgba(40, 33, 32, 0.35); color: #282120; }
+.thank-you-panel h1 { color: #282120; }
+.thank-you-line { background: rgba(40, 33, 32, 0.35); }
 .thank-you-message { color: #5f5b58; }
-.thank-you-btn { border-color: #244832; background: #244832; }
-.thank-you-btn:hover { color: #244832; }
+.thank-you-btn { border-color: #282120; background: #282120; }
+.thank-you-btn:hover { color: #282120; }
 
 @media (max-width: 600px) {
   .booking-wrapper { padding: 32px 22px; }
   .hero .btn { padding-inline: 18px; font-size: 11px; letter-spacing: 0.2em; }
+}
+
+/* Portrait crop for the About section; keep the full vertical composition. */
+.about-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  align-items: center;
+  gap: clamp(32px, 6vw, 80px);
+}
+
+.about-right {
+  width: min(100%, 420px);
+  justify-self: center;
+}
+
+.about-right img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  border-radius: 3px;
+  object-fit: cover;
+  object-position: center 46%;
+}
+
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; gap: 38px; }
+  .about-right { width: min(100%, 360px); }
 }
