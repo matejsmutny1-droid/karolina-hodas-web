@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-
+<meta charset="UTF-8">
 
 <title>Admin – Kara Masáže</title>
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -128,20 +128,12 @@
     <label for="newDate">Dátum:</label>
     <input type="date" id="newDate" required>
     
-    <label for="newTime">Čas (začiatok termínu, napr. 13:30):</label>
-    <input type="time" id="newTime" required>
+    <label for="newTime">Začiatok dostupnosti:</label>
+    <input type="time" id="newTime" step="900" required>
 
-    <label for="newDuration">Dostupné časové okno (vrátane masáží a prestávok):</label>
-    <select id="newDuration" required>
-      <option value="180" selected>180 minút (3 hodiny)</option>
-      <option value="45">45 minút (30 min masáž + 15 min prestávka)</option>
-      <option value="60">60 minút (1 hodina)</option>
-      <option value="90">90 minút (1,5 hodiny)</option>
-      <option value="120">120 minút (2 hodiny)</option>
-      <option value="150">150 minút (2,5 hodiny)</option>
-      <option value="210">210 minút (3,5 hodiny; aj na 180 min masáž + 30 min prestávku)</option>
-    </select>
-    <small style="color:#aaa;line-height:1.5">Prestávka sa počíta do okna dostupnosti. Napríklad 30 min masáž + 15 min prestávka obsadí 45 minút.</small>
+    <label for="newEndTime">Koniec dostupnosti:</label>
+    <input type="time" id="newEndTime" step="900" required>
+    <small style="color:#aaa;line-height:1.5">Zadajte celý súvislý blok, počas ktorého môže prebiehať rezervácia. Prestávky, počas ktorých nie ste dostupná, zadajte ako samostatné okná.</small>
     
     <button type="submit">Pridať termín do ponuky</button>
   </form>
@@ -192,16 +184,24 @@
     e.preventDefault();
     const date = document.getElementById("newDate").value;
     const time = document.getElementById("newTime").value;
-    const duration = document.getElementById("newDuration").value;
+    const endTime = document.getElementById("newEndTime").value;
+    const startMinutes = toMinutes(time);
+    const endMinutes = toMinutes(endTime);
+    const duration = endMinutes - startMinutes;
+
+    if (!date || !time || !endTime || duration <= 0) {
+      alert("Skontrolujte dátum a čas. Koniec dostupnosti musí byť po jej začiatku.");
+      return;
+    }
 
     try {
       await addDoc(collection(db, "terminy"), {
         datum: date,
         cas: time,
-        trvanie: parseInt(duration),
+        trvanie: duration,
         obsadene: false
       });
-      alert("Voľný termín bol pridaný!");
+      alert(`Dostupnosť ${time}–${endTime} (${duration} min) bola pridaná!`);
       loadSlots();
     } catch (err) {
       alert("Chyba: " + err);
@@ -287,7 +287,7 @@
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td data-label="Dátum">${escapeHtml(data.datum || '')}</td>
-      <td data-label="Začiatok okna">${escapeHtml(data.cas || '')}</td>
+      <td data-label="Časové okno">${escapeHtml(data.cas || '')}–${formatTime(toMinutes(data.cas) + slotDuration(data))}</td>
       <td data-label="Dostupné okno">${slotDuration(data)} min</td>
       <td data-label="Voľný čas" class="${statusClass}">${remaining}</td>
       <td data-label="Klient / Masáž">Dostupnosť</td>
