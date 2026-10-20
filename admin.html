@@ -416,7 +416,6 @@
         blocks,
         lastBookingId: migratedBookings.at(-1)?.id || (existingLock.exists() ? existingLock.data().lastBookingId || "" : "")
       }, { merge: true });
-      batch.delete(legacyDoc.ref);
       await batch.commit();
     }
   }
