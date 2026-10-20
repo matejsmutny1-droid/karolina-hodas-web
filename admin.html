@@ -289,14 +289,19 @@
     loginBox.hidden = true;
     adminContent.hidden = false;
     adminStatus.textContent = "Pripravujem zabezpečené termíny a prenášam existujúce rezervácie…";
+    let currentStep = "obnova prihlasovacieho tokenu";
     try {
+      await user.getIdToken(true);
+      currentStep = "príprava katalógu masáží";
       await ensureBookingCatalog();
+      currentStep = "bezpečné kopírovanie starých termínov";
       await migrateLegacyData();
+      currentStep = "načítanie termínov";
       await loadSlots();
       adminStatus.textContent = "Termíny sú načítané. Osobné údaje rezervácií vidia iba prihlásení správcovia.";
     } catch (error) {
       console.error(error);
-      adminStatus.textContent = `Načítanie zlyhalo: ${error.message || error}`;
+      adminStatus.textContent = `Načítanie zlyhalo pri kroku „${currentStep}“: ${error.message || error}`;
     }
   });
 
