@@ -27,7 +27,7 @@ service cloud.firestore {
         && data.cas.matches("^([01]\\d|2[0-3]):[0-5]\\d$")
         && data.trvanie is int
         && data.trvanie >= 15
-        && data.trvanie <= 1440
+        && data.trvanie <= 720
         && data.startMinute is int
         && data.startMinute >= 0
         && data.startMinute < 1440
@@ -187,9 +187,7 @@ service cloud.firestore {
 
     match /dostupnost/{slotId} {
       allow read: if true;
-      // Admins may import legacy availability windows. Public booking writes
-      // still validate the referenced schedule with validAvailability().
-      allow create, update: if isAdmin();
+      allow create, update: if isAdmin() && validAvailability(request.resource.data);
       allow delete: if isAdmin();
     }
 

@@ -418,30 +418,43 @@
         };
       });
 
-      const batch = writeBatch(db);
-      batch.set(availabilityRef, {
-        datum: date,
-        cas: normalizedStartTime,
-        trvanie: duration,
-        startMinute,
-        endMinute
-      });
+      const bookingWrites = [];
       for (const booking of migratedBookings) {
         const bookingRef = doc(db, "rezervacie", booking.id);
         const existingBooking = await migrationOperation(
           `kontrola existujúcej rezervácie ${booking.id}`,
           () => getDoc(bookingRef)
         );
-        if (!existingBooking.exists()) batch.set(bookingRef, booking.data);
+        if (!existingBooking.exists()) bookingWrites.push({ bookingRef, data: booking.data });
       }
-      batch.set(lockRef, {
-        datum: date,
-        blocks,
-        lastBookingId: migratedBookings.at(-1)?.id || (existingLock.exists() ? existingLock.data().lastBookingId || "" : "")
-      }, { merge: true });
+
+      // Protect migrated reservation blocks first. The public slot only appears
+      // after its reservations and lock have been copied successfully.
       await migrationOperation(
-        `zápis kópie termínu ${legacyDoc.id}`,
-        () => batch.commit()
+        `zápis zámku pre termín ${legacyDoc.id}`,
+        () => setDoc(lockRef, {
+          datum: date,
+          blocks,
+          lastBookingId: migratedBookings.at(-1)?.id || (existingLock.exists() ? existingLock.data().lastBookingId || "" : "")
+        }, { merge: true })
+      );
+
+      for (const { bookingRef, data } of bookingWrites) {
+        await migrationOperation(
+          `zápis rezervácie ${bookingRef.id}`,
+          () => setDoc(bookingRef, data)
+        );
+      }
+
+      await migrationOperation(
+        `zápis dostupnosti ${date} ${normalizedStartTime}, ${duration} min (${startMinute}–${endMinute}), ID ${legacyDoc.id}`,
+        () => setDoc(availabilityRef, {
+          datum: date,
+          cas: normalizedStartTime,
+          trvanie: duration,
+          startMinute,
+          endMinute
+        })
       );
     }
   }
