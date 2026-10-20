@@ -11,13 +11,6 @@ service cloud.firestore {
         ];
     }
 
-    function formatMinute(minute) {
-      let hour = math.floor(minute / 60);
-      let remainder = minute % 60;
-      return (hour < 10 ? "0" : "") + string(hour)
-        + ":" + (remainder < 10 ? "0" : "") + string(remainder);
-    }
-
     function validAvailability(data) {
       return data.keys().hasOnly(["datum", "cas", "trvanie", "startMinute", "endMinute"])
         && data.keys().hasAll(["datum", "cas", "trvanie", "startMinute", "endMinute"])
@@ -31,7 +24,6 @@ service cloud.firestore {
         && data.startMinute is int
         && data.startMinute >= 0
         && data.startMinute < 1440
-        && data.cas == formatMinute(data.startMinute)
         && data.endMinute is int
         && data.endMinute > data.startMinute
         && data.endMinute <= 1440
@@ -125,11 +117,11 @@ service cloud.firestore {
         && data.slotId is string
         && data.serviceId is string
         && data.cas is string
+        && data.cas.matches("^([01]\\d|2[0-3]):[0-5]\\d$")
         && data.startMinute is int
         && data.startMinute >= 0
         && data.startMinute < 1440
         && data.startMinute % 15 == 0
-        && data.cas == formatMinute(data.startMinute)
         && data.trvanieRezervacie is int
         && data.trvanieRezervacie >= 30
         && data.trvanieRezervacie <= 240

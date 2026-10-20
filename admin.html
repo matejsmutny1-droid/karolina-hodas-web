@@ -387,7 +387,9 @@
       const migratedBookings = previousBookings.map((booking, index) => {
         const bookedDuration = getBookedDuration(booking) || duration;
         const pause = bookedPause(booking, bookedDuration);
-        const bookingStart = toMinutes(booking.cas || old.cas);
+        const bookingStart = Number.isInteger(booking.startMinute)
+          ? booking.startMinute
+          : toMinutes(booking.cas || old.cas);
         const cas = formatTime(bookingStart);
         const id = `migrated_${legacyDoc.id.replace(/[^A-Za-z0-9_-]/g, "_")}_${index}`;
         const addons = Array.isArray(booking.doplnky)
@@ -509,6 +511,10 @@
 
   function renderWindowRow(slotId, data, reservations) {
     const intervals = freeIntervals(data, reservations);
+    const windowStart = Number.isInteger(data.startMinute) ? data.startMinute : toMinutes(data.cas);
+    const windowEnd = Number.isInteger(data.endMinute)
+      ? data.endMinute
+      : windowStart + slotDuration(data);
     const remaining = intervals.length
       ? intervals.map(interval => `${formatTime(interval.start)}–${formatTime(interval.end)} (${interval.end - interval.start} min)`).join("<br>")
       : "Žiadny voľný čas";
@@ -517,7 +523,7 @@
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td data-label="Dátum">${escapeHtml(data.datum || "")}</td>
-      <td data-label="Časové okno">${escapeHtml(data.cas || "")}–${formatTime(data.endMinute || (toMinutes(data.cas) + slotDuration(data)))}</td>
+      <td data-label="Časové okno">${formatTime(windowStart)}–${formatTime(windowEnd)}</td>
       <td data-label="Dĺžka">${slotDuration(data)} min</td>
       <td data-label="Voľný čas / stav" class="${statusClass}">${remaining}</td>
       <td data-label="Meno klienta / Masáž">Dostupnosť</td>
@@ -530,6 +536,7 @@
 
   function renderReservationRow(slotId, booking) {
     const duration = getBookedDuration(booking);
+    const bookingTime = Number.isInteger(booking.startMinute) ? formatTime(booking.startMinute) : booking.cas || "";
     const addons = Array.isArray(booking.doplnky) ? booking.doplnky.filter(Boolean) : [];
     const addonDetails = addons.length ? `<br><small style="color:#657365">Doplnky: ${escapeHtml(addons.join(", "))}</small>` : "";
     const priceDetails = booking.cenaSpolu !== undefined && Number.isFinite(Number(booking.cenaSpolu))
@@ -538,7 +545,7 @@
     tr.className = "reservation-row";
     tr.innerHTML = `
       <td data-label="Dátum">${escapeHtml(booking.datum || "")}</td>
-      <td data-label="Čas rezervácie">${escapeHtml(booking.cas || "")}</td>
+      <td data-label="Čas rezervácie">${escapeHtml(bookingTime)}</td>
       <td data-label="Masáž + prestávka">${duration} + ${bookedPause(booking, duration)} min</td>
       <td data-label="Stav" class="status-booked">OBSADENÉ</td>
       <td data-label="Klient / Masáž">${escapeHtml(booking.meno || "Klient")}<br><small style="color:#c5a059">${escapeHtml(booking.masaz || "")}</small>${addonDetails}${priceDetails}</td>

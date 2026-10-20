@@ -608,7 +608,9 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     const occupied = new Set(Object.keys(occupiedBlocks || {}).map(Number));
 
     items.forEach(item => {
-      const windowStart = toMinutes(item.data.cas);
+      const windowStart = Number.isInteger(item.data.startMinute)
+        ? item.data.startMinute
+        : toMinutes(item.data.cas);
       const windowEnd = Number.isInteger(item.data.endMinute)
         ? item.data.endMinute
         : windowStart + slotDuration(item.data);
@@ -918,7 +920,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
           datum: selectedDate,
           slotId: selectedSlotId,
           serviceId: serviceId(massageSelect.value),
-          cas: selectedTimeInput.value,
+          cas: timeFromMinutes(startMinute),
           startMinute,
           trvanieRezervacie: duration,
           prestavka: pause,
