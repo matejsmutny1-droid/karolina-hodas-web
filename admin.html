@@ -354,8 +354,19 @@
     return keys;
   }
 
+  async function migrationOperation(label, operation) {
+    try {
+      return await operation();
+    } catch (error) {
+      throw new Error(`${label}: ${error.code || error.message || error}`);
+    }
+  }
+
   async function migrateLegacyData() {
-    const legacySnapshot = await getDocs(collection(db, "terminy"));
+    const legacySnapshot = await migrationOperation(
+      "čítanie kolekcie terminy",
+      () => getDocs(collection(db, "terminy"))
+    );
     for (const legacyDoc of legacySnapshot.docs) {
       const old = legacyDoc.data();
       const date = old.datum;
@@ -366,7 +377,10 @@
       const endMinute = startMinute + duration;
       const availabilityRef = doc(db, "dostupnost", legacyDoc.id);
       const lockRef = doc(db, "rezervacneZamky", date);
-      const existingLock = await getDoc(lockRef);
+      const existingLock = await migrationOperation(
+        `čítanie časového zámku pre ${legacyDoc.id}`,
+        () => getDoc(lockRef)
+      );
       const blocks = { ...(existingLock.exists() ? existingLock.data().blocks || {} : {}) };
       const previousBookings = oldReservations(old);
       const migratedBookings = previousBookings.map((booking, index) => {
@@ -413,7 +427,10 @@
       });
       for (const booking of migratedBookings) {
         const bookingRef = doc(db, "rezervacie", booking.id);
-        const existingBooking = await getDoc(bookingRef);
+        const existingBooking = await migrationOperation(
+          `kontrola existujúcej rezervácie ${booking.id}`,
+          () => getDoc(bookingRef)
+        );
         if (!existingBooking.exists()) batch.set(bookingRef, booking.data);
       }
       batch.set(lockRef, {
@@ -421,7 +438,10 @@
         blocks,
         lastBookingId: migratedBookings.at(-1)?.id || (existingLock.exists() ? existingLock.data().lastBookingId || "" : "")
       }, { merge: true });
-      await batch.commit();
+      await migrationOperation(
+        `zápis kópie termínu ${legacyDoc.id}`,
+        () => batch.commit()
+      );
     }
   }
 
