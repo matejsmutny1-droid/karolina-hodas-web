@@ -38,10 +38,10 @@ service cloud.firestore {
         && data.endMinute - data.startMinute == data.trvanie;
     }
 
-    function validPause(duration, pause) {
-      return (duration == 30 && pause == 15)
-        || ((duration == 150 || duration == 180) && pause == 30)
-        || (duration != 30 && duration != 150 && duration != 180 && pause == 20);
+    function validPause(serviceDuration, pause) {
+      return (serviceDuration == 30 && pause == 15)
+        || ((serviceDuration == 150 || serviceDuration == 180) && pause == 30)
+        || (serviceDuration != 30 && serviceDuration != 150 && serviceDuration != 180 && pause == 20);
     }
 
     function sequentialBlocks(keys) {
