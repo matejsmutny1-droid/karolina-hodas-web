@@ -375,6 +375,7 @@
       const duration = slotDuration(old);
       const startMinute = toMinutes(old.cas);
       const endMinute = startMinute + duration;
+      const normalizedStartTime = formatTime(startMinute);
       const availabilityRef = doc(db, "dostupnost", legacyDoc.id);
       const lockRef = doc(db, "rezervacneZamky", date);
       const existingLock = await migrationOperation(
@@ -386,8 +387,8 @@
       const migratedBookings = previousBookings.map((booking, index) => {
         const bookedDuration = getBookedDuration(booking) || duration;
         const pause = bookedPause(booking, bookedDuration);
-        const cas = booking.cas || old.cas;
-        const bookingStart = toMinutes(cas);
+        const bookingStart = toMinutes(booking.cas || old.cas);
+        const cas = formatTime(bookingStart);
         const id = `migrated_${legacyDoc.id.replace(/[^A-Za-z0-9_-]/g, "_")}_${index}`;
         const addons = Array.isArray(booking.doplnky)
           ? booking.doplnky.map(addon => typeof addon === "string" ? addon : addon?.name).filter(Boolean)
@@ -420,7 +421,7 @@
       const batch = writeBatch(db);
       batch.set(availabilityRef, {
         datum: date,
-        cas: old.cas,
+        cas: normalizedStartTime,
         trvanie: duration,
         startMinute,
         endMinute
