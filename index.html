@@ -424,7 +424,7 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, query, where, getDocs, doc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, query, where, getDocs, doc, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBAUiW5uWKkj_aDq_4KXz2bdBIuxTQbadE",
@@ -494,6 +494,10 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
   function toMinutes(time) {
     const [hours, minutes] = (time || "0:0").split(":").map(Number);
     return hours * 60 + minutes;
+  }
+
+  function serviceId(value) {
+    return String(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   }
 
   function selectedAddons() {
@@ -592,55 +596,29 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     return `${year}-${month}-${day}`;
   }
 
-  function getBookedDuration(slot) {
-    return Number.parseInt(slot.trvanieRezervacie, 10) ||
-      Number.parseInt((slot.masaz || "").match(/(\d+)\s*min/i)?.[1], 10) || 0;
-  }
-
-  function bookedPause(slot, duration) {
-    const savedPause = Number.parseInt(slot.prestavka, 10);
-    return Number.isNaN(savedPause) ? breakMinutes(duration) : savedPause;
-  }
-
-  function reservationsForSlot(slot) {
-    if (Array.isArray(slot.rezervacie)) return slot.rezervacie;
-    if (!slot.obsadene) return [];
-
-    const duration = getBookedDuration(slot) || slotDuration(slot);
-    return [{
-      id: "legacy",
-      cas: slot.cas,
-      meno: slot.meno || "",
-      telefon: slot.telefon || "",
-      email: slot.email || "",
-      masaz: slot.masaz || "",
-      trvanieRezervacie: duration,
-      prestavka: bookedPause(slot, duration)
-    }];
-  }
-
   function timeFromMinutes(minutes) {
     const hours = Math.floor(minutes / 60);
     const remainder = minutes % 60;
     return `${String(hours).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`;
   }
 
-  function availableSlotsForDay(items, requestedDuration) {
-    const booked = items.flatMap(item => reservationsForSlot(item.data));
+  function availableSlotsForDay(items, requestedDuration, occupiedBlocks = {}) {
     const appointmentWithPause = requestedDuration + breakMinutes(requestedDuration);
     const candidates = new Map();
+    const occupied = new Set(Object.keys(occupiedBlocks || {}).map(Number));
 
     items.forEach(item => {
       const windowStart = toMinutes(item.data.cas);
-      const windowEnd = windowStart + slotDuration(item.data);
-      for (let start = windowStart; start + appointmentWithPause <= windowEnd; start += 15) {
-        const isBooked = booked.some(booking => {
-          const duration = getBookedDuration(booking);
-          if (!duration) return false;
-          const bookedStart = toMinutes(booking.cas);
-          const bookedEnd = bookedStart + duration + bookedPause(booking, duration);
-          return overlaps(start, start + appointmentWithPause, bookedStart, bookedEnd);
-        });
+      const windowEnd = Number.isInteger(item.data.endMinute)
+        ? item.data.endMinute
+        : windowStart + slotDuration(item.data);
+      const firstStart = Math.ceil(windowStart / 15) * 15;
+      for (let start = firstStart; start + appointmentWithPause <= windowEnd; start += 15) {
+        const lockEnd = Math.ceil((start + appointmentWithPause) / 15) * 15;
+        let isBooked = false;
+        for (let block = start; block < lockEnd; block += 15) {
+          if (occupied.has(block)) { isBooked = true; break; }
+        }
         if (!isBooked && !candidates.has(start)) {
           candidates.set(start, { ...item, availableAt: timeFromMinutes(start) });
         }
@@ -648,6 +626,23 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     });
 
     return [...candidates.values()].sort((a, b) => toMinutes(a.availableAt) - toMinutes(b.availableAt));
+  }
+
+  async function loadPublicAvailability(startDate, endDate) {
+    const slotQuery = query(
+      collection(db, "dostupnost"),
+      where("datum", ">=", startDate),
+      where("datum", "<=", endDate)
+    );
+    const lockQuery = query(
+      collection(db, "rezervacneZamky"),
+      where("datum", ">=", startDate),
+      where("datum", "<=", endDate)
+    );
+    const [slotSnapshot, lockSnapshot] = await Promise.all([getDocs(slotQuery), getDocs(lockQuery)]);
+    const slots = slotSnapshot.docs.map(snapshot => ({ id: snapshot.id, data: snapshot.data() }));
+    const locksByDate = new Map(lockSnapshot.docs.map(snapshot => [snapshot.data().datum, snapshot.data().blocks || {}]));
+    return { slots, locksByDate };
   }
 
   function updateCalendarControls() {
@@ -720,24 +715,19 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     renderCalendar();
 
     try {
-      const monthQuery = query(
-        collection(db, "terminy"),
-        where("datum", ">=", firstDate),
-        where("datum", "<=", lastDate)
-      );
-      const snapshot = await getDocs(monthQuery);
+      const response = await loadPublicAvailability(firstDate, lastDate);
       if (requestId !== calendarRequest) return;
 
       const slotsByDate = new Map();
-      snapshot.forEach(docSnap => {
-        const data = docSnap.data();
+      response.slots.forEach(item => {
+        const data = item.data;
         if (!slotsByDate.has(data.datum)) slotsByDate.set(data.datum, []);
-        slotsByDate.get(data.datum).push({ id: docSnap.id, ref: docSnap.ref, data });
+        slotsByDate.get(data.datum).push(item);
       });
 
       slotsByDate.forEach((slots, date) => {
         if (date < todayKey) return;
-        const available = availableSlotsForDay(slots, duration);
+        const available = availableSlotsForDay(slots, duration, response.locksByDate.get(date));
         if (available.length) availableDates.set(date, available);
       });
 
@@ -766,12 +756,11 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     selectedSlotId = null;
 
     try {
-      const q = query(collection(db, "terminy"), where("datum", "==", selectedDate));
-      const querySnapshot = await getDocs(q);
+      const response = await loadPublicAvailability(selectedDate, selectedDate);
       if (requestId !== slotRequest || selectedDate !== dateInput.value || requestedDuration !== selectedBookingDuration()) return;
 
-      const allSlots = querySnapshot.docs.map(docSnap => ({ id: docSnap.id, ref: docSnap.ref, data: docSnap.data() }));
-      const available = availableSlotsForDay(allSlots, requestedDuration);
+      const allSlots = response.slots;
+      const available = availableSlotsForDay(allSlots, requestedDuration, response.locksByDate.get(selectedDate));
 
       slotsContainer.innerHTML = "";
 
@@ -893,60 +882,66 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     try {
       e.preventDefault();
       const selectedDate = dateInput.value;
-      const slotsSnapshot = await getDocs(query(collection(db, "terminy"), where("datum", "==", selectedDate)));
-      const slotRefs = slotsSnapshot.docs.map(item => ({ id: item.id, ref: item.ref }));
-      const chosenRef = doc(db, "terminy", selectedSlotId);
       const addons = selectedAddons();
       const duration = selectedBookingDuration();
       const pause = breakMinutes(duration);
-      const start = toMinutes(selectedTimeInput.value);
-      let submitted = false;
+      const startMinute = toMinutes(selectedTimeInput.value);
+      const endMinute = startMinute + duration + pause;
+      const blockKeys = [];
+      for (let minute = startMinute; minute < Math.ceil(endMinute / 15) * 15; minute += 15) {
+        blockKeys.push(minute);
+      }
+      const bookingRef = doc(collection(db, "rezervacie"));
+      const slotRef = doc(db, "dostupnost", selectedSlotId);
+      const lockRef = doc(db, "rezervacneZamky", selectedDate);
 
       await runTransaction(db, async transaction => {
-        const snapshots = await Promise.all(slotRefs.map(item => transaction.get(item.ref)));
-        const chosenIndex = slotRefs.findIndex(item => item.id === selectedSlotId);
-        const chosen = snapshots[chosenIndex];
-        if (!chosen || !chosen.exists()) throw new Error("Tento termín už nie je dostupný. Obnovte výber času.");
-        const chosenData = chosen.data();
-        const windowStart = toMinutes(chosenData.cas);
-        const windowEnd = windowStart + slotDuration(chosenData);
-        if (start < windowStart || start + duration + pause > windowEnd) {
-          throw new Error("Vybraný termín už nie je dostupný pre túto masáž. Vyberte si iný.");
+        const [slotSnapshot, lockSnapshot] = await Promise.all([
+          transaction.get(slotRef),
+          transaction.get(lockRef)
+        ]);
+        if (!slotSnapshot.exists() || !lockSnapshot.exists()) {
+          throw new Error("Termín sa práve zmenil. Obnovte kalendár a vyberte si nový čas.");
+        }
+        const slot = slotSnapshot.data();
+        const lockData = lockSnapshot.data();
+        const blocks = { ...(lockData.blocks || {}) };
+        const slotEnd = Number.isInteger(slot.endMinute) ? slot.endMinute : toMinutes(slot.cas) + slotDuration(slot);
+        if (slot.datum !== selectedDate || startMinute < slot.startMinute || endMinute > slotEnd) {
+          throw new Error("Zvolený čas už nie je dostupný pre túto masáž.");
+        }
+        if (blockKeys.some(key => Object.prototype.hasOwnProperty.call(blocks, key))) {
+          throw new Error("Tento čas si práve rezervoval niekto iný. Obnovte kalendár a vyberte si nový.");
         }
 
-        const existingBookings = snapshots
-          .filter(snapshot => snapshot.exists())
-          .flatMap(snapshot => reservationsForSlot(snapshot.data()));
-        const conflict = existingBookings.some(booking => {
-          const bookedDuration = getBookedDuration(booking);
-          if (!bookedDuration) return false;
-          const bookedStart = toMinutes(booking.cas);
-          const bookedEnd = bookedStart + bookedDuration + bookedPause(booking, bookedDuration);
-          return overlaps(start, start + duration + pause, bookedStart, bookedEnd);
-        });
-        if (conflict) throw new Error("Tento čas sa prekrýva s inou rezerváciou alebo prestávkou. Obnovte výber času.");
-
-        const reservationId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
         const reservation = {
-          id: reservationId,
+          datum: selectedDate,
+          slotId: selectedSlotId,
+          serviceId: serviceId(massageSelect.value),
           cas: selectedTimeInput.value,
-          meno: name.value,
-          telefon: phone.value,
-          email: email.value,
-          masaz: massageSelect.value,
-          doplnky: addons,
-          cenaSpolu: selectedBookingPrice(),
+          startMinute,
           trvanieRezervacie: duration,
-          prestavka: pause
+          prestavka: pause,
+          blockKeys,
+          meno: name.value.trim(),
+          telefon: phone.value.trim(),
+          email: email.value.trim(),
+          masaz: massageSelect.value,
+          doplnky: addons.map(addon => addon.name),
+          cenaSpolu: selectedBookingPrice(),
+          vytvorene: serverTimestamp()
         };
-
-        transaction.update(chosenRef, {
-          obsadene: true,
-          rezervacie: [...reservationsForSlot(chosenData), reservation]
-        });
-        submitted = true;
+        blockKeys.forEach(key => { blocks[key] = bookingRef.id; });
+        transaction.set(bookingRef, reservation);
+        transaction.update(lockRef, { blocks, lastBookingId: bookingRef.id });
       });
-      if (submitted) this.submit();
+
+      bookingTotalPrice.value = `${selectedBookingPrice()} €`;
+      bookingTotalDuration.value = `${duration} min`;
+      bookingAddonsValue.value = addons
+        .map(addon => `${addon.name} (+${addon.duration} min, ${addon.price} €)`)
+        .join(", ");
+      this.submit();
     } catch (err) {
       console.error("Chyba pri rezervácii slotu:", err);
       e.preventDefault();
