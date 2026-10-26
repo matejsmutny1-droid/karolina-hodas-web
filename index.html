@@ -606,6 +606,9 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
     const appointmentWithPause = requestedDuration + breakMinutes(requestedDuration);
     const candidates = new Map();
     const occupied = new Set(Object.keys(occupiedBlocks || {}).map(Number));
+    const todayKey = toDateKey(new Date());
+    const now = new Date();
+    const currentMinute = now.getHours() * 60 + now.getMinutes();
 
     items.forEach(item => {
       const windowStart = Number.isInteger(item.data.startMinute)
@@ -614,7 +617,10 @@ Pre rezerváciu využite formulár nižšie alebo ma kontaktujte priamo.
       const windowEnd = Number.isInteger(item.data.endMinute)
         ? item.data.endMinute
         : windowStart + slotDuration(item.data);
-      const firstStart = Math.ceil(windowStart / 15) * 15;
+      const earliestStart = item.data.datum === todayKey
+        ? Math.max(windowStart, Math.floor(currentMinute / 15 + 1) * 15)
+        : windowStart;
+      const firstStart = Math.ceil(earliestStart / 15) * 15;
       for (let start = firstStart; start + appointmentWithPause <= windowEnd; start += 15) {
         const lockEnd = Math.ceil((start + appointmentWithPause) / 15) * 15;
         let isBooked = false;
