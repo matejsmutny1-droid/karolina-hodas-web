@@ -185,8 +185,8 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import {
-    getFirestore, collection, query, where, getDocs, getDoc, doc,
-    setDoc, deleteDoc, runTransaction, writeBatch, serverTimestamp
+    getFirestore, collection, getDocs, getDoc, doc,
+    setDoc, deleteDoc, runTransaction, writeBatch
   } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -288,14 +288,12 @@
     authMessage.textContent = "";
     loginBox.hidden = true;
     adminContent.hidden = false;
-    adminStatus.textContent = "Pripravujem zabezpečené termíny a prenášam existujúce rezervácie…";
+    adminStatus.textContent = "Načítavam termíny…";
     let currentStep = "obnova prihlasovacieho tokenu";
     try {
       await user.getIdToken(true);
       currentStep = "príprava katalógu masáží";
       await ensureBookingCatalog();
-      currentStep = "bezpečné kopírovanie starých termínov";
-      await migrateLegacyData();
       currentStep = "načítanie termínov";
       await loadSlots();
       adminStatus.textContent = "Termíny sú načítané. Osobné údaje rezervácií vidia iba prihlásení správcovia.";
@@ -332,133 +330,6 @@
   function bookedPause(booking, duration) {
     const savedPause = Number.parseInt(booking.prestavka, 10);
     return Number.isNaN(savedPause) ? breakMinutes(duration) : savedPause;
-  }
-
-  function oldReservations(slot) {
-    if (Array.isArray(slot.rezervacie)) return slot.rezervacie;
-    if (!slot.obsadene) return [];
-    const duration = getBookedDuration(slot) || slotDuration(slot);
-    return [{
-      cas: slot.cas, meno: slot.meno || "", telefon: slot.telefon || "",
-      email: slot.email || "", masaz: slot.masaz || "",
-      trvanieRezervacie: duration, prestavka: bookedPause(slot, duration),
-      doplnky: slot.doplnky || [], cenaSpolu: slot.cenaSpolu
-    }];
-  }
-
-  function makeBlockKeys(start, duration, pause) {
-    const first = Math.floor(start / 15) * 15;
-    const end = Math.ceil((start + duration + pause) / 15) * 15;
-    const keys = [];
-    for (let minute = first; minute < end; minute += 15) keys.push(minute);
-    return keys;
-  }
-
-  async function migrationOperation(label, operation) {
-    try {
-      return await operation();
-    } catch (error) {
-      throw new Error(`${label}: ${error.code || error.message || error}`);
-    }
-  }
-
-  async function migrateLegacyData() {
-    const legacySnapshot = await migrationOperation(
-      "čítanie kolekcie terminy",
-      () => getDocs(collection(db, "terminy"))
-    );
-    for (const legacyDoc of legacySnapshot.docs) {
-      const old = legacyDoc.data();
-      const date = old.datum;
-      if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !old.cas) continue;
-
-      const duration = slotDuration(old);
-      const startMinute = toMinutes(old.cas);
-      const endMinute = startMinute + duration;
-      const normalizedStartTime = formatTime(startMinute);
-      const availabilityRef = doc(db, "dostupnost", legacyDoc.id);
-      const lockRef = doc(db, "rezervacneZamky", date);
-      const existingLock = await migrationOperation(
-        `čítanie časového zámku pre ${legacyDoc.id}`,
-        () => getDoc(lockRef)
-      );
-      const blocks = { ...(existingLock.exists() ? existingLock.data().blocks || {} : {}) };
-      const previousBookings = oldReservations(old);
-      const migratedBookings = previousBookings.map((booking, index) => {
-        const bookedDuration = getBookedDuration(booking) || duration;
-        const pause = bookedPause(booking, bookedDuration);
-        const bookingStart = Number.isInteger(booking.startMinute)
-          ? booking.startMinute
-          : toMinutes(booking.cas || old.cas);
-        const cas = formatTime(bookingStart);
-        const id = `migrated_${legacyDoc.id.replace(/[^A-Za-z0-9_-]/g, "_")}_${index}`;
-        const addons = Array.isArray(booking.doplnky)
-          ? booking.doplnky.map(addon => typeof addon === "string" ? addon : addon?.name).filter(Boolean)
-          : [];
-        const lockKeys = makeBlockKeys(bookingStart, bookedDuration, pause);
-        lockKeys.forEach(key => {
-          if (!Object.prototype.hasOwnProperty.call(blocks, String(key))) blocks[String(key)] = id;
-        });
-        return {
-          id,
-          data: {
-            datum: date,
-            slotId: legacyDoc.id,
-            cas,
-            startMinute: bookingStart,
-            trvanieRezervacie: bookedDuration,
-            prestavka: pause,
-            blockKeys: lockKeys,
-            meno: booking.meno || "",
-            telefon: booking.telefon || "",
-            email: booking.email || "",
-            masaz: booking.masaz || "",
-            serviceId: booking.masaz ? serviceId(booking.masaz) : "",
-            doplnky: addons,
-            cenaSpolu: Number.isFinite(Number(booking.cenaSpolu)) ? Number(booking.cenaSpolu) : 0
-          }
-        };
-      });
-
-      const bookingWrites = [];
-      for (const booking of migratedBookings) {
-        const bookingRef = doc(db, "rezervacie", booking.id);
-        const existingBooking = await migrationOperation(
-          `kontrola existujúcej rezervácie ${booking.id}`,
-          () => getDoc(bookingRef)
-        );
-        if (!existingBooking.exists()) bookingWrites.push({ bookingRef, data: booking.data });
-      }
-
-      // Protect migrated reservation blocks first. The public slot only appears
-      // after its reservations and lock have been copied successfully.
-      await migrationOperation(
-        `zápis zámku pre termín ${legacyDoc.id}`,
-        () => setDoc(lockRef, {
-          datum: date,
-          blocks,
-          lastBookingId: migratedBookings.at(-1)?.id || (existingLock.exists() ? existingLock.data().lastBookingId || "" : "")
-        }, { merge: true })
-      );
-
-      for (const { bookingRef, data } of bookingWrites) {
-        await migrationOperation(
-          `zápis rezervácie ${bookingRef.id}`,
-          () => setDoc(bookingRef, data)
-        );
-      }
-
-      await migrationOperation(
-        `zápis dostupnosti ${date} ${normalizedStartTime}, ${duration} min (${startMinute}–${endMinute}), ID ${legacyDoc.id}`,
-        () => setDoc(availabilityRef, {
-          datum: date,
-          cas: normalizedStartTime,
-          trvanie: duration,
-          startMinute,
-          endMinute
-        })
-      );
-    }
   }
 
   function overlaps(startA, endA, startB, endB) {

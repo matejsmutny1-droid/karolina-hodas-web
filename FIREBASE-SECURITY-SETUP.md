@@ -11,7 +11,7 @@ Rezervačný systém používa Firestore priamo z webu s bezpečnostnými pravid
 5. Publikuj webové súbory `index.html` a `admin.html` cez GitHub Pages.
 6. Po nasadení otvor `https://karamasaze.sk/admin.html`, prihlás sa povoleným účtom a klikni na odkaz na overenie e-mailu. Po overení sa prihlás znova.
 
-Pri prvom úspešnom prihlásení administrácia vytvorí katalóg služieb a skopíruje existujúce údaje zo starej kolekcie `terminy`: dostupnosť do verejnej kolekcie `dostupnost`, osobné údaje do `rezervacie` a anonymné časové bloky do `rezervacneZamky`. Pôvodné dokumenty `terminy` zostanú zachované ako záloha, kým sa overí správne zobrazenie všetkých termínov.
+Administrácia pri prihlásení aktualizuje katalóg služieb. Staré dokumenty v kolekcii `terminy` zostávajú iba ako záloha; aktuálny rezervačný systém používa kolekcie `dostupnost`, `rezervacie` a `rezervacneZamky`. Staré termíny sa pri prihlásení automaticky nekopírujú, aby sa neobnovili okná alebo rezervácie, ktoré správca neskôr vymazal či zrušil.
 
 ## Rozdelenie prístupov
 
