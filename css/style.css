@@ -127,6 +127,18 @@ section {
   gap: 40px;
 }
 
+.hero-heading {
+  margin: 0;
+  color: #F5F5F5;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(12px, 1.7vw, 16px);
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .logo {
   width: 520px;
   max-width: 90%;
@@ -1675,6 +1687,7 @@ section {
 
 @media (max-width: 500px) {
   .hero .btn { padding-inline: 22px; letter-spacing: 0.24em; }
+  .hero-heading { letter-spacing: 0.18em; }
 }
 
 /* KARA visual identity: light mineral tones, charcoal and dark brown. */
