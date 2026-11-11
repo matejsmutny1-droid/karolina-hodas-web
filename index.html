@@ -4,22 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="/favicon.png">
-<title>KARA Masáže Žilina | Relaxačné a regeneračné masáže</title>
+<title>Masáže Žilina | KARA masážne štúdio · Bottova 1</title>
 <link rel="canonical" href="https://karamasaze.sk/">
 <meta name="robots" content="index,follow">
 <meta name="google-site-verification" content="jLVRnPmYGiguwECN1VmoUBdIAvLBXUF9Nzf4Qvjx7NY">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="sk_SK">
 <meta property="og:site_name" content="KARA Masáže">
-<meta property="og:title" content="KARA Masáže Žilina | Relaxačné a regeneračné masáže">
-<meta property="og:description" content="Doprajte si relaxačné a regeneračné masáže v štúdiu KARA na Bottovej 1 v Žiline. Vyberte si masáž a rezervujte si termín online.">
+<meta property="og:title" content="Masáže Žilina | KARA masážne štúdio · Bottova 1">
+<meta property="og:description" content="Relaxačné a regeneračné masáže v štúdiu KARA na Bottovej 1 v Žiline. Pozrite si cenník a rezervujte termín online.">
 <meta property="og:url" content="https://karamasaze.sk/">
 <meta property="og:image" content="https://karamasaze.sk/images/kajka3.jpg">
+<meta property="og:image:alt" content="Karolína Hodas, masérka v štúdiu KARA v Žiline">
+<meta name="twitter:card" content="summary_large_image">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="/images/m1.webp" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<meta name="description" content="Doprajte si relaxačné a regeneračné masáže v štúdiu KARA na Bottovej 1 v Žiline. Vyberte si masáž a rezervujte si termín online.">
+<meta name="description" content="Masáže v Žiline v štúdiu KARA na Bottovej 1. Relaxačné a regeneračné masáže, cenník aj online rezervácia termínu. Zavolajte +421 944 388 697.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -31,7 +36,12 @@
   "logo": "https://karamasaze.sk/images/logo.png",
   "telephone": "+421944388697",
   "email": "hello@karamasaze.sk",
+  "priceRange": "30–125 €",
   "description": "Relaxačné a regeneračné masáže v štúdiu KARA v Žiline.",
+  "areaServed": {
+    "@type": "City",
+    "name": "Žilina"
+  },
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Bottova 1",
@@ -201,8 +211,8 @@
   <div class="cursor-glow"></div>
 
 <section class="hero" id="top">
-<video autoplay muted loop playsinline class="hero-video">
-  <source src="images/video.mp4" type="video/mp4">
+<video muted loop playsinline class="hero-video" poster="images/m1.webp" preload="none" aria-hidden="true">
+  <source data-src="images/video.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
@@ -213,6 +223,30 @@
   <a href="#booking" class="btn">Rezervovať termín</a>
 </div>
 </section>
+
+<script>
+  (() => {
+    const video = document.querySelector(".hero-video");
+    const source = video?.querySelector("source[data-src]");
+    const supportsMotion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isLargeScreen = window.matchMedia("(min-width: 769px)").matches;
+
+    if (!video || !source || !supportsMotion || !isLargeScreen) return;
+
+    const loadHeroVideo = () => {
+      source.src = source.dataset.src;
+      source.removeAttribute("data-src");
+      video.load();
+      video.play().catch(() => {});
+    };
+
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(loadHeroVideo, { timeout: 2500 });
+    } else {
+      window.addEventListener("load", loadHeroVideo, { once: true });
+    }
+  })();
+</script>
 
 <section class="about reveal">
 <div class="about-grid">
@@ -228,14 +262,30 @@ Moja cesta začala umením. Od detstva som vnímala svet cez citlivosť, tvorbu 
 Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spomaľuje a myseľ nachádza pokoj.
 </p>
 
-<img src="images/podpis.png" class="signature">
+<img src="images/podpis.png" class="signature" alt="" aria-hidden="true" width="120" height="58" loading="lazy" decoding="async">
 </div>
 
 <div class="about-right">
-<img src="images/kajka3.jpg" alt="Karolína Hodas v masážnom štúdiu">
+<picture>
+  <source srcset="images/kajka3.webp" type="image/webp">
+  <img src="images/kajka3.jpg" alt="Karolína Hodas v masážnom štúdiu KARA v Žiline" width="1000" height="1504" loading="lazy" decoding="async">
+</picture>
 </div>
 
 </div>
+</section>
+
+<section class="local-intro reveal" aria-labelledby="local-intro-title">
+  <div class="local-intro-inner">
+    <p class="local-intro-eyebrow">MASÁŽNE ŠTÚDIO KARA · ŽILINA</p>
+    <h2 id="local-intro-title">Masáže v Žiline na Bottovej 1</h2>
+    <p>V štúdiu KARA si môžete vybrať celotelovú masáž Deep Balance, masáž chrbta a šije Back &amp; Neck Revival, masáž hlavy a tváre Čistá hlava, Sedavý detox, Active Recovery alebo Face Contouring.</p>
+    <p>Pri jednotlivých procedúrach nájdete ich trvanie, cenu aj doplnkové služby. Štúdio sa nachádza na adrese Bottova 1, 010 01 Žilina. Voľný termín si vyberiete priamo v online rezervačnom formulári.</p>
+    <div class="local-intro-links">
+      <a href="cennik.html">Pozrieť cenník masáží</a>
+      <a href="#booking">Rezervovať termín</a>
+    </div>
+  </div>
 </section>
 
 <section class="massages reveal" id="massages">
@@ -244,32 +294,50 @@ Dnes vnímam masáž ako rituál – priestor, kde sa telo uvoľňuje, dych spom
 <h2 class="massages-title">Masáže</h2>
 
 <a href="deep-balance.html" class="massage-card">
-  <img src="images/m1.jpg" alt="Masáž Deep Balance">
+  <picture>
+    <source srcset="images/m1.webp" type="image/webp">
+    <img src="images/m1.jpg" alt="Masáž Deep Balance v štúdiu KARA" width="900" height="1354" loading="lazy" decoding="async">
+  </picture>
   <div class="card-overlay center"><h3 class="title-wide">Deep Balance</h3></div>
 </a>
 
 <a href="cista-hlava.html" class="massage-card">
-  <img src="images/ch.jpg" alt="Masáž Čistá hlava">
+  <picture>
+    <source srcset="images/ch.webp" type="image/webp">
+    <img src="images/ch.jpg" alt="Masáž hlavy a tváre Čistá hlava" width="900" height="1354" loading="lazy" decoding="async">
+  </picture>
   <div class="card-overlay center"><h3 class="title-wide">Čistá hlava</h3></div>
 </a>
 
 <a href="sedavy-detox.html" class="massage-card">
-  <img src="images/m3.jpg" alt="Masáž Sedavý detox">
+  <picture>
+    <source srcset="images/m3.webp" type="image/webp">
+    <img src="images/m3.jpg" alt="Masáž Sedavý detox pri dlhom sedení" width="900" height="1354" loading="lazy" decoding="async">
+  </picture>
   <div class="card-overlay center"><h3 class="title-wide">Sedavý detox</h3></div>
 </a>
 
 <a href="back-neck.html" class="massage-card">
-  <img src="images/bn.jpg" alt="Masáž Back &amp; Neck Revival">
+  <picture>
+    <source srcset="images/bn.webp" type="image/webp">
+    <img src="images/bn.jpg" alt="Masáž chrbta a šije Back &amp; Neck Revival" width="900" height="1354" loading="lazy" decoding="async">
+  </picture>
   <div class="card-overlay center"><h3 class="title-wide">Back &amp; Neck Revival</h3></div>
 </a>
 
 <a href="active-recovery.html" class="massage-card">
-  <img src="images/m5.jpg" alt="Masáž Active Recovery">
+  <picture>
+    <source srcset="images/m5.webp" type="image/webp">
+    <img src="images/m5.jpg" alt="Regeneračná masáž Active Recovery" width="900" height="1354" loading="lazy" decoding="async">
+  </picture>
   <div class="card-overlay center"><h3 class="title-wide">Active Recovery</h3></div>
 </a>
 
 <a href="face-contouring.html" class="massage-card">
-  <img src="images/m6.jpg" alt="Face contouring a starostlivosť o pleť">
+  <picture>
+    <source srcset="images/m6.webp" type="image/webp">
+    <img src="images/m6.jpg" alt="Face Contouring a starostlivosť o pleť" width="1200" height="798" loading="lazy" decoding="async">
+  </picture>
   <div class="card-overlay center"><h3 class="title-wide">Face Contouring</h3></div>
 </a>
 
