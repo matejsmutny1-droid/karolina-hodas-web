@@ -94,24 +94,53 @@ function syncKaraBookings() {
       }
     });
 
-    console.log(JSON.stringify({created, updated, removed, skippedPast}));
+    console.log(JSON.stringify({
+      calendar: calendar.getName(),
+      foundUpcomingBookings: bookings.length,
+      created,
+      updated,
+      removed,
+      skippedPast
+    }));
   } finally {
     lock.releaseLock();
   }
 }
 
-/** Installs one 15-minute trigger. Run after a successful manual sync. */
+/** Replaces existing sync triggers with one fresh 15-minute trigger. */
 function installKaraCalendarTrigger() {
   const existing = ScriptApp.getProjectTriggers().filter(trigger =>
     trigger.getHandlerFunction() === "syncKaraBookings"
   );
-  if (existing.length === 0) {
-    ScriptApp.newTrigger("syncKaraBookings")
-      .timeBased()
-      .everyMinutes(KARA_SYNC.pollMinutes)
-      .create();
-  }
-  console.log("Calendar sync trigger is installed.");
+
+  ScriptApp.newTrigger("syncKaraBookings")
+    .timeBased()
+    .everyMinutes(KARA_SYNC.pollMinutes)
+    .create();
+  existing.forEach(trigger => ScriptApp.deleteTrigger(trigger));
+  console.log("Replaced sync triggers with one fresh 15-minute trigger.");
+}
+
+/** Reports whether the script sees upcoming bookings and which calendar it targets. */
+function diagnoseKaraCalendarSync() {
+  const today = Utilities.formatDate(new Date(), KARA_SYNC.timeZone, "yyyy-MM-dd");
+  const bookings = readUpcomingBookings_(today);
+  const calendar = CalendarApp.getDefaultCalendar();
+  const stored = PropertiesService.getScriptProperties().getProperties();
+  const mappedBookingCount = Object.keys(stored).filter(key =>
+    key.startsWith(KARA_SYNC.propertyPrefix)
+  ).length;
+  const syncTriggers = ScriptApp.getProjectTriggers().filter(trigger =>
+    trigger.getHandlerFunction() === "syncKaraBookings"
+  );
+
+  console.log(JSON.stringify({
+    today,
+    upcomingBookingsVisibleToScript: bookings.length,
+    calendarName: calendar ? calendar.getName() : null,
+    syncTriggerCount: syncTriggers.length,
+    savedBookingMappings: mappedBookingCount
+  }));
 }
 
 /** Removes the recurring trigger without deleting any calendar events. */

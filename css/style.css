@@ -1867,7 +1867,7 @@ body {
   letter-spacing: 0.24em;
 }
 
-.local-intro h2 {
+.local-intro h1 {
   margin: 0 0 20px;
   color: #282120;
   font-size: clamp(27px, 4.2vw, 42px);

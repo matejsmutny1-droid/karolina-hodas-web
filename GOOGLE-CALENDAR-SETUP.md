@@ -17,6 +17,8 @@ Skript vytvára súkromné udalosti. Obsahujú meno klienta a telefón, názov m
 ## Správa synchronizácie
 
 - Akcia **Run → `syncKaraBookings`** spustí synchronizáciu hneď.
+- Akcia **Run → `diagnoseKaraCalendarSync`** vypíše počet budúcich rezervácií, ktoré skript vidí, názov cieľového predvoleného kalendára, počet spúšťačov a počet uložených väzieb na udalosti.
+- Akcia **Run → `installKaraCalendarTrigger`** nahradí existujúce spúšťače tejto synchronizácie jedným novým spúšťačom každých 15 minút. Po spustení v časti **Triggers** skontrolovať, že `syncKaraBookings` je nastavený ako časový spúšťač.
 - Akcia **Run → `removeKaraCalendarTrigger`** zastaví automatické spúšťanie. Už zapísané udalosti ponechá v kalendári.
 - Priebeh a prípadné chyby sú v Apps Scripte v časti **Executions**.
 
