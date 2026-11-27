@@ -956,17 +956,20 @@ Relaxačné a regeneračné masáže nájdete na Bottovej 1 v Žiline. Pre rezer
     const email = this.querySelector('[name="email"]');
     const date = this.querySelector('[name="Termín"]');
 
-    if(!/^[A-Za-zÁ-ž ]+$/.test(name.value)){
-      alert("Zadajte správne meno");
+    const normalizedName = name.value.trim();
+    if(!/^[A-Za-zÁ-ž ]+$/.test(normalizedName) || normalizedName.length < 2 || normalizedName.length > 100){
+      alert("Zadajte meno a priezvisko (aspoň 2 znaky).");
       valid = false;
     }
 
-    if(!/^[0-9+ ]{9,}$/.test(phone.value)){
+    const normalizedPhone = phone.value.trim();
+    if(!/^[0-9+ ]{9,25}$/.test(normalizedPhone)){
       alert("Zadajte správne telefónne číslo");
       valid = false;
     }
 
-    if(email.value === ""){
+    const normalizedEmail = email.value.trim();
+    if(!/^[^@ ]+@[^@ ]+\.[^@ ]+$/.test(normalizedEmail) || normalizedEmail.length > 254){
       alert("Zadajte email");
       valid = false;
     }
